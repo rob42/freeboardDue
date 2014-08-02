@@ -27,6 +27,7 @@ Ive commited my .settings and .cproject files, so your project should be fully s
 
 * In Project>Properties>Arduino set the boards.txt file, and select the Due processor.
 * In Project>Properties>C++ Comiler>Settings>Include folders:
+ ```
   "${workspace_loc:/freeboardDue/arduino/core}"
   "${workspace_loc:/freeboardDue/arduino/variant}"
   "${workspace_loc:/${ProjName}/lib/DueTimer}"
@@ -38,12 +39,15 @@ Ive commited my .settings and .cproject files, so your project should be fully s
   "${workspace_loc:/${ProjName}/lib/PString}"
   "${workspace_loc:/${ProjName}/lib/AverageList}"
   "${workspace_loc:/${ProjName}/lib/PID_v1}"
+```
 
 ***check they really are there!
 
 * In Project>Properties>C Compiler>Settings>Include folders:
+```
   "${workspace_loc:/freeboardDue/arduino/core}"
   "${workspace_loc:/freeboardDue/arduino/variant}"
   "${workspace_loc:/freeboardDue/Libraries/SPI}"
+```
 
 ***Look in your /freeboardDue/Libraries/, make sure SPI is actually there!
