@@ -20,6 +20,9 @@ In Eclipse use the git integration to extract a new project:
 
 Notes:
 ======
+
+This is a first cut, not all the functionality is ported yet, and its untested. Outstanding items are configuation (no EEPROM in Due, so it always boots to defaults), and no SoftwareSerial, so no NMEASerial object - (this is the NMEA talker port). Other NMEA prots should work ok.
+
 Ive commited my .settings and .cproject files, so your project should be fully set up. But the .settings may cause your project to look for my dir structure, which will probably cause problems. In this case you will need to check the following:
 
 * In Project>Properties>Arduino set the boards.txt file, and select the Due processor.
