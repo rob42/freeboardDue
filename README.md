@@ -27,7 +27,7 @@ Ive commited my .settings and .cproject files, so your project should be fully s
 
 * In Project>Properties>Arduino set the boards.txt file, and select the Due processor.
 * In Project>Properties>C++ Comiler>Settings>Include folders:
- ```
+```
   "${workspace_loc:/freeboardDue/arduino/core}"
   "${workspace_loc:/freeboardDue/arduino/variant}"
   "${workspace_loc:/${ProjName}/lib/DueTimer}"
