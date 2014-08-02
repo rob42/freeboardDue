@@ -27,10 +27,7 @@
 #define _freeboardDue_H_
 #include "Arduino.h"
 //add your includes for the project freeboardDue here
-typedef unsigned char byte;
 
-#include "Arduino.h"
-//add your includes for the project  here
 #include "FreeboardConstants.h"
 #include <DueTimer.h>
 #include <MultiSerial.h>
@@ -48,8 +45,9 @@ typedef unsigned char byte;
 #include "Seatalk.h"
 
 #include <MemoryFree.h>
-
 */
+
+typedef unsigned char byte;
 
 //end of add your includes here
 #ifdef __cplusplus
