@@ -65,7 +65,7 @@ Autopilot autopilot( &model);
 //Anchor
 Anchor anchor(&model);
 
-//Seatalk seatalk(&Serial2, &model);
+Seatalk seatalk(&Serial2, &model);
 
 
 char inputSerialArray[100];
@@ -123,7 +123,7 @@ void setup()
 
 		if (model.getSeaTalk()) {
 			if (DEBUG) Serial.println("Start seatalk - serial2 at 4800");
-			//Serial2.begin(4800, SERIAL_9N1); //Seatalk interface
+			Serial2.begin(4800, SERIAL_9N1); //Seatalk interface
 		} else {
 			if (DEBUG) {
 				Serial.print("Start nmea Rx - serial2 at ");

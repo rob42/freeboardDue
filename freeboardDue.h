@@ -40,9 +40,10 @@
 #include "Anchor.h"
 #include "NmeaRelay.h"
 #include "Autopilot.h"
+#include "Seatalk.h"
 /*
 #include <EEPROM.h>
-#include "Seatalk.h"
+
 
 #include <MemoryFree.h>
 */
