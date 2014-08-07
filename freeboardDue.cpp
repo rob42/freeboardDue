@@ -123,7 +123,8 @@ void setup()
 
 		if (model.getSeaTalk()) {
 			if (DEBUG) Serial.println("Start seatalk - serial2 at 4800");
-			Serial2.begin(4800, SERIAL_9N1); //Seatalk interface
+			// Serial2.begin(4800, SERIAL_9N1); //Seatalk interface
+			Serial2.begin(4800);
 		} else {
 			if (DEBUG) {
 				Serial.print("Start nmea Rx - serial2 at ");

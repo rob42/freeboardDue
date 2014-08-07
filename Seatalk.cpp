@@ -66,12 +66,15 @@
 }
 
 void Seatalk::windAlarmOff() {
+	/*
 	// send 66  00 00 Wind alarm over
 	serial->write9(0x66, true);
 	serial->write9(0x00, false);
 	serial->write9(0x00, false);
+	//*/
 }
 void Seatalk::radarAlarmOff() {
+	/*
 	// send A8  43  80 00 00 C3  Alarm OFF for Guard #1 or #2
 	serial->write9(0xA8, true);
 	serial->write9(0x43, false);
@@ -82,13 +85,16 @@ void Seatalk::radarAlarmOff() {
 	serial->write9(0x43, false);
 	serial->write9(0x00, false);
 	serial->write9(0x00, false);
+	//*/
 }
 
 void Seatalk::cancelMOB() {
+	/*
 	// Send 36  00  01      Cancel MOB (Man Over Board) condition
 	serial->write9(0x36, true);
 	serial->write9(0x00, false);
 	serial->write9(0x01, false);
+	//*/
 }
 void Seatalk::processSeaTalkByte(byte inByte) {
 	if (inByte > 256) {
