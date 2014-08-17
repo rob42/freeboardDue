@@ -17,9 +17,12 @@ RM := rm -rf
 -include lib/JsonStream/subdir.mk
 -include lib/DueTimer/subdir.mk
 -include arduino/variant/subdir.mk
+-include arduino/core/avr/subdir.mk
 -include arduino/core/USB/subdir.mk
 -include arduino/core/subdir.mk
 -include Libraries/SPI/subdir.mk
+-include .metadata/.plugins/org.eclipse.cdt.managedbuilder.core/subdir.mk
+-include .metadata/.plugins/org.eclipse.cdt.make.core/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)
@@ -56,7 +59,7 @@ endif
 
 # Add inputs and outputs from these tool invocations to the build variables 
 AR += \
-/home/robert/devSpace/dueWorkspace/freeboardDue/Release/arduino.ar \
+/home/robert/gitrep/freeboardDue/Release/arduino.ar \
 
 ELF += \
 freeboardDue.elf \
@@ -75,19 +78,19 @@ all: freeboardDue
 freeboardDue: $(FLASH_IMAGE)
 	@echo 'Building target: $@'
 	@echo 'Printing size:'
-	"/home/robert/dev/arduino-1.5.2/hardware/tools/g++_arm_none_eabi/bin/arm-none-eabi-size" -A "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/freeboardDue.elf"
+	"/home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-size" -A "/home/robert/gitrep/freeboardDue/Release/freeboardDue.elf"
 	@echo 'Finished building target: $@'
 	@echo ' '
 
-/home/robert/devSpace/dueWorkspace/freeboardDue/Release/arduino.ar: $(AR_OBJ)
+/home/robert/gitrep/freeboardDue/Release/arduino.ar: $(AR_OBJ)
 	@echo 'Starting archiver'
-	"/home/robert/dev/arduino-1.5.2/hardware/tools/g++_arm_none_eabi/bin/arm-none-eabi-ar" rcs "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/arduino.ar"   $(AR_OBJ)
+	"/home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-ar" rcs  "/home/robert/gitrep/freeboardDue/Release/arduino.ar"   $(AR_OBJ)
 	@echo 'Finished building: $@'
 	@echo ' '
 
 freeboardDue.elf: $(LINK_OBJ) $(AR)
 	@echo 'Starting combiner'
-	"/home/robert/dev/arduino-1.5.2/hardware/tools/g++_arm_none_eabi/bin/arm-none-eabi-g++" -Os -Wl,--gc-sections -mcpu=cortex-m3 "-T/home/robert/dev/arduino-1.5.2/hardware/arduino/sam/variants/arduino_due_x/linker_scripts/gcc/flash.ld" "-Wl,-Map,/home/robert/devSpace/dueWorkspace/freeboardDue/Release/freeboardDue.map" -o "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/freeboardDue.elf" "-L/home/robert/devSpace/dueWorkspace/freeboardDue/Release" -lm -lgcc -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -Wl,--warn-unresolved-symbols -Wl,--start-group "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/arduino/syscalls_sam3.c.o"   $(LINK_OBJ) $(AR)  "/home/robert/dev/arduino-1.5.2/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a" "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/arduino.ar" -Wl,--end-group
+	"/home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-g++" -Os -Wl,--gc-sections -mcpu=cortex-m3 "-T/home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/linker_scripts/gcc/flash.ld" "-Wl,-Map,/home/robert/gitrep/freeboardDue/Release/freeboardDue.map"  -o "/home/robert/gitrep/freeboardDue/Release/freeboardDue.elf" "-L/home/robert/gitrep/freeboardDue/Release" -lm -lgcc -mthumb -Wl,--cref -Wl,--check-sections -Wl,--gc-sections -Wl,--entry=Reset_Handler -Wl,--unresolved-symbols=report-all -Wl,--warn-common -Wl,--warn-section-align -Wl,--warn-unresolved-symbols -Wl,--start-group "/home/robert/gitrep/freeboardDue/Release/arduino/syscalls_sam3.c.o"   $(LINK_OBJ) $(AR)  "/home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a" "/home/robert/gitrep/freeboardDue/Release/arduino.ar" -Wl,--end-group
 	@echo 'Finished building: $@'
 	@echo ' '
 
@@ -99,7 +102,7 @@ freeboardDue.eep: $(ELF)
 
 freeboardDue.bin: $(EEP)
 	@echo 'Create Flash image (ihex format)'
-	"/home/robert/dev/arduino-1.5.2/hardware/tools/g++_arm_none_eabi/bin/arm-none-eabi-objcopy" -O binary "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/freeboardDue.elf" "/home/robert/devSpace/dueWorkspace/freeboardDue/Release/freeboardDue.bin"
+	"/home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/arm-none-eabi-objcopy" -O binary  "/home/robert/gitrep/freeboardDue/Release/freeboardDue.elf" "/home/robert/gitrep/freeboardDue/Release/freeboardDue.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 

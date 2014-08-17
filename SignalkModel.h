@@ -32,21 +32,45 @@
 #include "FreeboardConstants.h"
 
 typedef enum {ALRM_MESSAGE,ALRM_SOUND,ALRM_SMS,ALRM_EMAIL,ALRM_DSC} AlarmMethodType;
+static const char *AlarmMethodString[] = {"message", "sound","sms","email","dsc",};
 typedef enum {ALRM_DISABLED,ALRM_ENABLED,ALRM_FIRING,ALRM_SILENT} AlarmStateType;
+static const char *AlarmStateString[] = {"disabled", "enabled", "firing", "silent",};
 
 typedef enum {AP_ON,AP_OFF,AP_ALARM} AutopilotStateType;
+static const char *AutopilotStateString[] = {"on", "off", "alarm",};
 typedef enum {AP_POWERSAVE,AP_NORMAL,AP_ACCURATE} AutopilotModeType;
+static const char *AutopilotModeString[] = { "powersave", "normal", "accurate",};
 
 typedef enum {NAV_UNDERWAY_ENGINE,NAV_ANCHORED,NAV_NOT_UNDER_COMMAND, NAV_RESTRICTED_MANOUVERABILITY, NAV_CONSTRAINED_BY_DRAFT,
 	NAV_MOORED,NAV_AGROUND,NAV_FISHING,NAV_SAILING,NAV_NOT_DEFINED} NavigationStateType;
-
+static const char *NavigationStateString[] = {
+		"Under way using engine",
+		"At anchor",
+        "Not under command",
+        "Restricted manoeuverability",
+        "Constrained by her draught",
+        "Moored",
+        "Aground",
+        "Engaged in Fishing",
+        "Under way sailing",
+        "Not defined (example)",
+};
 typedef enum {AP_COMPASS,AP_WIND,AP_GPS} AutopilotHeadingSourceType;
+static const char *AutopilotHeadingSourceString[] = { "compass", "wind", "gps",};
 
+typedef struct LevelStruct{
+		int upper;
+		int lower;
+	};
 
 class SignalkModel {
 public:
 
 	SignalkModel();
+	void setSignalkValue(char* attribute, char* value);
+	void setSignalkValue(char* attribute, float value);
+	void setSignalkValue(char* attribute, long value);
+	void setSignalkValue(char* attribute, int value);
 	float getNavigationCourseOverGroundMagnetic();
 	float getNavigationCourseOverGroundTrue();
 	float getNavigationCurrentRouteBearingActual();
@@ -239,47 +263,49 @@ public:
 private:
 
 	struct Navigation {
-		float courseOverGroundMagnetic;
-		float courseOverGroundTrue;
-		struct CurrentRoute {
-			float bearingActual;
-			float bearingDirect;
-			float courseRequired;
-			long eta;
-			String route;
-			long startTime;
-			struct Waypoint {
-				long lastTime;
-				String last;
-				long nextEta;
-				String next;
-				float xte;
-			} waypoint;
-		} currentRoute ;
-		float magneticVariation;
-		struct Destination {
-			long eta;
-			float longitude;
-			float latitude;
-			float altitude;
-		} destination;
-		float drift;
-		//gnss
-		float headingMagnetic;
-		float headingTrue;
-		struct Position {
-			float longitude;
-			float latitude;
-			float altitude;
-		} position ;
-		float pitch;
-		float rateOfTurn;
-		float roll;
-		float set;
-		float speedOverGround;
-		float speedThroughWater;
-		NavigationStateType state;
-	} navigation;
+			float courseOverGroundMagnetic;
+			float courseOverGroundTrue;
+			struct CurrentRoute {
+				float bearingActual;
+				float bearingDirect;
+				float courseRequired;
+				long eta;
+				String route;
+				long startTime;
+				struct Waypoint {
+					long lastTime;
+					String last;
+					long nextEta;
+					String next;
+					float xte;
+				} waypoint;
+			} currentRoute ;
+			float magneticVariation;
+			struct Destination {
+				long eta;
+				float longitude;
+				float latitude;
+				float altitude;
+			} destination;
+			float drift;
+			//gnss
+			float headingMagnetic;
+			float headingTrue;
+			struct Position {
+				float longitude;
+				float latitude;
+				float altitude;
+			} position ;
+			float pitch;
+			float rateOfTurn;
+			float roll;
+			float set;
+			float speedOverGround;
+			float speedThroughWater;
+			NavigationStateType state;
+		} navigation;
+
+
 	struct Steering {
 		float rudderAngle;
 		float rudderAngleTarget;
@@ -322,39 +348,106 @@ private:
 		AlarmMethodType windAlarmMethod;
 		AlarmStateType windAlarmState;
 	} alarms ;
-	struct Environment {
-		float airPressureChangeRateAlarm;
-		float airPressure;
-		float airTemp;
-		float currentDirection;
-		float currentSpeed;
-		struct Depth {
-			float belowKeel;
-			float belowTransducer;
-			float belowSurface;
-			float transducerToKeel;
-			float surfaceToTransducer;
-		} depth;
-		float humidity;
-		float salinity;
-		struct Tide {
+
+	struct WindStruct {
+					float directionApparent;
+					float directionChangeAlarm;
+					float directionTrue;
+					float speedAlarm;
+					float speedTrue;
+					float speedApparent;
+				} wind;
+		struct TideStruct {
 			float heightHigh;
 			float heightNow;
 			float heightLow;
 			long timeLow;
 			long timeHigh;
 		} tide ;
+
+		struct DepthStruct {
+			float belowKeel;
+			float belowTransducer;
+			float belowSurface;
+			float transducerToKeel;
+			float surfaceToTransducer;
+		} depth;
+
+	struct EnvironmentStruct {
+		float airPressureChangeRateAlarm;
+		float airPressure;
+		float airTemp;
+		float currentDirection;
+		float currentSpeed;
+		float humidity;
+		float salinity;
 		float waterTemp;
-		struct Wind {
-			float directionApparent;
-			float directionChangeAlarm;
-			float directionTrue;
-			float speedAlarm;
-			float speedTrue;
-			float speedApparent;
-		} wind;
+		DepthStruct depth;
+		TideStruct tide;
+		WindStruct wind;
 	} environment ;
+
+
+	struct ConfigStruct {
+		struct GpsStruct {
+			int model;
+		}gps;
+		struct SerialStruct{
+			long baud0;
+			long baud1;
+			long baud2;
+			long baud3;
+		}serial;
+		struct AlarmStruct{
+			LevelStruct level1;
+			LevelStruct level2;
+			LevelStruct level3;
+			long snooze;
+			long last;
+		}alarm;
+		struct AnchorStruct{
+			float radiusDeg;
+			float distance;
+			float maxDistance;
+			float north;
+			float south;
+			float east;
+			float west;
+		}anchor;
+		bool seatalk;
+		long windLastUpdate;
+		float windAverage;
+		float windFactor;
+		float windMax;
+
+	}_arduino;
 };
+
+
+
+			/*
+
+			"_arduino.gps.model",
+			"_arduino.serial.baud0",
+			"_arduino.serial.baud1",
+			"_arduino.serial.baud2",
+			"_arduino.serial.baud3",
+			"_arduino.alarm.level1.upper",
+			"_arduino.alarm.level1.lower",
+			"_arduino.alarm.level2.upper",
+			"_arduino.alarm.level2.lower",
+			"_arduino.alarm.level3.upper",
+			"_arduino.alarm.level3.lower",
+			"_arduino.seatalk",
+			"_arduino.windAverage ",
+			"_arduino.windFactor ",
+			"_arduino.windMax",
+			"_arduino.alarm.snooze",
+			"_arduino.anchorRadiusDeg ",
+			"_arduino.anchorDistance",
+			"_arduino.anchorMaxDistance"
+					};*/
+
 /*
 _arduino.gps.model
 _arduino.serial.baud0

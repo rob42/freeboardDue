@@ -21,7 +21,7 @@
 
 namespace stream_json_reader {
 
-	StreamJsonReader::StreamJsonReader(HardwareSerial* serial,
+	StreamJsonReader::StreamJsonReader(HardwareSerial* serial, SignalkModel* model,
 									  const char* queries[],
 									  unsigned int num_queries,
 									  unsigned int max_name_size,
@@ -36,6 +36,7 @@ namespace stream_json_reader {
 																	 ignore_node(false){
 
 		this->serial=serial;
+		this->model=model;
 		alloc_elements();
 	}
 
@@ -88,9 +89,12 @@ namespace stream_json_reader {
 		//Check trace against queries and assign result
 		for(int i=0; i < num_queries; i++){
 			if(query_match(queries[i], trace)){
+				//TODO:leave these for easy debug for now
 				results[i] = (char*) realloc(results[i], (strlen(result)+1)*sizeof(char));
 				str_copy(results[i], result);
 				found_results++;
+				//put it straight into the Signalk model
+				model->setSignalkValue(trace, result);
 				return;
 			}
 		}
@@ -231,7 +235,7 @@ namespace stream_json_reader {
 		serial->print(", char:");
 		serial->println(c);
 		switch(status){
-			case NODE_VALUE: //At the beggining is a node value of root. Wait for { or [ or number or "
+			case NODE_VALUE: //At the beginning is a node value of root. Wait for { or [ or number or "
 				switch(c){
 					case '{': status = READ_ELEMENT; element_type = TYPE_DICT; break;
 					case '[': status = NODE_VALUE; add_to_trace((char*) "0"); break;

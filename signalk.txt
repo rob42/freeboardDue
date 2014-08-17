@@ -6,7 +6,6 @@ navigation.currentRoute.courseRequired
 navigation.currentRoute.eta
 navigation.currentRoute.route
 navigation.currentRoute.startTime
-navigation.currentRoute.waypoint
 navigation.currentRoute.waypoint.lastTime
 navigation.currentRoute.waypoint.last
 navigation.currentRoute.waypoint.nextEta
@@ -30,7 +29,7 @@ navigation.roll
 navigation.set
 navigation.speedOverGround
 navigation.speedThroughWater
-navigation.state.value
+navigation.state
 steering.rudderAngle
 steering.rudderAngleTarget
 steering.autopilot.state

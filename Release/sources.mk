@@ -45,6 +45,9 @@ lib/DueTimer \
 . \
 arduino/variant \
 arduino/core \
+arduino/core/avr \
 arduino/core/USB \
 Libraries/SPI \
+.metadata/.plugins/org.eclipse.cdt.managedbuilder.core \
+.metadata/.plugins/org.eclipse.cdt.make.core \
 

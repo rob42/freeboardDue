@@ -1,0 +1,226 @@
+switch (key) {
+			break;
+	case 177632231 :
+		navigation.courseOverGroundMagnetic = value;
+			break;
+	case 1495033343 :
+		navigation.courseOverGroundTrue = value;
+			break;
+	case 3733725560 :
+		navigation.magneticVariation = value;
+			break;
+	case 250998974 :
+		navigation.destination.longitude = value;
+			break;
+	case 2077664687 :
+		navigation.destination.latitude = value;
+			break;
+	case 390698939 :
+		navigation.headingMagnetic = value;
+			break;
+	case 1129234387 :
+		navigation.headingTrue = value;
+			break;
+	case 4257320113 :
+		navigation.position.longitude = value;
+			break;
+	case 2329218882 :
+		navigation.position.latitude = value;
+			break;
+	case 2999027170 :
+		navigation.position.altitude = value;
+			break;
+	case 2242652731 :
+		navigation.pitch = value;
+			break;
+	case 1051834157 :
+		navigation.rateOfTurn = value;
+			break;
+	case 588639420 :
+		navigation.roll = value;
+			break;
+	case 3375602335 :
+		navigation.speedOverGround = value;
+			break;
+	case 2011270296 :
+		navigation.speedThroughWater = value;
+			break;
+	case 2246585668 :
+		navigation.state = value;
+			break;
+	case 1414591300 :
+		steering.autopilot.state = value;
+			break;
+	case 3296408520 :
+		steering.autopilot.mode = value;
+			break;
+	case 1763947237 :
+		steering.autopilot.targetHeadingNorth = value;
+			break;
+	case 542499234 :
+		steering.autopilot.targetHeadingMagnetic = value;
+			break;
+	case 2225422449 :
+		steering.autopilot.alarmHeadingXte = value;
+			break;
+	case 1161926884 :
+		steering.autopilot.headingSource = value;
+			break;
+	case 3691686605 :
+		steering.autopilot.deadZone = value;
+			break;
+	case 3570446012 :
+		steering.autopilot.backlash = value;
+			break;
+	case 3296177826 :
+		steering.autopilot.gain = value;
+			break;
+	case 3211458388 :
+		steering.autopilot.maxDriveAmps = value;
+			break;
+	case 3212056367 :
+		steering.autopilot.maxDriveRate = value;
+			break;
+	case 2783435100 :
+		alarms.anchorAlarmMethod = value;
+			break;
+	case 1003034460 :
+		alarms.anchorAlarmState = value;
+			break;
+	case 1469117826 :
+		alarms.autopilotAlarmMethod = value;
+			break;
+	case 3305916098 :
+		alarms.autopilotAlarmState = value;
+			break;
+	case 3992095383 :
+		alarms.engineAlarmMethod = value;
+			break;
+	case 2991918391 :
+		alarms.engineAlarmState = value;
+			break;
+	case 133189895 :
+		alarms.fireAlarmMethod = value;
+			break;
+	case 662422951 :
+		alarms.fireAlarmState = value;
+			break;
+	case 3929525820 :
+		alarms.gasAlarmMethod = value;
+			break;
+	case 3380473916 :
+		alarms.gasAlarmState = value;
+			break;
+	case 2429115595 :
+		alarms.gpsAlarmMethod = value;
+			break;
+	case 2814404843 :
+		alarms.gpsAlarmState = value;
+			break;
+	case 67311014 :
+		alarms.maydayAlarmMethod = value;
+			break;
+	case 1441329766 :
+		alarms.maydayAlarmState = value;
+			break;
+	case 1695331519 :
+		alarms.panpanAlarmMethod = value;
+			break;
+	case 3963523679 :
+		alarms.panpanAlarmState = value;
+			break;
+	case 3887776462 :
+		alarms.powerAlarmMethod = value;
+			break;
+	case 1296800398 :
+		alarms.powerAlarmState = value;
+			break;
+	case 357415143 :
+		alarms.silentInterval = value;
+			break;
+	case 1899960179 :
+		alarms.windAlarmMethod = value;
+			break;
+	case 3449122451 :
+		alarms.windAlarmState = value;
+			break;
+	case 3267532580 :
+		environment.wind.directionApparent = value;
+			break;
+	case 4209206332 :
+		environment.wind.directionChangeAlarm = value;
+			break;
+	case 1752542857 :
+		environment.wind.directionTrue = value;
+			break;
+	case 2559123686 :
+		environment.wind.speedAlarm = value;
+			break;
+	case 1900346521 :
+		environment.wind.speedTrue = value;
+			break;
+	case 531262772 :
+		environment.wind.speedApparent = value;
+			break;
+	case 260479757 :
+		_arduino.gps.model = value;
+			break;
+	case 1806063390 :
+		_arduino.serial.baud0 = value;
+			break;
+	case 1806063391 :
+		_arduino.serial.baud1 = value;
+			break;
+	case 1806063392 :
+		_arduino.serial.baud2 = value;
+			break;
+	case 1806063393 :
+		_arduino.serial.baud3 = value;
+			break;
+	case 2104985698 :
+		_arduino.alarm.level1.upper = value;
+			break;
+	case 2094284095 :
+		_arduino.alarm.level1.lower = value;
+			break;
+	case 3396453667 :
+		_arduino.alarm.level2.upper = value;
+			break;
+	case 3385752064 :
+		_arduino.alarm.level2.lower = value;
+			break;
+	case 392954340 :
+		_arduino.alarm.level3.upper = value;
+			break;
+	case 382252737 :
+		_arduino.alarm.level3.lower = value;
+			break;
+	case 3540059849 :
+		_arduino.seatalk = value;
+			break;
+	case 2851759217 :
+		_arduino.windAverage = value;
+			break;
+	case 1428475061 :
+		_arduino.windFactor = value;
+			break;
+	case 287358556 :
+		_arduino.windMax = value;
+			break;
+	case 2215576829 :
+		_arduino.alarm.snooze = value;
+			break;
+	case 691832951 :
+		_arduino.anchorRadiusDeg = value;
+			break;
+	case 2964680170 :
+		_arduino.anchorDistance = value;
+			break;
+	case 730710032 :
+		_arduino.anchorMaxDistance = value;
+		break;
+	default:
+	break;
+
+}
+

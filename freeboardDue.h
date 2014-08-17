@@ -57,6 +57,7 @@ extern "C" {
 #endif
 void loop();
 void setup();
+unsigned long hash( const char *str);
 #ifdef __cplusplus
 } // extern "C"
 #endif
