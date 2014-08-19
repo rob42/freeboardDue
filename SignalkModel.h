@@ -55,6 +55,7 @@ static const char *NavigationStateString[] = {
         "Under way sailing",
         "Not defined (example)",
 };
+
 typedef enum {AP_COMPASS,AP_WIND,AP_GPS} AutopilotHeadingSourceType;
 static const char *AutopilotHeadingSourceString[] = { "compass", "wind", "gps",};
 
@@ -67,6 +68,7 @@ class SignalkModel {
 public:
 
 	SignalkModel();
+	void setSignalkValue(char* attribute, bool value);
 	void setSignalkValue(char* attribute, char* value);
 	void setSignalkValue(char* attribute, float value);
 	void setSignalkValue(char* attribute, long value);
