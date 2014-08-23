@@ -210,17 +210,135 @@ switch (key) {
 	case 2215576829 :
 		_arduino.alarm.snooze = value;
 			break;
-	case 691832951 :
-		_arduino.anchorRadiusDeg = value;
+	case 439059557 :
+		_arduino.anchor.radiusDeg = value;
 			break;
-	case 2964680170 :
-		_arduino.anchorDistance = value;
+	case 614310936 :
+		_arduino.anchor.distance = value;
 			break;
-	case 730710032 :
-		_arduino.anchorMaxDistance = value;
+	case 338390910 :
+		_arduino.anchor.maxDistance = value;
 		break;
-	default:
+	case 3688841722 :	
+		navigation.anchor.maxRadius = value;
+		break;
+	case 2152304183 :
+		navigation.anchor.currentRadius = value;
+		break;
+	case 3067744843 :
+		navigation.anchor.position.altitude = value;
+		break;
+	case 2397936555 :
+		navigation.anchor.position.latitude = value;
+		break;
+	case 2230036026 :
+		navigation.anchor.position.longitude = value;
+		break;
+
+		case 544409929 :
+		_arduino.anchor.latitude = value;
+				break;
+		case 1193199512 :
+		_arduino.anchor.longitude = value;
+				break;
+		case 230959824 :
+		_arduino.anchor.anchorRadius = value;
+				break;
+		case 3020492120 :
+		_arduino.anchor.north = value;
+				break;
+		case 3026424992 :
+		_arduino.anchor.south = value;
+				break;
+		case 3214803994 :
+		_arduino.anchor.east = value;
+				break;
+		case 3215455216 :
+		_arduino.anchor.west = value;
+		break;
+	default:navigation.courseOverGroundMagnetic=177632231
+navigation.courseOverGroundTrue=1495033343
+navigation.magneticVariation=3733725560
+navigation.destination.longitude=250998974
+navigation.destination.latitude=2077664687
+navigation.headingMagnetic=390698939
+navigation.headingTrue=1129234387
+navigation.position.longitude=4257320113
+navigation.position.latitude=2329218882
+navigation.position.altitude=2999027170
+navigation.pitch=2242652731
+navigation.rateOfTurn=1051834157
+navigation.roll=588639420
+navigation.speedOverGround=3375602335
+navigation.speedThroughWater=2011270296
+navigation.state=2246585668
+navigation.anchor.maxRadius=3688841722
+navigation.anchor.currentRadius=2152304183
+navigation.anchor.position.altitude=3067744843
+navigation.anchor.position.latitude=2397936555
+navigation.anchor.position.longitude=2230036026
+steering.autopilot.state=1414591300
+steering.autopilot.mode=3296408520
+steering.autopilot.targetHeadingNorth=1763947237
+steering.autopilot.targetHeadingMagnetic=542499234
+steering.autopilot.alarmHeadingXte=2225422449
+steering.autopilot.headingSource=1161926884
+steering.autopilot.deadZone=3691686605
+steering.autopilot.backlash=3570446012
+steering.autopilot.gain=3296177826
+steering.autopilot.maxDriveAmps=3211458388
+steering.autopilot.maxDriveRate=3212056367
+alarms.anchorAlarmMethod=2783435100
+alarms.anchorAlarmState=1003034460
+alarms.autopilotAlarmMethod=1469117826
+alarms.autopilotAlarmState=3305916098
+alarms.engineAlarmMethod=3992095383
+alarms.engineAlarmState=2991918391
+alarms.fireAlarmMethod=133189895
+alarms.fireAlarmState=662422951
+alarms.gasAlarmMethod=3929525820
+alarms.gasAlarmState=3380473916
+alarms.gpsAlarmMethod=2429115595
+alarms.gpsAlarmState=2814404843
+alarms.maydayAlarmMethod=67311014
+alarms.maydayAlarmState=1441329766
+alarms.panpanAlarmMethod=1695331519
+alarms.panpanAlarmState=3963523679
+alarms.powerAlarmMethod=3887776462
+alarms.powerAlarmState=1296800398
+alarms.silentInterval=357415143
+alarms.windAlarmMethod=1899960179
+alarms.windAlarmState=3449122451
+environment.wind.directionApparent=3267532580
+environment.wind.directionChangeAlarm=4209206332
+environment.wind.directionTrue=1752542857
+environment.wind.speedAlarm=2559123686
+environment.wind.speedTrue=1900346521
+environment.wind.speedApparent=531262772
+_arduino.gps.model=260479757
+_arduino.serial.baud0=1806063390
+_arduino.serial.baud1=1806063391
+_arduino.serial.baud2=1806063392
+_arduino.serial.baud3=1806063393
+_arduino.alarm.level1.upper=2104985698
+_arduino.alarm.level1.lower=2094284095
+_arduino.alarm.level2.upper=3396453667
+_arduino.alarm.level2.lower=3385752064
+_arduino.alarm.level3.upper=392954340
+_arduino.alarm.level3.lower=382252737
+_arduino.seatalk=3540059849
+_arduino.windAverage=2851759217
+_arduino.windFactor=1428475061
+_arduino.windMax=287358556
+_arduino.alarm.snooze=2215576829
+_arduino.anchor.radiusDeg=439059557
+_arduino.anchor.north=3020492120
+_arduino.anchor.south=3026424992
+_arduino.anchor.east=3214803994
+_arduino.anchor.west=3215455216
+	
 	break;
+
 
 }
 

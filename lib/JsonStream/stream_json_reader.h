@@ -22,6 +22,7 @@
 #define TYPE_DICT 0
 #define TYPE_STRING 1
 #define TYPE_NUMERIC 2
+#define TYPE_BOOLEAN 3
 
 //#include "lasote/stringutils/cstringutils.h"
 #include <HardwareSerial.h>
@@ -37,9 +38,9 @@ public:
 	// initial_value_size: Initial allocated bytes to values in json (will be realocated if needed)
 	// initial_trace_size: Initial allocated bytes to path in json (will be realocated if needed)
 	StreamJsonReader(HardwareSerial* serial, SignalkModel* model, const char* queries[],
-			unsigned int num_queries, unsigned int initial_name_size = 12,
-			unsigned int initial_value_size = 15,
-			unsigned int initial_trace_size = 25);
+			unsigned int num_queries, unsigned int initial_name_size = 30,
+			unsigned int initial_value_size = 30,
+			unsigned int initial_trace_size = 60);
 	virtual ~StreamJsonReader();
 	int process_char(char c);
 	bool finished();

@@ -58,11 +58,15 @@ static const char *NavigationStateString[] = {
 
 typedef enum {AP_COMPASS,AP_WIND,AP_GPS} AutopilotHeadingSourceType;
 static const char *AutopilotHeadingSourceString[] = { "compass", "wind", "gps",};
-
-typedef struct LevelStruct{
+typedef struct {
+	float longitude;
+	float latitude;
+	float altitude;
+} Position ;
+typedef struct {
 		int upper;
 		int lower;
-	};
+	}LevelStruct;
 
 class SignalkModel {
 public:
@@ -71,8 +75,8 @@ public:
 	void setSignalkValue(char* attribute, bool value);
 	void setSignalkValue(char* attribute, char* value);
 	void setSignalkValue(char* attribute, float value);
-	void setSignalkValue(char* attribute, long value);
-	void setSignalkValue(char* attribute, int value);
+	//void setSignalkValue(char* attribute, long value);
+	//void setSignalkValue(char* attribute, int value);
 	float getNavigationCourseOverGroundMagnetic();
 	float getNavigationCourseOverGroundTrue();
 	float getNavigationCurrentRouteBearingActual();
@@ -293,11 +297,7 @@ private:
 			//gnss
 			float headingMagnetic;
 			float headingTrue;
-			struct Position {
-				float longitude;
-				float latitude;
-				float altitude;
-			} position ;
+			Position  position ;
 			float pitch;
 			float rateOfTurn;
 			float roll;
@@ -305,6 +305,11 @@ private:
 			float speedOverGround;
 			float speedThroughWater;
 			NavigationStateType state;
+			struct Anchor {
+				Position  position ;
+				float maxRadius;
+				float currentRadius;
+			}anchor;
 		} navigation;
 
 
@@ -409,8 +414,6 @@ private:
 		}alarm;
 		struct AnchorStruct{
 			float radiusDeg;
-			float distance;
-			float maxDistance;
 			float north;
 			float south;
 			float east;

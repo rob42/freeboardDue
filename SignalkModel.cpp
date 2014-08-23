@@ -60,6 +60,11 @@ SignalkModel::SignalkModel() {
 	navigation.speedOverGround = 0.0;
 	navigation.speedThroughWater = 0.0;
 	navigation.state = NAV_NOT_DEFINED;
+	navigation.anchor.maxRadius=40.0;
+	navigation.anchor.currentRadius=0.0;
+	navigation.anchor.position.altitude=0.0;
+	navigation.anchor.position.latitude=0.0;
+	navigation.anchor.position.longitude=0.0;
 	steering.rudderAngle = 0.0;
 	steering.rudderAngleTarget = 0.0;
 	steering.autopilot.state = AP_OFF;
@@ -277,70 +282,55 @@ void SignalkModel::setSignalkValue(char* attribute, char* value) {
 
 	}
 }
-void SignalkModel::setSignalkValue(char* attribute, long value) {
-	long key = hash(attribute);
-	switch (key) {
-	case 1806063390UL:
-		_arduino.serial.baud0 = value;
-		break;
-	case 1806063391UL:
-		_arduino.serial.baud1 = value;
-		break;
-	case 1806063392UL:
-		_arduino.serial.baud2 = value;
-		break;
-	case 1806063393UL:
-		_arduino.serial.baud3 = value;
-		break;
-	case 2215576829UL:
-		_arduino.alarm.snooze = value;
-		break;
-	default:
-		break;
-
-	}
-}
-void SignalkModel::setSignalkValue(char* attribute, int value) {
-	long key = hash(attribute);
-	switch (key) {
-
-	case 260479757UL:
-		_arduino.gps.model = value;
-		break;
-	case 3296177826UL:
-		steering.autopilot.gain = value;
-		break;
-	case 357415143UL:
-		alarms.silentInterval = value;
-		break;
-	case 2104985698UL:
-		_arduino.alarm.level1.upper = value;
-		break;
-	case 2094284095UL:
-		_arduino.alarm.level1.lower = value;
-		break;
-	case 3396453667UL:
-		_arduino.alarm.level2.upper = value;
-		break;
-	case 3385752064UL:
-		_arduino.alarm.level2.lower = value;
-		break;
-	case 392954340UL:
-		_arduino.alarm.level3.upper = value;
-		break;
-	case 382252737UL:
-		_arduino.alarm.level3.lower = value;
-		break;
-	default:
-		break;
-
-	}
-}
-
 void SignalkModel::setSignalkValue(char* attribute, float value) {
 	long key = hash(attribute);
+	Serial.print(" setSignalkValue:");
+	Serial.println(key);
 	switch (key) {
-	break;
+	case 1806063390UL:
+		_arduino.serial.baud0 = (long)value;
+		break;
+	case 1806063391UL:
+		_arduino.serial.baud1 = (long)value;
+		break;
+	case 1806063392UL:
+		_arduino.serial.baud2 = (long)value;
+		break;
+	case 1806063393UL:
+		_arduino.serial.baud3 = (long)value;
+		break;
+	case 2215576829UL:
+		_arduino.alarm.snooze = (long)value;
+		break;
+
+	case 260479757UL:
+		_arduino.gps.model = (int)value;
+		break;
+	case 3296177826UL:
+		steering.autopilot.gain = (int)value;
+		break;
+	case 357415143UL:
+		alarms.silentInterval = (int)value;
+		break;
+	case 2104985698UL:
+		_arduino.alarm.level1.upper = (int)value;
+		break;
+	case 2094284095UL:
+		_arduino.alarm.level1.lower = (int)value;
+		break;
+	case 3396453667UL:
+		_arduino.alarm.level2.upper = (int)value;
+		break;
+	case 3385752064UL:
+		_arduino.alarm.level2.lower = (int)value;
+		break;
+	case 392954340UL:
+		_arduino.alarm.level3.upper = (int)value;
+		break;
+	case 382252737UL:
+		_arduino.alarm.level3.lower = (int)value;
+		break;
+
 case 177632231UL:
 	navigation.courseOverGroundMagnetic = value;
 	break;
@@ -386,7 +376,21 @@ case 3375602335UL:
 case 2011270296UL:
 	navigation.speedThroughWater = value;
 	break;
-
+case 3688841722UL :
+	navigation.anchor.maxRadius = value;
+	break;
+case 2152304183UL :
+	navigation.anchor.currentRadius = value;
+	break;
+case 3067744843UL :
+	navigation.anchor.position.altitude = value;
+	break;
+case 2397936555UL :
+	navigation.anchor.position.latitude = value;
+	break;
+case 2230036026UL :
+	navigation.anchor.position.longitude = value;
+	break;
 case 1763947237UL:
 	steering.autopilot.targetHeadingNorth = value;
 	break;
@@ -429,7 +433,6 @@ case 1900346521UL:
 case 531262772UL:
 	environment.wind.speedApparent = value;
 	break;
-
 case 2851759217UL:
 	_arduino.windAverage = value;
 	break;
@@ -439,16 +442,23 @@ case 1428475061UL:
 case 287358556UL:
 	_arduino.windMax = value;
 	break;
-
-case 691832951UL:
+case 439059557UL:
 	_arduino.anchor.radiusDeg = value;
 	break;
-case 2964680170UL:
-	_arduino.anchor.distance = value;
+
+case 3020492120UL:
+	_arduino.anchor.north = value;
 	break;
-case 730710032UL:
-	_arduino.anchor.maxDistance = value;
+case 3026424992UL:
+	_arduino.anchor.south = value;
 	break;
+case 3214803994UL:
+	_arduino.anchor.east = value;
+	break;
+case 3215455216UL:
+	_arduino.anchor.west = value;
+	break;
+
 default:
 	break;
 

@@ -111,12 +111,12 @@ _arduino.windMax
 _arduino.alarm.last //toggle to make alarm beep - beep beep
 _arduino.alarm.snooze
 	
-_arduino.anchorRadiusDeg //anchor alarm radius in decimal degrees, eg 1deg = 60NM.
-_arduino.anchorDistance
-_arduino.anchorMaxDistance
+_arduino.anchor.radiusDeg //anchor alarm radius in decimal degrees, eg 1deg = 60NM.
+_arduino.anchor.distance
+_arduino.anchor.maxDistance
 //a box around the anchor, shrinks with every GPS reading to home in on the anchor itself
-_arduino.anchorN
-_arduino.anchorS
-_arduino.anchorE
-_arduino.anchorW
+_arduino.anchor.north
+_arduino.anchor.south
+_arduino.anchor.east
+_arduino.anchor.west
 

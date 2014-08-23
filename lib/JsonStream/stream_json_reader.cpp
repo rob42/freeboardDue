@@ -4,9 +4,10 @@
  *  Created on: 07/03/2014
  *      Author: laso
  */
-/*  Copied from http://blog.biicode.com/arduino-parse-json/
- *  No licence mentioned on site - attempting to contact owner
+/*  Originally copied from http://blog.biicode.com/arduino-parse-json/
+ *  No licence mentioned on site - attempted to contact owner
  *  Mods to avoid cstringlibs
+ *  Mods to suit freeboard data model
  *
  */
 
@@ -85,19 +86,27 @@ namespace stream_json_reader {
 
 	// MATCH PARTIAL
 
-	void StreamJsonReader::assign_result(char* result){
-		//Check trace against queries and assign result
-		for(int i=0; i < num_queries; i++){
-			if(query_match(queries[i], trace)){
-				//TODO:leave these for easy debug for now
-				results[i] = (char*) realloc(results[i], (strlen(result)+1)*sizeof(char));
-				str_copy(results[i], result);
-				found_results++;
+	void StreamJsonReader::assign_result(char* result ){
+
 				//put it straight into the Signalk model
-				model->setSignalkValue(trace, result);
+				switch(element_type){
+					case TYPE_STRING:
+						Serial.println("Send to signalk String");
+						model->setSignalkValue(trace, result);
+						break;
+					case TYPE_NUMERIC:
+						Serial.println("Send to signalk Float");
+						model->setSignalkValue(trace, atoff(result));
+						break;
+					case TYPE_BOOLEAN:
+						Serial.println("Send to signalk Bool");
+						model->setSignalkValue(trace, result && strcmp(result,"true")==0);
+						break;
+					default:
+						break;
+				}
 				return;
-			}
-		}
+
 	}
 
 	bool StreamJsonReader::finished(){
@@ -105,10 +114,7 @@ namespace stream_json_reader {
 	}
 
 	bool StreamJsonReader::query_match(char* query, char* trace){
-		serial->print("*query_match! ");
-		serial->print(query);
-		serial->print("=");
-		serial->print(trace);
+
 		if(strlen(trace) != strlen(query)){
 				serial->println(", len : false");
 				return false;
@@ -119,6 +125,10 @@ namespace stream_json_reader {
 				return false;
 			}
 		}
+		serial->print("*query_match! ");
+				serial->print(query);
+				serial->print("=");
+				serial->print(trace);
 		serial->println(", true");
 		return true;
 	}
@@ -126,12 +136,13 @@ namespace stream_json_reader {
 
 	bool StreamJsonReader::partial_query_match(char* trace){
 		//query starts with trace, we need to keep looking on this node
-		for(int i=0; i < num_queries; i++){
-			if(starts_with(queries[i], trace)){
-				return true;
-			}
-		}
-		return false;
+		//for(int i=0; i < num_queries; i++){
+		//	if(starts_with(queries[i], trace)){
+		//		return true;
+		//	}
+		//}
+		//return false;
+		return true;
 	}
 
 
@@ -228,12 +239,12 @@ namespace stream_json_reader {
 	}
 
 	int StreamJsonReader::process_char(char c){
-		serial->print("Process char, status:");
+		/*serial->print("Process char, status:");
 		serial->print(status);
 		serial->print(", element type:");
 		serial->print(element_type);
 		serial->print(", char:");
-		serial->println(c);
+		serial->println(c);*/
 		switch(status){
 			case NODE_VALUE: //At the beginning is a node value of root. Wait for { or [ or number or "
 				switch(c){
@@ -241,6 +252,16 @@ namespace stream_json_reader {
 					case '[': status = NODE_VALUE; add_to_trace((char*) "0"); break;
 					case '"': status = READ_ELEMENT; element_type = TYPE_STRING; element_value[0] = '\0'; break;
 					case ']': remove_last_trace_element(); status = WAIT_FOR_ANOTHER_ELEMENT_OR_CLOSE; break; //Empty array
+					case 't':
+						status = READ_ELEMENT;
+						element_type = TYPE_BOOLEAN;
+						append_to_value(c);
+						break;
+					case 'f':
+						status = READ_ELEMENT;
+						element_type = TYPE_BOOLEAN;
+						append_to_value(c);
+						break;
 					default:
 						if((c >= '0' && c <= '9') || c == '-'){
 							 status = READ_ELEMENT;
@@ -300,6 +321,21 @@ namespace stream_json_reader {
 							return process_char(c); // Advance one status
 						}
 						break;
+					case TYPE_BOOLEAN:
+							// Inside a boolean, concat until } or ,
+							if(c != '}' && c != ',' && c != ']') append_to_value(c);
+							else{
+								// FIN VALOR DE BOOLEAN!!! DEVOLVERLO!!
+								serial->print("*PUT BOOLEAN! ");
+								serial->print(element_value);
+									serial->print(", trace=");
+										serial->println(trace);
+								assign_result(element_value);
+								element_value[0] = '\0';
+								status = WAIT_FOR_ANOTHER_ELEMENT_OR_CLOSE;
+								return process_char(c); // Advance one status
+							}
+							break;
 				}//end switch
 				break;
 			case WAIT_FOR_ANOTHER_ELEMENT_OR_CLOSE:
@@ -434,11 +470,7 @@ namespace stream_json_reader {
 	       while(string[i] != '\0'){
 	           i++;
 	       }
-	       //serial->print("String = ");
-	       //serial->print(string);
-	       //serial->print(",len=");
-	       //serial->println(i);
-	       //return strlen(string);
+
 	        return i;
 	    }
 

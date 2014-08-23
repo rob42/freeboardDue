@@ -78,84 +78,10 @@ boolean inputSerial3Complete = false; // whether the string is complete
 boolean inputSerial4Complete = false; // whether the string is complete
 
 //json support
-//{"navigation": {"position": {"longitude": "173.2" ,"latitude": "-41.5"}}}
 //{"navigation":{ "position":{"longitude":173.5, "latitude":-43.5}}}
-static const char* queries[] = {
-		"navigation.courseOverGroundMagnetic",
-		"navigation.courseOverGroundTrue",
-		"navigation.magneticVariation",
-		"navigation.destination.longitude",
-		"navigation.destination.latitude",
-		"navigation.headingMagnetic",
-		"navigation.headingTrue",
-		"navigation.position.longitude",
-		"navigation.position.latitude",
-		"navigation.position.altitude",
-		"navigation.pitch",
-		"navigation.rateOfTurn",
-		"navigation.roll",
-		"navigation.speedOverGround",
-		"navigation.speedThroughWater",
-		"navigation.state",
-		"steering.autopilot.state",
-		"steering.autopilot.mode",
-		"steering.autopilot.targetHeadingNorth",
-		"steering.autopilot.targetHeadingMagnetic",
-		"steering.autopilot.alarmHeadingXte",
-		"steering.autopilot.headingSource",
-		"steering.autopilot.deadZone",
-		"steering.autopilot.backlash",
-		"steering.autopilot.gain",
-		"steering.autopilot.maxDriveAmps",
-		"steering.autopilot.maxDriveRate",
-		"alarms.anchorAlarmMethod",
-		"alarms.anchorAlarmState",
-		"alarms.autopilotAlarmMethod",
-		"alarms.autopilotAlarmState",
-		"alarms.engineAlarmMethod",
-		"alarms.engineAlarmState",
-		"alarms.fireAlarmMethod",
-		"alarms.fireAlarmState",
-		"alarms.gasAlarmMethod",
-		"alarms.gasAlarmState",
-		"alarms.gpsAlarmMethod",
-		"alarms.gpsAlarmState",
-		"alarms.maydayAlarmMethod",
-		"alarms.maydayAlarmState",
-		"alarms.panpanAlarmMethod",
-		"alarms.panpanAlarmState",
-		"alarms.powerAlarmMethod",
-		"alarms.powerAlarmState",
-		"alarms.silentInterval",
-		"alarms.windAlarmMethod",
-		"alarms.windAlarmState",
-		"environment.wind.directionApparent",
-		"environment.wind.directionChangeAlarm",
-		"environment.wind.directionTrue",
-		"environment.wind.speedAlarm",
-		"environment.wind.speedTrue",
-		"environment.wind.speedApparent",
-		"_arduino.gps.model",
-		"_arduino.serial.baud0",
-		"_arduino.serial.baud1",
-		"_arduino.serial.baud2",
-		"_arduino.serial.baud3",
-		"_arduino.alarm.level1.upper",
-		"_arduino.alarm.level1.lower",
-		"_arduino.alarm.level2.upper",
-		"_arduino.alarm.level2.lower",
-		"_arduino.alarm.level3.upper",
-		"_arduino.alarm.level3.lower",
-		"_arduino.seatalk",
-		"_arduino.windAverage",
-		"_arduino.windFactor",
-		"_arduino.windMax",
-		"_arduino.alarm.snooze",
-		"_arduino.anchorRadiusDeg",
-		"_arduino.anchorDistance",
-		"_arduino.anchorMaxDistance"
-				};
-StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 73);
+static const char* queries[] = {};
+
+StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
 
 /*
  * Timer interrupt driven method to do time sensitive calculations
@@ -254,11 +180,11 @@ void setup()
 		if (DEBUG) Serial.println("Setup complete..");
 
 		//execute hashing
-		for(int x=0; x<73; x++){
+		/*for(int x=0; x<80; x++){
 			Serial.print(queries[x]);
 			Serial.print("=");
 			Serial.println(hash(queries[x]),DEC);
-		}
+		}*/
 }
 
 
@@ -278,24 +204,6 @@ void serialEvent() {
 		//try out the json reader here
 		jsonreader.process_char(inChar);
 
-		// add it to the inputString:
-		inputSerialArray[inputSerialPos]=inChar;
-					inputSerialPos++;
-
-		if (inChar == '\n' || inChar == '\r' || inputSerialPos>198) {
-			//null to mark this array end
-			inputSerialArray[inputSerialPos]='\0';
-
-			Serial.println(inputSerialArray);
-			inputSerialPos=0;
-			memset(inputSerialArray, 0, sizeof(inputSerialArray));
-			//and also dump out the json
-			Serial.print("jsonreader.results[0] = ");
-			Serial.println(jsonreader.results[0]);
-			Serial.print("jsonreader.results[1] = ");
-			Serial.println(jsonreader.results[1]);
-		}
-		//Serial.println(inputSerialArray);
 
 	}
 
