@@ -30,8 +30,8 @@
 
 #include <PString.h>
 
-#include "FreeboardConstants.h"
-#include "FreeBoardModel.h"
+//#include "FreeboardConstants.h"
+#include <SignalkModel.h>
 #include <AverageList.h>
 
 extern void saveWindAlarmState(bool windAlarmOn);
@@ -41,7 +41,7 @@ extern bool readWindAlarmState();
 class Wind {
 
 public:
-	Wind( FreeBoardModel* model);
+	Wind( SignalkModel* model);
 	void calcWindSpeedAndDir();
 	void calcWindData();
 	void readWindDataSpeed();
@@ -53,9 +53,10 @@ public:
 	float itan(long x);
 	float fsin(float d);
 	int getRotationalAverage();
+	void checkWindAlarm();
 private:
 
-	FreeBoardModel* model;
+	SignalkModel* model;
 
 };
 #endif /* WIND_H_ */

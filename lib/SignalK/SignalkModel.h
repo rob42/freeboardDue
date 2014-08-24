@@ -31,6 +31,90 @@
 #include "Arduino.h"
 //#include "StreamJsonReader.h"
 //#include "FreeboardConstants.h"
+#define NAVIGATION_COURSEOVERGROUNDMAGNETIC 177632231UL
+#define NAVIGATION_COURSEOVERGROUNDTRUE 1495033343UL
+#define NAVIGATION_MAGNETICVARIATION 3733725560UL
+#define NAVIGATION_DESTINATION_LONGITUDE 250998974UL
+#define NAVIGATION_DESTINATION_LATITUDE 2077664687UL
+#define NAVIGATION_HEADINGMAGNETIC 390698939UL
+#define NAVIGATION_HEADINGTRUE 1129234387UL
+#define NAVIGATION_POSITION_LONGITUDE 4257320113UL
+#define NAVIGATION_POSITION_LATITUDE 2329218882UL
+#define NAVIGATION_POSITION_ALTITUDE 2999027170UL
+#define NAVIGATION_PITCH 2242652731UL
+#define NAVIGATION_RATEOFTURN 1051834157UL
+#define NAVIGATION_ROLL 588639420UL
+#define NAVIGATION_SPEEDOVERGROUND 3375602335UL
+#define NAVIGATION_SPEEDTHROUGHWATER 2011270296UL
+#define NAVIGATION_STATE 2246585668UL
+#define NAVIGATION_ANCHOR_MAXRADIUS 3688841722UL
+#define NAVIGATION_ANCHOR_CURRENTRADIUS 2152304183UL
+#define NAVIGATION_ANCHOR_POSITION_ALTITUDE 3067744843UL
+#define NAVIGATION_ANCHOR_POSITION_LATITUDE 2397936555UL
+#define NAVIGATION_ANCHOR_POSITION_LONGITUDE 2230036026UL
+#define STEERING_AUTOPILOT_STATE 1414591300UL
+#define STEERING_AUTOPILOT_MODE 3296408520UL
+#define STEERING_AUTOPILOT_TARGETHEADINGNORTH 1763947237UL
+#define STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC 542499234UL
+#define STEERING_AUTOPILOT_ALARMHEADINGXTE 2225422449UL
+#define STEERING_AUTOPILOT_HEADINGSOURCE 1161926884UL
+#define STEERING_AUTOPILOT_DEADZONE 3691686605UL
+#define STEERING_AUTOPILOT_BACKLASH 3570446012UL
+#define STEERING_AUTOPILOT_GAIN 3296177826UL
+#define STEERING_AUTOPILOT_MAXDRIVEAMPS 3211458388UL
+#define STEERING_AUTOPILOT_MAXDRIVERATE 3212056367UL
+#define ALARMS_ANCHORALARMMETHOD 2783435100UL
+#define ALARMS_ANCHORALARMSTATE 1003034460UL
+#define ALARMS_AUTOPILOTALARMMETHOD 1469117826UL
+#define ALARMS_AUTOPILOTALARMSTATE 3305916098UL
+#define ALARMS_ENGINEALARMMETHOD 3992095383UL
+#define ALARMS_ENGINEALARMSTATE 2991918391UL
+#define ALARMS_FIREALARMMETHOD 133189895UL
+#define ALARMS_FIREALARMSTATE 662422951UL
+#define ALARMS_GASALARMMETHOD 3929525820UL
+#define ALARMS_GASALARMSTATE 3380473916UL
+#define ALARMS_GPSALARMMETHOD 2429115595UL
+#define ALARMS_GPSALARMSTATE 2814404843UL
+#define ALARMS_MAYDAYALARMMETHOD 67311014UL
+#define ALARMS_MAYDAYALARMSTATE 1441329766UL
+#define ALARMS_PANPANALARMMETHOD 1695331519UL
+#define ALARMS_PANPANALARMSTATE 3963523679UL
+#define ALARMS_POWERALARMMETHOD 3887776462UL
+#define ALARMS_POWERALARMSTATE 1296800398UL
+#define ALARMS_SILENTINTERVAL 357415143UL
+#define ALARMS_WINDALARMMETHOD 1899960179UL
+#define ALARMS_WINDALARMSTATE 3449122451UL
+#define ENVIRONMENT_WIND_DIRECTIONAPPARENT 3267532580UL
+#define ENVIRONMENT_WIND_DIRECTIONCHANGEALARM 4209206332UL
+#define ENVIRONMENT_WIND_DIRECTIONTRUE 1752542857UL
+#define ENVIRONMENT_WIND_SPEEDALARM 2559123686UL
+#define ENVIRONMENT_WIND_SPEEDTRUE 1900346521UL
+#define ENVIRONMENT_WIND_SPEEDAPPARENT 531262772UL
+#define _ARDUINO_GPS_MODEL 260479757UL
+#define _ARDUINO_SERIAL_BAUD0 1806063390UL
+#define _ARDUINO_SERIAL_BAUD1 1806063391UL
+#define _ARDUINO_SERIAL_BAUD2 1806063392UL
+#define _ARDUINO_SERIAL_BAUD3 1806063393UL
+#define _ARDUINO_ALARM_LEVEL1_UPPER 2104985698UL
+#define _ARDUINO_ALARM_LEVEL1_LOWER 2094284095UL
+#define _ARDUINO_ALARM_LEVEL2_UPPER 3396453667UL
+#define _ARDUINO_ALARM_LEVEL2_LOWER 3385752064UL
+#define _ARDUINO_ALARM_LEVEL3_UPPER 392954340UL
+#define _ARDUINO_ALARM_LEVEL3_LOWER 382252737UL
+#define _ARDUINO_SEATALK 3540059849UL
+//TODO: get hash
+#define _ARDUINO_WINDZEROOFFSET 0UL
+#define _ARDUINO_WINDLASTUPDATE 0UL
+
+#define _ARDUINO_WINDAVERAGE 2851759217UL
+#define _ARDUINO_WINDFACTOR 1428475061UL
+#define _ARDUINO_WINDMAX 287358556UL
+#define _ARDUINO_ALARM_SNOOZE 2215576829UL
+#define _ARDUINO_ANCHOR_RADIUSDEG 439059557UL
+#define _ARDUINO_ANCHOR_NORTH 3020492120UL
+#define _ARDUINO_ANCHOR_SOUTH 3026424992UL
+#define _ARDUINO_ANCHOR_EAST 3214803994UL
+#define _ARDUINO_ANCHOR_WEST 3215455216UL
 
 typedef enum {ALRM_MESSAGE,ALRM_SOUND,ALRM_SMS,ALRM_EMAIL,ALRM_DSC} AlarmMethodType;
 static const char *AlarmMethodString[] = {"message", "sound","sms","email","dsc",};
@@ -76,197 +160,24 @@ public:
 	void setSignalkValue(char* attribute, bool value);
 	void setSignalkValue(char* attribute, char* value);
 	void setSignalkValue(char* attribute, float value);
-	//void setSignalkValue(char* attribute, long value);
-	//void setSignalkValue(char* attribute, int value);
+	void setSignalkValue(char* attribute, long value);
+	void setSignalkValue(char* attribute, int value);
+
+	void setSignalkValue(unsigned long key, bool value);
+	void setSignalkValue(unsigned long key, char* value);
+	void setSignalkValue(unsigned long key, float value);
+	void setSignalkValue(unsigned long key, long value);
+	void setSignalkValue(unsigned long key, int value);
+
+	bool getSignalkValueBool(unsigned long key);
+	char* getSignalkValueChar(unsigned long key);
+	float getSignalkValueFloat(unsigned long key);
+	long getSignalkValueLong(unsigned long key);
+	int getSignalkValueInt(unsigned long key);
+	volatile bool isAlarmTriggered() ;
+	volatile bool isAlarmTriggered(unsigned long key);
 	unsigned long hash(const char *str);
-	float getNavigationCourseOverGroundMagnetic();
-	float getNavigationCourseOverGroundTrue();
-	float getNavigationCurrentRouteBearingActual();
-	float getNavigationCurrentRouteBearingDirect();
-	float getNavigationCurrentRouteCourseRequired();
-	long getNavigationCurrentRouteEta();
-	String getNavigationCurrentRouteRoute();
-	long getNavigationCurrentRouteStartTime();
-	float getNavigationCurrentRouteWaypoint();
-	long getNavigationCurrentRouteWaypointLastTime();
-	String getNavigationCurrentRouteWaypointLast();
-	long getNavigationCurrentRouteWaypointNextEta();
-	String getNavigationCurrentRouteWaypointNext();
-	float getNavigationCurrentRouteWaypointXte();
-	float getNavigationMagneticVariation();
-	long getNavigationDestinationEta();
-	float getNavigationDestinationLongitude();
-	float getNavigationDestinationLatitude();
-	float getNavigationDestinationAltitude();
-	float getNavigationDrift();
 
-	float getNavigationHeadingMagnetic();
-	float getNavigationHeadingTrue();
-	float getNavigationPositionLongitude();
-	float getNavigationPositionLatitude();
-	float getNavigationPositionAltitude();
-	float getNavigationPitch();
-	float getNavigationRateOfTurn();
-	float getNavigationRoll();
-	float getNavigationSet();
-	float getNavigationSpeedOverGround();
-	float getNavigationSpeedThroughWater();
-	NavigationStateType getNavigationState();
-	float getSteeringRudderAngle();
-	float getSteeringRudderAngleTarget();
-	AutopilotStateType getSteeringAutopilotState();
-	AutopilotModeType getSteeringAutopilotMode();
-	float getSteeringAutopilotTargetHeadingNorth();
-	float getSteeringAutopilotTargetHeadingMagnetic();
-	float getSteeringAutopilotAlarmHeadingXte();
-	AutopilotHeadingSourceType getSteeringAutopilotHeadingSource();
-	float getSteeringAutopilotDeadZone();
-	float getSteeringAutopilotBacklash();
-	float getSteeringAutopilotGain();
-	float getSteeringAutopilotMaxDriveAmps();
-	float getSteeringAutopilotMaxDriveRate();
-	float getSteeringAutopilotPortLock();
-	float getSteeringAutopilotStarboardLock();
-	AlarmMethodType getAlarmsAnchorAlarmMethod();
-	AlarmStateType getAlarmsAnchorAlarmState();
-	AlarmMethodType getAlarmsAutopilotAlarmMethod();
-	AlarmStateType getAlarmsAutopilotAlarmState();
-	AlarmMethodType getAlarmsEngineAlarmMethod();
-	AlarmStateType getAlarmsEngineAlarmState();
-	AlarmMethodType getAlarmsFireAlarmMethod();
-	AlarmStateType getAlarmsFireAlarmState();
-	AlarmMethodType getAlarmsGasAlarmMethod();
-	AlarmStateType getAlarmsGasAlarmState();
-	AlarmMethodType getAlarmsGpsAlarmMethod();
-	AlarmStateType getAlarmsGpsAlarmState();
-	AlarmMethodType getAlarmsMaydayAlarmMethod();
-	AlarmStateType getAlarmsMaydayAlarmState();
-	AlarmMethodType getAlarmsPanpanAlarmMethod();
-	AlarmStateType getAlarmsPanpanAlarmState();
-	AlarmMethodType getAlarmsPowerAlarmMethod();
-	AlarmStateType getAlarmsPowerAlarmState();
-	int getAlarmsSilentInterval();
-	AlarmMethodType getAlarmsWindAlarmMethod();
-	AlarmStateType getAlarmsWindAlarmState();
-	float getEnvironmentAirPressureChangeRateAlarm();
-	float getEnvironmentAirPressure();
-	float getEnvironmentAirTemp();
-	float getEnvironmentCurrentDirection();
-	float getEnvironmentCurrentSpeed();
-	float getEnvironmentDepthBelowKeel();
-	float getEnvironmentDepthBelowTransducer();
-	float getEnvironmentDepthBelowSurface();
-	float getEnvironmentDepthTransducerToKeel();
-	float getEnvironmentDepthSurfaceToTransducer();
-	float getEnvironmentHumidity();
-	float getEnvironmentSalinity();
-	float getEnvironmentTideHeightHigh();
-	float getEnvironmentTideHeightNow();
-	float getEnvironmentTideHeightLow();
-	long getEnvironmentTideTimeLow();
-	long getEnvironmentTideTimeHigh();
-	float getEnvironmentWaterTemp();
-	float getEnvironmentWindDirectionApparent();
-	float getEnvironmentWindDirectionChangeAlarm();
-	float getEnvironmentWindDirectionTrue();
-	float getEnvironmentWindSpeedAlarm();
-	float getEnvironmentWindSpeedTrue();
-	float getEnvironmentWindSpeedApparent();
-
-
-	void setNavigationCourseOverGroundMagnetic(float navigationCourseOverGroundMagnetic);
-	void setNavigationCourseOverGroundTrue(float navigationCourseOverGroundTrue);
-	void setNavigationCurrentRouteBearingActual(float navigationCurrentRouteBearingActual);
-	void setNavigationCurrentRouteBearingDirect(float navigationCurrentRouteBearingDirect);
-	void setNavigationCurrentRouteCourseRequired(float navigationCurrentRouteCourseRequired);
-	void setNavigationCurrentRouteEta(long navigationCurrentRouteEta);
-	void setNavigationCurrentRouteRoute(String navigationCurrentRouteRoute);
-	void setNavigationCurrentRouteStartTime(long navigationCurrentRouteStartTime);
-	void setNavigationCurrentRouteWaypoint(float navigationCurrentRouteWaypoint);
-	void setNavigationCurrentRouteWaypointLastTime(long navigationCurrentRouteWaypointLastTime);
-	void setNavigationCurrentRouteWaypointLast(String navigationCurrentRouteWaypointLast);
-	void setNavigationCurrentRouteWaypointNextEta(long navigationCurrentRouteWaypointNextEta);
-	void setNavigationCurrentRouteWaypointNext(String navigationCurrentRouteWaypointNext);
-	void setNavigationCurrentRouteWaypointXte(float navigationCurrentRouteWaypointXte);
-	void setNavigationMagneticVariation(float navigationMagneticVariation);
-	void setNavigationDestinationEta(long navigationDestinationEta);
-	void setNavigationDestinationLongitude(float navigationDestinationLongitude);
-	void setNavigationDestinationLatitude(float navigationDestinationLatitude);
-	void setNavigationDestinationAltitude(float navigationDestinationAltitude);
-	void setNavigationDrift(float navigationDrift);
-	void setNavigationGnss(float navigationGnss);
-	void setNavigationHeadingMagnetic(float navigationHeadingMagnetic);
-	void setNavigationHeadingTrue(float navigationHeadingTrue);
-	void setNavigationPositionLongitude(float navigationPositionLongitude);
-	void setNavigationPositionLatitude(float navigationPositionLatitude);
-	void setNavigationPositionAltitude(float navigationPositionAltitude);
-	void setNavigationPitch(float navigationPitch);
-	void setNavigationRateOfTurn(float navigationRateOfTurn);
-	void setNavigationRoll(float navigationRoll);
-	void setNavigationSet(float navigationSet);
-	void setNavigationSpeedOverGround(float navigationSpeedOverGround);
-	void setNavigationSpeedThroughWater(float navigationSpeedThroughWater);
-	void setNavigationState(NavigationStateType navigationStateValue);
-	void setSteeringRudderAngle(float steeringRudderAngle);
-	void setSteeringRudderAngleTarget(float steeringRudderAngleTarget);
-	void setSteeringAutopilotState(AutopilotStateType steeringAutopilotState);
-	void setSteeringAutopilotMode(AutopilotModeType steeringAutopilotMode);
-	void setSteeringAutopilotTargetHeadingNorth(float steeringAutopilotTargetHeadingNorth);
-	void setSteeringAutopilotTargetHeadingMagnetic(float steeringAutopilotTargetHeadingMagnetic);
-	void setSteeringAutopilotAlarmHeadingXte(float steeringAutopilotAlarmHeadingXte);
-	void setSteeringAutopilotHeadingSource(AutopilotHeadingSourceType steeringAutopilotHeadingSource);
-	void setSteeringAutopilotDeadZone(float steeringAutopilotDeadZone);
-	void setSteeringAutopilotBacklash(float steeringAutopilotBacklash);
-	void setSteeringAutopilotGain(float steeringAutopilotGain);
-	void setSteeringAutopilotMaxDriveAmps(float steeringAutopilotMaxDriveAmps);
-	void setSteeringAutopilotMaxDriveRate(float steeringAutopilotMaxDriveRate);
-	void setSteeringAutopilotPortLock(float steeringAutopilotPortLock);
-	void setSteeringAutopilotStarboardLock(float steeringAutopilotStarboardLock);
-	void setAlarmsAnchorAlarmMethod(AlarmMethodType alarmsAnchorAlarmMethod);
-	void setAlarmsAnchorAlarmState(AlarmStateType alarmsAnchorAlarmState);
-	void setAlarmsAutopilotAlarmMethod(AlarmMethodType alarmsAutopilotAlarmMethod);
-	void setAlarmsAutopilotAlarmState(AlarmStateType alarmsAutopilotAlarmState);
-	void setAlarmsEngineAlarmMethod(AlarmMethodType alarmsEngineAlarmMethod);
-	void setAlarmsEngineAlarmState(AlarmStateType alarmsEngineAlarmState);
-	void setAlarmsFireAlarmMethod(AlarmMethodType alarmsFireAlarmMethod);
-	void setAlarmsFireAlarmState(AlarmStateType alarmsFireAlarmState);
-	void setAlarmsGasAlarmMethod(AlarmMethodType alarmsGasAlarmMethod);
-	void setAlarmsGasAlarmState(AlarmStateType alarmsGasAlarmState);
-	void setAlarmsGpsAlarmMethod(AlarmMethodType alarmsGpsAlarmMethod);
-	void setAlarmsGpsAlarmState(AlarmStateType alarmsGpsAlarmState);
-	void setAlarmsMaydayAlarmMethod(AlarmMethodType alarmsMaydayAlarmMethod);
-	void setAlarmsMaydayAlarmState(AlarmStateType alarmsMaydayAlarmState);
-	void setAlarmsPanpanAlarmMethod(AlarmMethodType alarmsPanpanAlarmMethod);
-	void setAlarmsPanpanAlarmState(AlarmStateType alarmsPanpanAlarmState);
-	void setAlarmsPowerAlarmMethod(AlarmMethodType alarmsPowerAlarmMethod);
-	void setAlarmsPowerAlarmState(AlarmStateType alarmsPowerAlarmState);
-	void setAlarmsSilentInterval(int alarmsSilentInterval);
-	void setAlarmsWindAlarmMethod(AlarmMethodType alarmsWindAlarmMethod);
-	void setAlarmsWindAlarmState(AlarmStateType alarmsWindAlarmState);
-	void setEnvironmentAirPressureChangeRateAlarm(float environmentAirPressureChangeRateAlarm);
-	void setEnvironmentAirPressure(float environmentAirPressure);
-	void setEnvironmentAirTemp(float environmentAirTemp);
-	void setEnvironmentCurrentDirection(float environmentCurrentDirection);
-	void setEnvironmentCurrentSpeed(float environmentCurrentSpeed);
-	void setEnvironmentDepthBelowKeel(float environmentDepthBelowKeel);
-	void setEnvironmentDepthBelowTransducer(float environmentDepthBelowTransducer);
-	void setEnvironmentDepthBelowSurface(float environmentDepthBelowSurface);
-	void setEnvironmentDepthTransducerToKeel(float environmentDepthTransducerToKeel);
-	void setEnvironmentDepthSurfaceToTransducer(float environmentDepthSurfaceToTransducer);
-	void setEnvironmentHumidity(float environmentHumidity);
-	void setEnvironmentSalinity(float environmentSalinity);
-	void setEnvironmentTideHeightHigh(float environmentTideHeightHigh);
-	void setEnvironmentTideHeightNow(float environmentTideHeightNow);
-	void setEnvironmentTideHeightLow(float environmentTideHeightLow);
-	void setEnvironmentTideTimeLow(long environmentTideTimeLow);
-	void setEnvironmentTideTimeHigh(long environmentTideTimeHigh);
-	void setEnvironmentWaterTemp(float environmentWaterTemp);
-	void setEnvironmentWindDirectionApparent(float environmentWindDirectionApparent);
-	void setEnvironmentWindDirectionChangeAlarm(float environmentWindDirectionChangeAlarm);
-	void setEnvironmentWindDirectionTrue(float environmentWindDirectionTrue);
-	void setEnvironmentWindSpeedAlarm(float environmentWindSpeedAlarm);
-	void setEnvironmentWindSpeedTrue(float environmentWindSpeedTrue);
-	void setEnvironmentWindSpeedApparent(float environmentWindSpeedApparent);
 
 private:
 
@@ -356,6 +267,8 @@ private:
 		int  silentInterval;
 		AlarmMethodType windAlarmMethod;
 		AlarmStateType windAlarmState;
+		AlarmMethodType genericAlarmMethod;
+		AlarmStateType genericAlarmState;
 	} alarms ;
 
 	struct WindStruct {
@@ -426,6 +339,7 @@ private:
 		float windAverage;
 		float windFactor;
 		float windMax;
+		float windZeroOffset;
 
 	}_arduino;
 };

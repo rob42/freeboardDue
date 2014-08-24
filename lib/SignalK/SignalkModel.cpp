@@ -137,11 +137,16 @@ int findInArray(const char *array[], const char* value) {
 	}
 	return -1;
 }
+
 void SignalkModel::setSignalkValue(char* attribute, bool value) {
-	long key = hash(attribute);
+	unsigned long key = hash(attribute);
+	setSignalkValue(key,value);
+
+}
+void SignalkModel::setSignalkValue(unsigned long key, bool value) {
 	switch (key) {
 
-	case 3540059849UL:
+	case _ARDUINO_SEATALK:
 		_arduino.seatalk = value;
 		break;
 	default:
@@ -149,130 +154,134 @@ void SignalkModel::setSignalkValue(char* attribute, bool value) {
 
 	}
 }
-
 void SignalkModel::setSignalkValue(char* attribute, char* value) {
 	unsigned long key = hash(attribute);
+	setSignalkValue(key,value);
+}
+
+void SignalkModel::setSignalkValue(unsigned long key, char* value) {
+
 	int c;
 	switch (key) {
 
-	case 2246585668UL:
+	case NAVIGATION_STATE:
 		if ((c = findInArray(NavigationStateString, value)) > -1) {
 			navigation.state = static_cast<NavigationStateType>(c);
 		}
 		break;
-	case 1414591300UL:
+	case STEERING_AUTOPILOT_STATE:
 		if ((c = findInArray(AutopilotStateString, value)) > -1) {
 			steering.autopilot.state = static_cast<AutopilotStateType>(c);
 		}
 		break;
-	case 3296408520UL:
+	case STEERING_AUTOPILOT_MODE:
 		if ((c = findInArray(AutopilotModeString, value)) > -1) {
 			steering.autopilot.mode = static_cast<AutopilotModeType>(c);
 		}
 		break;
-	case 1161926884UL:
+	case STEERING_AUTOPILOT_HEADINGSOURCE:
 		if ((c = findInArray(AutopilotHeadingSourceString, value)) > -1) {
 			steering.autopilot.headingSource =
 					static_cast<AutopilotHeadingSourceType>(c);
 		}
 		break;
-	case 2783435100UL:
+	case ALARMS_ANCHORALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.anchorAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 1003034460UL:
+	case ALARMS_ANCHORALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.anchorAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 1469117826UL:
+	case ALARMS_AUTOPILOTALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.autopilotAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 3305916098UL:
+	case ALARMS_AUTOPILOTALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.autopilotAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 3992095383UL:
+	case ALARMS_ENGINEALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.engineAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 2991918391UL:
+	case ALARMS_ENGINEALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.engineAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 133189895UL:
+	case ALARMS_FIREALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.fireAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 662422951UL:
+	case ALARMS_FIREALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.fireAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 3929525820UL:
+	case ALARMS_GASALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.gasAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 3380473916UL:
+	case ALARMS_GASALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.gasAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 2429115595UL:
+	case ALARMS_GPSALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.gpsAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 2814404843UL:
+	case ALARMS_GPSALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.gpsAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 67311014UL:
+	case ALARMS_MAYDAYALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.maydayAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 1441329766UL:
+	case ALARMS_MAYDAYALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.maydayAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 1695331519UL:
+	case ALARMS_PANPANALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.panpanAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 3963523679UL:
+	case ALARMS_PANPANALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.panpanAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
-	case 3887776462UL:
+	case ALARMS_POWERALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.powerAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 1296800398UL:
+	case ALARMS_POWERALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.powerAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
 
-	case 1899960179UL:
+	case ALARMS_WINDALARMMETHOD:
 		if ((c = findInArray(AlarmMethodString, value)) > -1) {
 			alarms.windAlarmMethod = static_cast<AlarmMethodType>(c);
 		}
 		break;
-	case 3449122451UL:
+	case ALARMS_WINDALARMSTATE:
 		if ((c = findInArray(AlarmStateString, value)) > -1) {
 			alarms.windAlarmState = static_cast<AlarmStateType>(c);
 		}
@@ -282,190 +291,455 @@ void SignalkModel::setSignalkValue(char* attribute, char* value) {
 
 	}
 }
+void SignalkModel::setSignalkValue(char* attribute, int value) {
+	setSignalkValue(hash(attribute), (float)value);
+	//Serial.print(" setSignalkValue:");
+	//Serial.println(key);
+}
+
+void SignalkModel::setSignalkValue(char* attribute, long value) {
+	setSignalkValue(hash(attribute), (float)value);
+	//Serial.print(" setSignalkValue:");
+	//Serial.println(key);
+}
 void SignalkModel::setSignalkValue(char* attribute, float value) {
-	long key = hash(attribute);
-	Serial.print(" setSignalkValue:");
-	Serial.println(key);
+	setSignalkValue(hash(attribute), value);
+	//Serial.print(" setSignalkValue:");
+	//Serial.println(key);
+}
+void SignalkModel::setSignalkValue(unsigned long key, float value) {
+
 	switch (key) {
-	case 1806063390UL:
+	case _ARDUINO_SERIAL_BAUD0:
 		_arduino.serial.baud0 = (long)value;
 		break;
-	case 1806063391UL:
+	case _ARDUINO_SERIAL_BAUD1:
 		_arduino.serial.baud1 = (long)value;
 		break;
-	case 1806063392UL:
+	case _ARDUINO_SERIAL_BAUD2:
 		_arduino.serial.baud2 = (long)value;
 		break;
-	case 1806063393UL:
+	case _ARDUINO_SERIAL_BAUD3:
 		_arduino.serial.baud3 = (long)value;
 		break;
-	case 2215576829UL:
+	case _ARDUINO_ALARM_SNOOZE:
 		_arduino.alarm.snooze = (long)value;
 		break;
 
-	case 260479757UL:
+	case _ARDUINO_GPS_MODEL:
 		_arduino.gps.model = (int)value;
 		break;
-	case 3296177826UL:
+	case STEERING_AUTOPILOT_GAIN:
 		steering.autopilot.gain = (int)value;
 		break;
-	case 357415143UL:
+	case ALARMS_SILENTINTERVAL:
 		alarms.silentInterval = (int)value;
 		break;
-	case 2104985698UL:
+	case _ARDUINO_ALARM_LEVEL1_UPPER:
 		_arduino.alarm.level1.upper = (int)value;
 		break;
-	case 2094284095UL:
+	case _ARDUINO_ALARM_LEVEL1_LOWER:
 		_arduino.alarm.level1.lower = (int)value;
 		break;
-	case 3396453667UL:
+	case _ARDUINO_ALARM_LEVEL2_UPPER:
 		_arduino.alarm.level2.upper = (int)value;
 		break;
-	case 3385752064UL:
+	case _ARDUINO_ALARM_LEVEL2_LOWER:
 		_arduino.alarm.level2.lower = (int)value;
 		break;
-	case 392954340UL:
+	case _ARDUINO_ALARM_LEVEL3_UPPER:
 		_arduino.alarm.level3.upper = (int)value;
 		break;
-	case 382252737UL:
+	case _ARDUINO_ALARM_LEVEL3_LOWER:
 		_arduino.alarm.level3.lower = (int)value;
 		break;
 
-case 177632231UL:
-	navigation.courseOverGroundMagnetic = value;
-	break;
-case 1495033343UL:
-	navigation.courseOverGroundTrue = value;
-	break;
-case 3733725560UL:
-	navigation.magneticVariation = value;
-	break;
-case 250998974UL:
-	navigation.destination.longitude = value;
-	break;
-case 2077664687UL:
-	navigation.destination.latitude = value;
-	break;
-case 390698939UL:
-	navigation.headingMagnetic = value;
-	break;
-case 1129234387UL:
-	navigation.headingTrue = value;
-	break;
-case 4257320113UL:
-	navigation.position.longitude = value;
-	break;
-case 2329218882UL:
-	navigation.position.latitude = value;
-	break;
-case 2999027170UL:
-	navigation.position.altitude = value;
-	break;
-case 2242652731UL:
-	navigation.pitch = value;
-	break;
-case 1051834157UL:
-	navigation.rateOfTurn = value;
-	break;
-case 588639420UL:
-	navigation.roll = value;
-	break;
-case 3375602335UL:
-	navigation.speedOverGround = value;
-	break;
-case 2011270296UL:
-	navigation.speedThroughWater = value;
-	break;
-case 3688841722UL :
-	navigation.anchor.maxRadius = value;
-	break;
-case 2152304183UL :
-	navigation.anchor.currentRadius = value;
-	break;
-case 3067744843UL :
-	navigation.anchor.position.altitude = value;
-	break;
-case 2397936555UL :
-	navigation.anchor.position.latitude = value;
-	break;
-case 2230036026UL :
-	navigation.anchor.position.longitude = value;
-	break;
-case 1763947237UL:
-	steering.autopilot.targetHeadingNorth = value;
-	break;
-case 542499234UL:
-	steering.autopilot.targetHeadingMagnetic = value;
-	break;
-case 2225422449UL:
-	steering.autopilot.alarmHeadingXte = value;
-	break;
+	case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
+			navigation.courseOverGroundMagnetic = value;
+		break;
+	case NAVIGATION_COURSEOVERGROUNDTRUE:
+			navigation.courseOverGroundTrue = value;
+		break;
+	case NAVIGATION_MAGNETICVARIATION:
+			navigation.magneticVariation = value;
+		break;
+	case NAVIGATION_DESTINATION_LONGITUDE:
+			navigation.destination.longitude = value;
+		break;
+	case NAVIGATION_DESTINATION_LATITUDE:
+			navigation.destination.latitude = value;
+		break;
+	case NAVIGATION_HEADINGMAGNETIC:
+			navigation.headingMagnetic = value;
+		break;
+	case NAVIGATION_HEADINGTRUE:
+			navigation.headingTrue = value;
+		break;
+	case NAVIGATION_POSITION_LONGITUDE:
+			navigation.position.longitude = value;
+		break;
+	case NAVIGATION_POSITION_LATITUDE:
+			navigation.position.latitude = value;
+		break;
+	case NAVIGATION_POSITION_ALTITUDE:
+			navigation.position.altitude = value;
+		break;
+	case NAVIGATION_PITCH:
+			navigation.pitch = value;
+		break;
+	case NAVIGATION_RATEOFTURN:
+			navigation.rateOfTurn = value;
+		break;
+	case NAVIGATION_ROLL:
+			navigation.roll = value;
+		break;
+	case NAVIGATION_SPEEDOVERGROUND:
+			navigation.speedOverGround = value;
+		break;
+	case NAVIGATION_SPEEDTHROUGHWATER:
+			navigation.speedThroughWater = value;
+		break;
+	case NAVIGATION_ANCHOR_MAXRADIUS:
+			navigation.anchor.maxRadius = value;
+		break;
+	case NAVIGATION_ANCHOR_CURRENTRADIUS:
+			navigation.anchor.currentRadius = value;
+		break;
+	case NAVIGATION_ANCHOR_POSITION_ALTITUDE:
+			navigation.anchor.position.altitude = value;
+		break;
+	case NAVIGATION_ANCHOR_POSITION_LATITUDE:
+			navigation.anchor.position.latitude = value;
+		break;
+	case NAVIGATION_ANCHOR_POSITION_LONGITUDE:
+			navigation.anchor.position.longitude = value;
+		break;
+	case STEERING_AUTOPILOT_TARGETHEADINGNORTH:
+			steering.autopilot.targetHeadingNorth = value;
+		break;
+	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC:
+			steering.autopilot.targetHeadingMagnetic = value;
+		break;
+	case STEERING_AUTOPILOT_ALARMHEADINGXTE:
+			steering.autopilot.alarmHeadingXte = value;
+		break;
 
-case 3691686605UL:
-	steering.autopilot.deadZone = value;
-	break;
-case 3570446012UL:
-	steering.autopilot.backlash = value;
-	break;
+	case STEERING_AUTOPILOT_DEADZONE:
+			steering.autopilot.deadZone = value;
+		break;
+	case STEERING_AUTOPILOT_BACKLASH:
+			steering.autopilot.backlash = value;
+		break;
 
-case 3211458388UL:
-	steering.autopilot.maxDriveAmps = value;
-	break;
-case 3212056367UL:
-	steering.autopilot.maxDriveRate = value;
-	break;
+	case STEERING_AUTOPILOT_MAXDRIVEAMPS:
+			steering.autopilot.maxDriveAmps = value;
+		break;
+	case STEERING_AUTOPILOT_MAXDRIVERATE:
+			steering.autopilot.maxDriveRate = value;
+		break;
 
-case 3267532580UL:
-	environment.wind.directionApparent = value;
-	break;
-case 4209206332UL:
-	environment.wind.directionChangeAlarm = value;
-	break;
-case 1752542857UL:
-	environment.wind.directionTrue = value;
-	break;
-case 2559123686UL:
-	environment.wind.speedAlarm = value;
-	break;
-case 1900346521UL:
-	environment.wind.speedTrue = value;
-	break;
-case 531262772UL:
-	environment.wind.speedApparent = value;
-	break;
-case 2851759217UL:
-	_arduino.windAverage = value;
-	break;
-case 1428475061UL:
-	_arduino.windFactor = value;
-	break;
-case 287358556UL:
-	_arduino.windMax = value;
-	break;
-case 439059557UL:
-	_arduino.anchor.radiusDeg = value;
-	break;
+	case ENVIRONMENT_WIND_DIRECTIONAPPARENT:
+			environment.wind.directionApparent = value;
+		break;
+	case ENVIRONMENT_WIND_DIRECTIONCHANGEALARM:
+			environment.wind.directionChangeAlarm = value;
+		break;
+	case ENVIRONMENT_WIND_DIRECTIONTRUE:
+			environment.wind.directionTrue = value;
+		break;
+	case ENVIRONMENT_WIND_SPEEDALARM:
+			environment.wind.speedAlarm = value;
+		break;
+	case ENVIRONMENT_WIND_SPEEDTRUE:
+			environment.wind.speedTrue = value;
+		break;
+	case ENVIRONMENT_WIND_SPEEDAPPARENT:
+			environment.wind.speedApparent = value;
+		break;
+	case _ARDUINO_WINDAVERAGE:
+			_arduino.windAverage = value;
+		break;
+	case _ARDUINO_WINDFACTOR:
+			_arduino.windFactor = value;
+		break;
+	case _ARDUINO_WINDMAX:
+			_arduino.windMax = value;
+		break;
+	case _ARDUINO_ANCHOR_RADIUSDEG:
+			_arduino.anchor.radiusDeg = value;
+		break;
 
-case 3020492120UL:
-	_arduino.anchor.north = value;
-	break;
-case 3026424992UL:
-	_arduino.anchor.south = value;
-	break;
-case 3214803994UL:
-	_arduino.anchor.east = value;
-	break;
-case 3215455216UL:
-	_arduino.anchor.west = value;
-	break;
+	case _ARDUINO_ANCHOR_NORTH:
+			_arduino.anchor.north = value;
+		break;
+	case _ARDUINO_ANCHOR_SOUTH:
+			_arduino.anchor.south = value;
+		break;
+	case _ARDUINO_ANCHOR_EAST:
+			_arduino.anchor.east = value;
+		break;
+	case _ARDUINO_ANCHOR_WEST:
+			_arduino.anchor.west = value;
+		break;
 
-default:
-	break;
+	default:
+		break;
 
 	}
 
 }
+int SignalkModel::getSignalkValueInt(unsigned long key){
+	switch (key) {
+	case _ARDUINO_GPS_MODEL:
+			return _arduino.gps.model;
+			break;
+		case STEERING_AUTOPILOT_GAIN:
+			return steering.autopilot.gain;
+			break;
+		case ALARMS_SILENTINTERVAL:
+			return alarms.silentInterval;
+			break;
+		case _ARDUINO_ALARM_LEVEL1_UPPER:
+			return _arduino.alarm.level1.upper;
+			break;
+		case _ARDUINO_ALARM_LEVEL1_LOWER:
+			return _arduino.alarm.level1.lower;
+			break;
+		case _ARDUINO_ALARM_LEVEL2_UPPER:
+			return _arduino.alarm.level2.upper;
+			break;
+		case _ARDUINO_ALARM_LEVEL2_LOWER:
+			return _arduino.alarm.level2.lower;
+			break;
+		case _ARDUINO_ALARM_LEVEL3_UPPER:
+			return _arduino.alarm.level3.upper;
+			break;
+		case _ARDUINO_ALARM_LEVEL3_LOWER:
+			return _arduino.alarm.level3.lower;
+			break;
+	}
+	return NAN;
+}
 
+long SignalkModel::getSignalkValueLong(unsigned long key){
+	switch (key) {
+		case _ARDUINO_SERIAL_BAUD0:
+			return _arduino.serial.baud0;
+			break;
+		case _ARDUINO_SERIAL_BAUD1:
+			return _arduino.serial.baud1;
+			break;
+		case _ARDUINO_SERIAL_BAUD2:
+			return _arduino.serial.baud2;
+			break;
+		case _ARDUINO_SERIAL_BAUD3:
+			return _arduino.serial.baud3;
+			break;
+		case _ARDUINO_ALARM_SNOOZE:
+			return _arduino.alarm.snooze;
+			break;
+	}
+	return NAN;
+}
+
+float SignalkModel::getSignalkValueFloat(unsigned long key){
+	switch (key) {
+
+		case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
+				return navigation.courseOverGroundMagnetic;
+			break;
+		case NAVIGATION_COURSEOVERGROUNDTRUE:
+				return navigation.courseOverGroundTrue;
+			break;
+		case NAVIGATION_MAGNETICVARIATION:
+				return navigation.magneticVariation;
+			break;
+		case NAVIGATION_DESTINATION_LONGITUDE:
+				return navigation.destination.longitude;
+			break;
+		case NAVIGATION_DESTINATION_LATITUDE:
+				return navigation.destination.latitude;
+			break;
+		case NAVIGATION_HEADINGMAGNETIC:
+				return navigation.headingMagnetic;
+			break;
+		case NAVIGATION_HEADINGTRUE:
+				return navigation.headingTrue;
+			break;
+		case NAVIGATION_POSITION_LONGITUDE:
+				return navigation.position.longitude;
+			break;
+		case NAVIGATION_POSITION_LATITUDE:
+				return navigation.position.latitude;
+			break;
+		case NAVIGATION_POSITION_ALTITUDE:
+				return navigation.position.altitude;
+			break;
+		case NAVIGATION_PITCH:
+				return navigation.pitch;
+			break;
+		case NAVIGATION_RATEOFTURN:
+				return navigation.rateOfTurn;
+			break;
+		case NAVIGATION_ROLL:
+				return navigation.roll;
+			break;
+		case NAVIGATION_SPEEDOVERGROUND:
+				return navigation.speedOverGround;
+			break;
+		case NAVIGATION_SPEEDTHROUGHWATER:
+				return navigation.speedThroughWater;
+			break;
+		case NAVIGATION_ANCHOR_MAXRADIUS:
+				return navigation.anchor.maxRadius;
+			break;
+		case NAVIGATION_ANCHOR_CURRENTRADIUS:
+				return navigation.anchor.currentRadius;
+			break;
+		case NAVIGATION_ANCHOR_POSITION_ALTITUDE:
+				return navigation.anchor.position.altitude;
+			break;
+		case NAVIGATION_ANCHOR_POSITION_LATITUDE:
+				return navigation.anchor.position.latitude;
+			break;
+		case NAVIGATION_ANCHOR_POSITION_LONGITUDE:
+				return navigation.anchor.position.longitude;
+			break;
+		case STEERING_AUTOPILOT_TARGETHEADINGNORTH:
+				return steering.autopilot.targetHeadingNorth;
+			break;
+		case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC:
+				return steering.autopilot.targetHeadingMagnetic;
+			break;
+		case STEERING_AUTOPILOT_ALARMHEADINGXTE:
+				return steering.autopilot.alarmHeadingXte;
+			break;
+
+		case STEERING_AUTOPILOT_DEADZONE:
+				return steering.autopilot.deadZone;
+			break;
+		case STEERING_AUTOPILOT_BACKLASH:
+				return steering.autopilot.backlash;
+			break;
+
+		case STEERING_AUTOPILOT_MAXDRIVEAMPS:
+				return steering.autopilot.maxDriveAmps;
+			break;
+		case STEERING_AUTOPILOT_MAXDRIVERATE:
+				return steering.autopilot.maxDriveRate;
+			break;
+
+		case ENVIRONMENT_WIND_DIRECTIONAPPARENT:
+				return environment.wind.directionApparent;
+			break;
+		case ENVIRONMENT_WIND_DIRECTIONCHANGEALARM:
+				return environment.wind.directionChangeAlarm;
+			break;
+		case ENVIRONMENT_WIND_DIRECTIONTRUE:
+				return environment.wind.directionTrue;
+			break;
+		case ENVIRONMENT_WIND_SPEEDALARM:
+				return environment.wind.speedAlarm;
+			break;
+		case ENVIRONMENT_WIND_SPEEDTRUE:
+				return environment.wind.speedTrue;
+			break;
+		case ENVIRONMENT_WIND_SPEEDAPPARENT:
+				return environment.wind.speedApparent;
+			break;
+		case _ARDUINO_WINDAVERAGE:
+				return _arduino.windAverage;
+			break;
+		case _ARDUINO_WINDFACTOR:
+				return _arduino.windFactor;
+			break;
+		case _ARDUINO_WINDMAX:
+				return _arduino.windMax;
+			break;
+		case _ARDUINO_ANCHOR_RADIUSDEG:
+				return _arduino.anchor.radiusDeg;
+			break;
+
+		case _ARDUINO_ANCHOR_NORTH:
+				return _arduino.anchor.north;
+			break;
+		case _ARDUINO_ANCHOR_SOUTH:
+				return _arduino.anchor.south;
+			break;
+		case _ARDUINO_ANCHOR_EAST:
+				return _arduino.anchor.east;
+			break;
+		case _ARDUINO_ANCHOR_WEST:
+				return _arduino.anchor.west;
+			break;
+
+		default:
+			break;
+			}
+	return NAN;
+}
+
+volatile bool SignalkModel::isAlarmTriggered() {
+	if(alarms.windAlarmState>ALRM_ENABLED
+			|| alarms.gpsAlarmState>ALRM_ENABLED
+			|| alarms.gasAlarmState>ALRM_ENABLED
+			|| alarms.anchorAlarmState>ALRM_ENABLED
+			|| alarms.autopilotAlarmState>ALRM_ENABLED
+			|| alarms.engineAlarmState>ALRM_ENABLED
+			|| alarms.maydayAlarmState>ALRM_ENABLED
+			|| alarms.panpanAlarmMethod>ALRM_ENABLED
+			|| alarms.powerAlarmState>ALRM_ENABLED
+			|| alarms.fireAlarmState>ALRM_ENABLED
+			|| alarms.genericAlarmState>ALRM_ENABLED
+			)	return true;
+	return false;
+
+}
+
+volatile bool SignalkModel::isAlarmTriggered(unsigned long key ) {
+	switch (key) {
+
+		case ALARMS_ANCHORALARMSTATE:
+				return (alarms.anchorAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_ENGINEALARMSTATE:
+			return (alarms.engineAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_FIREALARMSTATE:
+			return (alarms.fireAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_GASALARMSTATE:
+			return (alarms.gasAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_GPSALARMSTATE:
+			return (alarms.gpsAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_MAYDAYALARMSTATE:
+			return (alarms.maydayAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_PANPANALARMSTATE:
+			return (alarms.panpanAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_POWERALARMSTATE:
+			return (alarms.powerAlarmState > ALRM_ENABLED);
+			break;
+
+		case ALARMS_WINDALARMSTATE:
+			return (alarms.windAlarmState > ALRM_ENABLED);
+			break;
+		default:
+			break;
+
+	}
+	return false;
+}
 
 unsigned long SignalkModel::hash(const char *str)
 {
@@ -478,714 +752,4 @@ unsigned long SignalkModel::hash(const char *str)
     return hash;
 }
 
-float SignalkModel::getNavigationCourseOverGroundMagnetic() {
-	return navigation.courseOverGroundMagnetic;
-}
-float SignalkModel::getNavigationCourseOverGroundTrue() {
-	return navigation.courseOverGroundTrue;
-}
-float SignalkModel::getNavigationCurrentRouteBearingActual() {
-	return navigation.currentRoute.bearingActual;
-}
-float SignalkModel::getNavigationCurrentRouteBearingDirect() {
-	return navigation.currentRoute.bearingDirect;
-}
-float SignalkModel::getNavigationCurrentRouteCourseRequired() {
-	return navigation.currentRoute.courseRequired;
-}
-long SignalkModel::getNavigationCurrentRouteEta() {
-	return navigation.currentRoute.eta;
-}
-String SignalkModel::getNavigationCurrentRouteRoute() {
-	return navigation.currentRoute.route;
-}
-long SignalkModel::getNavigationCurrentRouteStartTime() {
-	return navigation.currentRoute.startTime;
-}
 
-long SignalkModel::getNavigationCurrentRouteWaypointLastTime() {
-	return navigation.currentRoute.waypoint.lastTime;
-}
-String SignalkModel::getNavigationCurrentRouteWaypointLast() {
-	return navigation.currentRoute.waypoint.last;
-}
-long SignalkModel::getNavigationCurrentRouteWaypointNextEta() {
-	return navigation.currentRoute.waypoint.nextEta;
-}
-String SignalkModel::getNavigationCurrentRouteWaypointNext() {
-	return navigation.currentRoute.waypoint.next;
-}
-float SignalkModel::getNavigationCurrentRouteWaypointXte() {
-	return navigation.currentRoute.waypoint.xte;
-}
-float SignalkModel::getNavigationMagneticVariation() {
-	return navigation.magneticVariation;
-}
-long SignalkModel::getNavigationDestinationEta() {
-	return navigation.destination.eta;
-}
-float SignalkModel::getNavigationDestinationLongitude() {
-	return navigation.destination.longitude;
-}
-float SignalkModel::getNavigationDestinationLatitude() {
-	return navigation.destination.latitude;
-}
-float SignalkModel::getNavigationDestinationAltitude() {
-	return navigation.destination.altitude;
-}
-float SignalkModel::getNavigationDrift() {
-	return navigation.drift;
-}
-
-float SignalkModel::getNavigationHeadingMagnetic() {
-	return navigation.headingMagnetic;
-}
-float SignalkModel::getNavigationHeadingTrue() {
-	return navigation.headingTrue;
-}
-float SignalkModel::getNavigationPositionLongitude() {
-	return navigation.position.longitude;
-}
-float SignalkModel::getNavigationPositionLatitude() {
-	return navigation.position.latitude;
-}
-float SignalkModel::getNavigationPositionAltitude() {
-	return navigation.position.altitude;
-}
-float SignalkModel::getNavigationPitch() {
-	return navigation.pitch;
-}
-float SignalkModel::getNavigationRateOfTurn() {
-	return navigation.rateOfTurn;
-}
-float SignalkModel::getNavigationRoll() {
-	return navigation.roll;
-}
-float SignalkModel::getNavigationSet() {
-	return navigation.set;
-}
-float SignalkModel::getNavigationSpeedOverGround() {
-	return navigation.speedOverGround;
-}
-float SignalkModel::getNavigationSpeedThroughWater() {
-	return navigation.speedThroughWater;
-}
-NavigationStateType SignalkModel::getNavigationState() {
-	return navigation.state;
-}
-float SignalkModel::getSteeringRudderAngle() {
-	return steering.rudderAngle;
-}
-float SignalkModel::getSteeringRudderAngleTarget() {
-	return steering.rudderAngleTarget;
-}
-AutopilotStateType SignalkModel::getSteeringAutopilotState() {
-	return steering.autopilot.state;
-}
-AutopilotModeType SignalkModel::getSteeringAutopilotMode() {
-	return steering.autopilot.mode;
-}
-float SignalkModel::getSteeringAutopilotTargetHeadingNorth() {
-	return steering.autopilot.targetHeadingNorth;
-}
-float SignalkModel::getSteeringAutopilotTargetHeadingMagnetic() {
-	return steering.autopilot.targetHeadingMagnetic;
-}
-float SignalkModel::getSteeringAutopilotAlarmHeadingXte() {
-	return steering.autopilot.alarmHeadingXte;
-}
-AutopilotHeadingSourceType SignalkModel::getSteeringAutopilotHeadingSource() {
-	return steering.autopilot.headingSource;
-}
-float SignalkModel::getSteeringAutopilotDeadZone() {
-	return steering.autopilot.deadZone;
-}
-float SignalkModel::getSteeringAutopilotBacklash() {
-	return steering.autopilot.backlash;
-}
-float SignalkModel::getSteeringAutopilotGain() {
-	return steering.autopilot.gain;
-}
-float SignalkModel::getSteeringAutopilotMaxDriveAmps() {
-	return steering.autopilot.maxDriveAmps;
-}
-float SignalkModel::getSteeringAutopilotMaxDriveRate() {
-	return steering.autopilot.maxDriveRate;
-}
-float SignalkModel::getSteeringAutopilotPortLock() {
-	return steering.autopilot.portLock;
-}
-float SignalkModel::getSteeringAutopilotStarboardLock() {
-	return steering.autopilot.starboardLock;
-}
-AlarmMethodType SignalkModel::getAlarmsAnchorAlarmMethod() {
-	return alarms.anchorAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsAnchorAlarmState() {
-	return alarms.anchorAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsAutopilotAlarmMethod() {
-	return alarms.autopilotAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsAutopilotAlarmState() {
-	return alarms.autopilotAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsEngineAlarmMethod() {
-	return alarms.engineAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsEngineAlarmState() {
-	return alarms.engineAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsFireAlarmMethod() {
-	return alarms.fireAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsFireAlarmState() {
-	return alarms.fireAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsGasAlarmMethod() {
-	return alarms.gasAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsGasAlarmState() {
-	return alarms.gasAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsGpsAlarmMethod() {
-	return alarms.gpsAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsGpsAlarmState() {
-	return alarms.gpsAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsMaydayAlarmMethod() {
-	return alarms.maydayAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsMaydayAlarmState() {
-	return alarms.maydayAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsPanpanAlarmMethod() {
-	return alarms.panpanAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsPanpanAlarmState() {
-	return alarms.panpanAlarmState;
-}
-AlarmMethodType SignalkModel::getAlarmsPowerAlarmMethod() {
-	return alarms.powerAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsPowerAlarmState() {
-	return alarms.powerAlarmState;
-}
-int SignalkModel::getAlarmsSilentInterval() {
-	return alarms.silentInterval;
-}
-AlarmMethodType SignalkModel::getAlarmsWindAlarmMethod() {
-	return alarms.windAlarmMethod;
-}
-AlarmStateType SignalkModel::getAlarmsWindAlarmState() {
-	return alarms.windAlarmState;
-}
-float SignalkModel::getEnvironmentAirPressureChangeRateAlarm() {
-	return environment.airPressureChangeRateAlarm;
-}
-float SignalkModel::getEnvironmentAirPressure() {
-	return environment.airPressure;
-}
-float SignalkModel::getEnvironmentAirTemp() {
-	return environment.airTemp;
-}
-float SignalkModel::getEnvironmentCurrentDirection() {
-	return environment.currentDirection;
-}
-float SignalkModel::getEnvironmentCurrentSpeed() {
-	return environment.currentDirection;
-}
-float SignalkModel::getEnvironmentDepthBelowKeel() {
-	return environment.depth.belowKeel;
-}
-float SignalkModel::getEnvironmentDepthBelowTransducer() {
-	return environment.depth.belowTransducer;
-}
-float SignalkModel::getEnvironmentDepthBelowSurface() {
-	return environment.depth.belowSurface;
-}
-float SignalkModel::getEnvironmentDepthTransducerToKeel() {
-	return environment.depth.transducerToKeel;
-}
-float SignalkModel::getEnvironmentDepthSurfaceToTransducer() {
-	return environment.depth.surfaceToTransducer;
-}
-float SignalkModel::getEnvironmentHumidity() {
-	return environment.humidity;
-}
-float SignalkModel::getEnvironmentSalinity() {
-	return environment.salinity;
-}
-float SignalkModel::getEnvironmentTideHeightHigh() {
-	return environment.tide.heightHigh;
-}
-float SignalkModel::getEnvironmentTideHeightNow() {
-	return environment.tide.heightNow;
-}
-float SignalkModel::getEnvironmentTideHeightLow() {
-	return environment.tide.heightLow;
-}
-long SignalkModel::getEnvironmentTideTimeLow() {
-	return environment.tide.timeLow;
-}
-long SignalkModel::getEnvironmentTideTimeHigh() {
-	return environment.tide.timeHigh;
-}
-float SignalkModel::getEnvironmentWaterTemp() {
-	return environment.waterTemp;
-}
-float SignalkModel::getEnvironmentWindDirectionApparent() {
-	return environment.wind.directionApparent;
-}
-float SignalkModel::getEnvironmentWindDirectionChangeAlarm() {
-	return environment.wind.directionChangeAlarm;
-}
-float SignalkModel::getEnvironmentWindDirectionTrue() {
-	return environment.wind.directionTrue;
-}
-float SignalkModel::getEnvironmentWindSpeedAlarm() {
-	return environment.wind.speedAlarm;
-}
-float SignalkModel::getEnvironmentWindSpeedTrue() {
-	return environment.wind.speedTrue;
-}
-float SignalkModel::getEnvironmentWindSpeedApparent() {
-	return environment.wind.speedApparent;
-}
-
-void SignalkModel::setNavigationCourseOverGroundMagnetic(
-		float navigationCourseOverGroundMagnetic) {
-	navigation.courseOverGroundMagnetic = navigationCourseOverGroundMagnetic;
-}
-
-void SignalkModel::setNavigationCourseOverGroundTrue(
-		float navigationCourseOverGroundTrue) {
-	navigation.courseOverGroundTrue = navigationCourseOverGroundTrue;
-}
-
-void SignalkModel::setNavigationCurrentRouteBearingActual(
-		float navigationCurrentRouteBearingActual) {
-	navigation.currentRoute.bearingActual = navigationCurrentRouteBearingActual;
-}
-
-void SignalkModel::setNavigationCurrentRouteBearingDirect(
-		float navigationCurrentRouteBearingDirect) {
-	navigation.currentRoute.bearingDirect = navigationCurrentRouteBearingDirect;
-}
-
-void SignalkModel::setNavigationCurrentRouteCourseRequired(
-		float navigationCurrentRouteCourseRequired) {
-	navigation.currentRoute.courseRequired =
-			navigationCurrentRouteCourseRequired;
-}
-
-void SignalkModel::setNavigationCurrentRouteEta(
-		long navigationCurrentRouteEta) {
-	navigation.currentRoute.eta = navigationCurrentRouteEta;
-}
-
-void SignalkModel::setNavigationCurrentRouteRoute(
-		String navigationCurrentRouteRoute) {
-	navigation.currentRoute.route = navigationCurrentRouteRoute;
-}
-
-void SignalkModel::setNavigationCurrentRouteStartTime(
-		long navigationCurrentRouteStartTime) {
-	navigation.currentRoute.startTime = navigationCurrentRouteStartTime;
-}
-
-void SignalkModel::setNavigationCurrentRouteWaypointLastTime(
-		long navigationCurrentRouteWaypointLastTime) {
-	navigation.currentRoute.waypoint.lastTime =
-			navigationCurrentRouteWaypointLastTime;
-}
-
-void SignalkModel::setNavigationCurrentRouteWaypointLast(
-		String navigationCurrentRouteWaypointLast) {
-	navigation.currentRoute.waypoint.last = navigationCurrentRouteWaypointLast;
-}
-
-void SignalkModel::setNavigationCurrentRouteWaypointNextEta(
-		long navigationCurrentRouteWaypointNextEta) {
-	navigation.currentRoute.waypoint.nextEta =
-			navigationCurrentRouteWaypointNextEta;
-}
-
-void SignalkModel::setNavigationCurrentRouteWaypointNext(
-		String navigationCurrentRouteWaypointNext) {
-	navigation.currentRoute.waypoint.next = navigationCurrentRouteWaypointNext;
-}
-
-void SignalkModel::setNavigationCurrentRouteWaypointXte(
-		float navigationCurrentRouteWaypointXte) {
-	navigation.currentRoute.waypoint.xte = navigationCurrentRouteWaypointXte;
-}
-
-void SignalkModel::setNavigationMagneticVariation(
-		float navigationMagneticVariation) {
-	navigation.magneticVariation = navigationMagneticVariation;
-}
-
-void SignalkModel::setNavigationDestinationEta(long navigationDestinationEta) {
-	navigation.destination.eta = navigationDestinationEta;
-}
-
-void SignalkModel::setNavigationDestinationLongitude(
-		float navigationDestinationLongitude) {
-	navigation.destination.longitude = navigationDestinationLongitude;
-}
-
-void SignalkModel::setNavigationDestinationLatitude(
-		float navigationDestinationLatitude) {
-	navigation.destination.latitude = navigationDestinationLatitude;
-}
-
-void SignalkModel::setNavigationDestinationAltitude(
-		float navigationDestinationAltitude) {
-	navigation.destination.altitude = navigationDestinationAltitude;
-}
-
-void SignalkModel::setNavigationDrift(float navigationDrift) {
-	navigation.drift = navigationDrift;
-}
-
-void SignalkModel::setNavigationHeadingMagnetic(
-		float navigationHeadingMagnetic) {
-	navigation.headingMagnetic = navigationHeadingMagnetic;
-}
-
-void SignalkModel::setNavigationHeadingTrue(float navigationHeadingTrue) {
-	navigation.headingTrue = navigationHeadingTrue;
-}
-
-void SignalkModel::setNavigationPositionLongitude(
-		float navigationPositionLongitude) {
-	navigation.position.longitude = navigationPositionLongitude;
-}
-
-void SignalkModel::setNavigationPositionLatitude(
-		float navigationPositionLatitude) {
-	navigation.position.latitude = navigationPositionLatitude;
-}
-
-void SignalkModel::setNavigationPositionAltitude(
-		float navigationPositionAltitude) {
-	navigation.position.altitude = navigationPositionAltitude;
-}
-
-void SignalkModel::setNavigationPitch(float navigationPitch) {
-	navigation.pitch = navigationPitch;
-}
-
-void SignalkModel::setNavigationRateOfTurn(float navigationRateOfTurn) {
-	navigation.rateOfTurn = navigationRateOfTurn;
-}
-
-void SignalkModel::setNavigationRoll(float navigationRoll) {
-	navigation.roll = navigationRoll;
-}
-
-void SignalkModel::setNavigationSet(float navigationSet) {
-	navigation.set = navigationSet;
-}
-
-void SignalkModel::setNavigationSpeedOverGround(
-		float navigationSpeedOverGround) {
-	navigation.speedOverGround = navigationSpeedOverGround;
-}
-
-void SignalkModel::setNavigationSpeedThroughWater(
-		float navigationSpeedThroughWater) {
-	navigation.speedThroughWater = navigationSpeedThroughWater;
-}
-
-void SignalkModel::setNavigationState(NavigationStateType navigationState) {
-	navigation.state = navigationState;
-}
-
-void SignalkModel::setSteeringRudderAngle(float steeringRudderAngle) {
-	steering.rudderAngle = steeringRudderAngle;
-}
-
-void SignalkModel::setSteeringRudderAngleTarget(
-		float steeringRudderAngleTarget) {
-	steering.rudderAngleTarget = steeringRudderAngleTarget;
-}
-
-void SignalkModel::setSteeringAutopilotState(
-		AutopilotStateType steeringAutopilotState) {
-	steering.autopilot.state = steeringAutopilotState;
-}
-
-void SignalkModel::setSteeringAutopilotMode(
-		AutopilotModeType steeringAutopilotMode) {
-	steering.autopilot.mode = steeringAutopilotMode;
-}
-
-void SignalkModel::setSteeringAutopilotTargetHeadingNorth(
-		float steeringAutopilotTargetHeadingNorth) {
-	steering.autopilot.targetHeadingNorth = steeringAutopilotTargetHeadingNorth;
-}
-
-void SignalkModel::setSteeringAutopilotTargetHeadingMagnetic(
-		float steeringAutopilotTargetHeadingMagnetic) {
-	steering.autopilot.targetHeadingMagnetic =
-			steeringAutopilotTargetHeadingMagnetic;
-}
-
-void SignalkModel::setSteeringAutopilotAlarmHeadingXte(
-		float steeringAutopilotAlarmHeadingXte) {
-	steering.autopilot.alarmHeadingXte = steeringAutopilotAlarmHeadingXte;
-}
-
-void SignalkModel::setSteeringAutopilotHeadingSource(
-		AutopilotHeadingSourceType steeringAutopilotHeadingSource) {
-	steering.autopilot.headingSource = steeringAutopilotHeadingSource;
-}
-
-void SignalkModel::setSteeringAutopilotDeadZone(
-		float steeringAutopilotDeadZone) {
-	steering.autopilot.deadZone = steeringAutopilotDeadZone;
-}
-
-void SignalkModel::setSteeringAutopilotBacklash(
-		float steeringAutopilotBacklash) {
-	steering.autopilot.backlash = steeringAutopilotBacklash;
-}
-
-void SignalkModel::setSteeringAutopilotGain(float steeringAutopilotGain) {
-	steering.autopilot.gain = steeringAutopilotGain;
-}
-
-void SignalkModel::setSteeringAutopilotMaxDriveAmps(
-		float steeringAutopilotMaxDriveAmps) {
-	steering.autopilot.maxDriveAmps = steeringAutopilotMaxDriveAmps;
-}
-
-void SignalkModel::setSteeringAutopilotMaxDriveRate(
-		float steeringAutopilotMaxDriveRate) {
-	steering.autopilot.maxDriveRate = steeringAutopilotMaxDriveRate;
-}
-
-void SignalkModel::setSteeringAutopilotPortLock(
-		float steeringAutopilotPortLock) {
-	steering.autopilot.portLock = steeringAutopilotPortLock;
-}
-
-void SignalkModel::setSteeringAutopilotStarboardLock(
-		float steeringAutopilotStarboardLock) {
-	steering.autopilot.starboardLock = steeringAutopilotStarboardLock;
-}
-
-void SignalkModel::setAlarmsAnchorAlarmMethod(
-		AlarmMethodType alarmsAnchorAlarmMethod) {
-	alarms.anchorAlarmMethod = alarmsAnchorAlarmMethod;
-}
-
-void SignalkModel::setAlarmsAnchorAlarmState(
-		AlarmStateType alarmsAnchorAlarmState) {
-	alarms.anchorAlarmState = alarmsAnchorAlarmState;
-}
-
-void SignalkModel::setAlarmsAutopilotAlarmMethod(
-		AlarmMethodType alarmsAutopilotAlarmMethod) {
-	alarms.autopilotAlarmMethod = alarmsAutopilotAlarmMethod;
-}
-
-void SignalkModel::setAlarmsAutopilotAlarmState(
-		AlarmStateType alarmsAutopilotAlarmState) {
-	alarms.autopilotAlarmState = alarmsAutopilotAlarmState;
-}
-
-void SignalkModel::setAlarmsEngineAlarmMethod(
-		AlarmMethodType alarmsEngineAlarmMethod) {
-	alarms.engineAlarmMethod = alarmsEngineAlarmMethod;
-}
-
-void SignalkModel::setAlarmsEngineAlarmState(
-		AlarmStateType alarmsEngineAlarmState) {
-	alarms.engineAlarmState = alarmsEngineAlarmState;
-}
-
-void SignalkModel::setAlarmsFireAlarmMethod(
-		AlarmMethodType alarmsFireAlarmMethod) {
-	alarms.fireAlarmMethod = alarmsFireAlarmMethod;
-}
-
-void SignalkModel::setAlarmsFireAlarmState(
-		AlarmStateType alarmsFireAlarmState) {
-	alarms.fireAlarmState = alarmsFireAlarmState;
-}
-
-void SignalkModel::setAlarmsGasAlarmMethod(
-		AlarmMethodType alarmsGasAlarmMethod) {
-	alarms.gasAlarmMethod = alarmsGasAlarmMethod;
-}
-
-void SignalkModel::setAlarmsGasAlarmState(AlarmStateType alarmsGasAlarmState) {
-	alarms.gasAlarmState = alarmsGasAlarmState;
-}
-
-void SignalkModel::setAlarmsGpsAlarmMethod(
-		AlarmMethodType alarmsGpsAlarmMethod) {
-	alarms.gpsAlarmMethod = alarmsGpsAlarmMethod;
-}
-
-void SignalkModel::setAlarmsGpsAlarmState(AlarmStateType alarmsGpsAlarmState) {
-	alarms.gpsAlarmState = alarmsGpsAlarmState;
-}
-
-void SignalkModel::setAlarmsMaydayAlarmMethod(
-		AlarmMethodType alarmsMaydayAlarmMethod) {
-	alarms.maydayAlarmMethod = alarmsMaydayAlarmMethod;
-}
-
-void SignalkModel::setAlarmsMaydayAlarmState(
-		AlarmStateType alarmsMaydayAlarmState) {
-	alarms.maydayAlarmState = alarmsMaydayAlarmState;
-}
-
-void SignalkModel::setAlarmsPanpanAlarmMethod(
-		AlarmMethodType alarmsPanpanAlarmMethod) {
-	alarms.panpanAlarmMethod = alarmsPanpanAlarmMethod;
-}
-
-void SignalkModel::setAlarmsPanpanAlarmState(
-		AlarmStateType alarmsPanpanAlarmState) {
-	alarms.panpanAlarmState = alarmsPanpanAlarmState;
-}
-
-void SignalkModel::setAlarmsPowerAlarmMethod(
-		AlarmMethodType alarmsPowerAlarmMethod) {
-	alarms.powerAlarmMethod = alarmsPowerAlarmMethod;
-}
-
-void SignalkModel::setAlarmsPowerAlarmState(
-		AlarmStateType alarmsPowerAlarmState) {
-	alarms.powerAlarmState = alarmsPowerAlarmState;
-}
-
-void SignalkModel::setAlarmsSilentInterval(int alarmsSilentInterval) {
-	alarms.silentInterval = alarmsSilentInterval;
-}
-
-void SignalkModel::setAlarmsWindAlarmMethod(
-		AlarmMethodType alarmsWindAlarmMethod) {
-	alarms.windAlarmMethod = alarmsWindAlarmMethod;
-}
-
-void SignalkModel::setAlarmsWindAlarmState(
-		AlarmStateType alarmsWindAlarmState) {
-	alarms.windAlarmState = alarmsWindAlarmState;
-}
-
-void SignalkModel::setEnvironmentAirPressureChangeRateAlarm(
-		float environmentAirPressureChangeRateAlarm) {
-	environment.airPressureChangeRateAlarm =
-			environmentAirPressureChangeRateAlarm;
-}
-
-void SignalkModel::setEnvironmentAirPressure(float environmentAirPressure) {
-	environment.airPressure = environmentAirPressure;
-}
-
-void SignalkModel::setEnvironmentAirTemp(float environmentAirTemp) {
-	environment.airTemp = environmentAirTemp;
-}
-
-void SignalkModel::setEnvironmentCurrentDirection(
-		float environmentCurrentDirection) {
-	environment.currentDirection = environmentCurrentDirection;
-}
-
-void SignalkModel::setEnvironmentCurrentSpeed(float environmentCurrentSpeed) {
-	environment.currentDirection = environmentCurrentSpeed;
-}
-
-void SignalkModel::setEnvironmentDepthBelowKeel(
-		float environmentDepthBelowKeel) {
-	environment.depth.belowKeel = environmentDepthBelowKeel;
-}
-
-void SignalkModel::setEnvironmentDepthBelowTransducer(
-		float environmentDepthBelowTransducer) {
-	environment.depth.belowTransducer = environmentDepthBelowTransducer;
-}
-
-void SignalkModel::setEnvironmentDepthBelowSurface(
-		float environmentDepthBelowSurface) {
-	environment.depth.belowSurface = environmentDepthBelowSurface;
-}
-
-void SignalkModel::setEnvironmentDepthTransducerToKeel(
-		float environmentDepthTransducerToKeel) {
-	environment.depth.transducerToKeel = environmentDepthTransducerToKeel;
-}
-
-void SignalkModel::setEnvironmentDepthSurfaceToTransducer(
-		float environmentDepthSurfaceToTransducer) {
-	environment.depth.surfaceToTransducer = environmentDepthSurfaceToTransducer;
-}
-
-void SignalkModel::setEnvironmentHumidity(float environmentHumidity) {
-	environment.humidity = environmentHumidity;
-}
-
-void SignalkModel::setEnvironmentSalinity(float environmentSalinity) {
-	environment.salinity = environmentSalinity;
-}
-
-void SignalkModel::setEnvironmentTideHeightHigh(
-		float environmentTideHeightHigh) {
-	environment.tide.heightHigh = environmentTideHeightHigh;
-}
-
-void SignalkModel::setEnvironmentTideHeightNow(float environmentTideHeightNow) {
-	environment.tide.heightNow = environmentTideHeightNow;
-}
-
-void SignalkModel::setEnvironmentTideHeightLow(float environmentTideHeightLow) {
-	environment.tide.heightLow = environmentTideHeightLow;
-}
-
-void SignalkModel::setEnvironmentTideTimeLow(long environmentTideTimeLow) {
-	environment.tide.timeLow = environmentTideTimeLow;
-}
-
-void SignalkModel::setEnvironmentTideTimeHigh(long environmentTideTimeHigh) {
-	environment.tide.timeHigh = environmentTideTimeHigh;
-}
-
-void SignalkModel::setEnvironmentWaterTemp(float environmentWaterTemp) {
-	environment.waterTemp = environmentWaterTemp;
-}
-
-void SignalkModel::setEnvironmentWindDirectionApparent(
-		float environmentWindDirectionApparent) {
-	environment.wind.directionApparent = environmentWindDirectionApparent;
-}
-
-void SignalkModel::setEnvironmentWindDirectionChangeAlarm(
-		float environmentWindDirectionChangeAlarm) {
-	environment.wind.directionChangeAlarm = environmentWindDirectionChangeAlarm;
-}
-
-void SignalkModel::setEnvironmentWindDirectionTrue(
-		float environmentWindDirectionTrue) {
-	environment.wind.directionTrue = environmentWindDirectionTrue;
-}
-
-void SignalkModel::setEnvironmentWindSpeedAlarm(
-		float environmentWindSpeedAlarm) {
-	environment.wind.speedAlarm = environmentWindSpeedAlarm;
-}
-
-void SignalkModel::setEnvironmentWindSpeedTrue(float environmentWindSpeedTrue) {
-	environment.wind.speedTrue = environmentWindSpeedTrue;
-}
-
-void SignalkModel::setEnvironmentWindSpeedApparent(
-		float environmentWindSpeedApparent) {
-	environment.wind.speedApparent = environmentWindSpeedApparent;
-}

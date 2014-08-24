@@ -52,7 +52,7 @@ NMEARelay talker4(ALL);
 Alarm alarm(&model);
 
 //wind
-Wind wind(&model);
+Wind wind(&signalkModel);
 
 //Gps
 Gps gps(&gpsSource, &model);
@@ -79,7 +79,10 @@ boolean inputSerial4Complete = false; // whether the string is complete
 
 //json support
 //{"navigation":{ "position":{"longitude":173.5, "latitude":-43.5}}}
-static const char* queries[] = {};
+static const char* queries[] = {"alarms.alarms.genericAlarmState",
+					"alarms.genericAlarmMethod",
+					"_arduino.windLastUpdate",
+					"_arduino.windZeroOffset"};
 
 StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
 
@@ -180,11 +183,11 @@ void setup()
 		if (DEBUG) Serial.println("Setup complete..");
 
 		//execute hashing
-		/*for(int x=0; x<80; x++){
+		for(int x=0; x<2; x++){
 			Serial.print(queries[x]);
 			Serial.print("=");
-			Serial.println(hash(queries[x]),DEC);
-		}*/
+			Serial.println(signalkModel.hash(queries[x]),DEC);
+		}
 }
 
 
@@ -203,7 +206,6 @@ void serialEvent() {
 		char inChar = (char) Serial.read();
 		//try out the json reader here
 		jsonreader.process_char(inChar);
-
 
 	}
 
@@ -293,7 +295,7 @@ void loop()
 				//Serial.println(freeMemory());
 				//do every 1000ms
 				anchor.checkAnchor();
-				alarm.checkWindAlarm();
+				wind.checkWindAlarm();
 				alarm.checkLvlAlarms();
 				//nmea.printTrueHeading();
 

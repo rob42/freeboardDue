@@ -34,6 +34,7 @@ typedef unsigned char byte;
 #include <MultiSerial.h>
 #include <SignalkModel.h>
 #include <StreamJsonReader.h>
+#include <Wind.h>
 #include "FreeBoardModel.h"
 #include "NmeaSerial.h"
 #include "Alarm.h"
