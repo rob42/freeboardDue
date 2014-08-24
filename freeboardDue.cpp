@@ -61,7 +61,7 @@ Gps gps(&gpsSource, &signalkModel);
 MultiSerial mSerial1 = MultiSerial(CS_PIN,1); //NMEA4
 //Autopilot
 
-Autopilot autopilot( &model);
+Autopilot autopilot( &signalkModel);
 
 //Anchor
 Anchor anchor(&model);
@@ -91,6 +91,9 @@ static const char* queries[] = {
 					"_arduino.gps.utc",
 					"_arduino.gps.status",
 					"_arduino.gps.decode",
+					"_arduino.autopilot.baudRate",
+					"_arduino.autopilot.offcourse",
+					"_arduino.autopilot.rudderCommand",
 					};
 
 StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
@@ -304,6 +307,8 @@ void loop()
 				//Serial.println(freeMemory());
 				//do every 1000ms
 				anchor.checkAnchor();
+				Serial.println(wind.getWindNmea());
+				//nmea.printNmea(wind.getWindNmea());
 				wind.checkWindAlarm();
 				alarm.checkLvlAlarms();
 				//nmea.printTrueHeading();

@@ -123,7 +123,9 @@
 #define _ARDUINO_GPS_UTC 3UL
 #define _ARDUINO_GPS_STATUS 4UL
 #define _ARDUINO_GPS_DECODE 5UL
-
+#define _ARDUINO_AUTOPILOT_BAUDRATE 6UL
+#define _ARDUINO_AUTOPILOT_OFFCOURSE 7UL
+#define _ARDUINO_AUTOPILOT_RUDDERCOMMAND 8UL
 #define _ARDUINO_WIND_AVERAGE 2851759217UL
 #define _ARDUINO_WIND_FACTOR 1428475061UL
 #define _ARDUINO_WIND_MAX 287358556UL
@@ -187,6 +189,7 @@ public:
 	void setSignalkValue(unsigned long key, char* value);
 	void setSignalkValue(unsigned long key, char value);
 	void setSignalkValue(unsigned long key, float value);
+	void setSignalkValue(unsigned long key, double value);
 	void setSignalkValue(unsigned long key, long value);
 	void setSignalkValue(unsigned long key, unsigned long value);
 	void setSignalkValue(unsigned long key, int value);
@@ -194,9 +197,11 @@ public:
 	bool getSignalkValueBool(unsigned long key);
 	char* getSignalkValueChar(unsigned long key);
 	float getSignalkValueFloat(unsigned long key);
+	double getSignalkValueDouble(unsigned long key);
 	long getSignalkValueLong(unsigned long key);
 	int getSignalkValueInt(unsigned long key);
 	volatile bool isAlarmTriggered() ;
+	volatile bool isAutopilotOn() ;
 	volatile bool isAlarmTriggered(unsigned long key);
 	unsigned long hash(const char *str);
 
@@ -368,6 +373,11 @@ private:
 			float max;
 			float zeroOffset;
 		}wind;
+		struct AutopilotStruct{
+			long baudRate;
+			double offcourse;
+			double rudderCommand;
+		}autopilot;
 
 	}_arduino;
 };

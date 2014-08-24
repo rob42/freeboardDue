@@ -174,6 +174,16 @@ void SignalkModel::setSignalkValue(unsigned long key, char value) {
 	}
 }
 
+void SignalkModel::setSignalkValue(unsigned long key, double value) {
+
+	switch (key) {
+
+		case _ARDUINO_AUTOPILOT_OFFCOURSE:
+			_arduino.autopilot.offcourse=value;
+		break;
+	}
+}
+
 void SignalkModel::setSignalkValue(char* attribute, char* value) {
 	unsigned long key = hash(attribute);
 	setSignalkValue(key,value);
@@ -383,6 +393,9 @@ void SignalkModel::setSignalkValue(unsigned long key, long value) {
 			break;
 		case _ARDUINO_ALARM_SNOOZE:
 			_arduino.alarm.snooze = (long)value;
+			break;
+		case _ARDUINO_AUTOPILOT_BAUDRATE:
+			_arduino.autopilot.baudRate = (long)value;
 			break;
 	}
 }
@@ -601,6 +614,18 @@ long SignalkModel::getSignalkValueLong(unsigned long key){
 	return NAN;
 }
 
+double SignalkModel::getSignalkValueDouble(unsigned long key){
+	switch (key) {
+		case _ARDUINO_AUTOPILOT_OFFCOURSE:
+			return _arduino.autopilot.offcourse;
+			break;
+		case _ARDUINO_AUTOPILOT_RUDDERCOMMAND:
+			return _arduino.autopilot.rudderCommand;
+			break;
+	}
+	return NAN;
+}
+
 float SignalkModel::getSignalkValueFloat(unsigned long key){
 	switch (key) {
 
@@ -738,6 +763,11 @@ float SignalkModel::getSignalkValueFloat(unsigned long key){
 	return NAN;
 }
 
+volatile bool SignalkModel::isAutopilotOn() {
+	if(steering.autopilot.state==AP_OFF)
+			return false;
+	return true;
+}
 volatile bool SignalkModel::isAlarmTriggered() {
 	if(alarms.windAlarmState>ALRM_ENABLED
 			|| alarms.gpsAlarmState>ALRM_ENABLED

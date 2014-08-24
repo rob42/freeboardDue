@@ -42,6 +42,7 @@ class Wind {
 
 public:
 	Wind( SignalkModel* model);
+	char* getWindNmea();
 	void calcWindSpeedAndDir();
 	void calcWindData();
 	void readWindDataSpeed();
@@ -55,7 +56,9 @@ public:
 	int getRotationalAverage();
 	void checkWindAlarm();
 private:
-
+	byte getChecksum(char* str);
+	char windSentence [30];
+	byte cs;
 	SignalkModel* model;
 
 };

@@ -35,9 +35,9 @@ try to keep the boat on this target heading.
 
 #include "Arduino.h"
 
-#include "FreeboardConstants.h"
-#include "FreeBoardModel.h"
-#include "Gps.h"
+//#include "FreeboardConstants.h"
+#include <SignalkModel.h>
+#include <Gps.h>
 #include <PID_v1.h>
 #include <Kangaroo.h>
 #include <MultiSerial.h>
@@ -56,9 +56,11 @@ try to keep the boat on this target heading.
 #define I_Param  0.08 //manual response time (in Seconds)/4. How fast it reacts.
 #define D_Param  0.52 //aggressive factor. Dampen oscillations. Change sign to invert command direction
 
+#define CS_PIN 67 //analog A13
+
 class Autopilot {
 public:
-	Autopilot(FreeBoardModel* model);
+	Autopilot(SignalkModel* model);
 	~Autopilot();
 	void calcAutoPilot();
 	double getRudderCorrection();
@@ -77,7 +79,7 @@ private:
 	int inputSerialPos;
 	int inputAutopilotPos;
 
-	FreeBoardModel* model;
+	SignalkModel* model;
 	PID headingPid;
 };
 

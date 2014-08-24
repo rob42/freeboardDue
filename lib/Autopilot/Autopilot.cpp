@@ -58,7 +58,7 @@ MultiSerial mSerial0 = MultiSerial(CS_PIN,0); //autopilot
 KangarooSerial  K(mSerial0);
 KangarooChannel K1(K, '1');
 
-Autopilot::Autopilot(FreeBoardModel* model) {
+Autopilot::Autopilot(SignalkModel* model) {
 	//this->serial=serial;
 	this->model = model;
 	//set defaults
@@ -76,11 +76,11 @@ void Autopilot::init() {
 	this->inputAutopilotPos=0;
 	this->inputSerialPos=0;
 	if (DEBUG) Serial.println("Init autopilot..");
-	mSerial0.begin(this->model->getAutopilotBaud());
+	mSerial0.begin(this->model->getSignalkValueLong(_ARDUINO_AUTOPILOT_BAUDRATE));
 	delay(100);
-	autopilotTargetHeading = model->getAutopilotTargetHeading() + 720;
-	autopilotCurrentHeading = autopilotTargetHeading + model->getAutopilotOffCourse();
-	autopilotRudderCommand = model->getAutopilotRudderCommand();
+	autopilotTargetHeading = model->getSignalkValueFloat(STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC) + 720;
+	autopilotCurrentHeading = autopilotTargetHeading + model->getSignalkValueDouble(_ARDUINO_AUTOPILOT_OFFCOURSE);
+	autopilotRudderCommand = model->getSignalkValueDouble(_ARDUINO_AUTOPILOT_RUDDERCOMMAND);
 	lastDirection=true;
 	if (DEBUG) Serial.println("Init autopilot..start PID..");
 	this->headingPid = PID(&autopilotCurrentHeading, &autopilotRudderCommand, &autopilotTargetHeading, P_Param, I_Param, D_Param, REVERSE);
@@ -100,11 +100,11 @@ void Autopilot::calcAutoPilot() {
 		this->autopilotEvent();
 		//does nothing if its already on, inits if off
 		headingPid.SetMode(AUTOMATIC);
-		autopilotTargetHeading = model->getAutopilotTargetHeading() + 720;
-		autopilotCurrentHeading = autopilotTargetHeading + model->getAutopilotOffCourse();
+		autopilotTargetHeading = model->getSignalkValueFloat(STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC) + 720;
+		autopilotCurrentHeading = autopilotTargetHeading + model->getSignalkValueDouble(_ARDUINO_AUTOPILOT_OFFCOURSE);
 		headingPid.Compute();
 		//check deadzone
-		if (abs(autopilotRudderCommand - lastRudderCommand) > model->getAutopilotDeadZone()) {
+		if (abs(autopilotRudderCommand - lastRudderCommand) > model->getSignalkValueFloat(STEERING_AUTOPILOT_DEADZONE)) {
 			//then we move the rudder.
 			//is it changing movement direction, we need to compensate for slack
 			if (lastDirection && autopilotRudderCommand > lastRudderCommand) {
@@ -113,20 +113,20 @@ void Autopilot::calcAutoPilot() {
 			}else if (lastDirection && autopilotRudderCommand < lastRudderCommand) {
 				//changed direction to port, subtract slack
 				lastDirection = false;
-				lastRudderCommand = autopilotRudderCommand - model->getAutopilotSlack();
+				lastRudderCommand = autopilotRudderCommand - model->getSignalkValueFloat(STEERING_AUTOPILOT_BACKLASH);
 			}else if (!lastDirection && autopilotRudderCommand < lastRudderCommand) {
 				//same direction to port
 				lastRudderCommand = autopilotRudderCommand;
 			}else if (!lastDirection && autopilotRudderCommand > lastRudderCommand) {
 				//changed direction to stbd, add slack
 				lastDirection = true;
-				lastRudderCommand = autopilotRudderCommand + model->getAutopilotSlack();
+				lastRudderCommand = autopilotRudderCommand + model->getSignalkValueFloat(STEERING_AUTOPILOT_BACKLASH);
 			}
 			//constrain(lastRudderCommand,0.0,66.0);
 			//update model
-			model->setAutopilotRudderCommand(lastRudderCommand);
+			model->setSignalkValue(_ARDUINO_AUTOPILOT_RUDDERCOMMAND, lastRudderCommand);
 			//tell the kangaroo
-			K1.p(lastRudderCommand*100, model->getAutopilotSpeed());
+			K1.p(lastRudderCommand*100, model->getSignalkValueFloat(STEERING_AUTOPILOT_MAXDRIVERATE));
 		}
 
 	} else {

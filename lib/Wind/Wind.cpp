@@ -364,3 +364,48 @@ void Wind::checkWindAlarm(){
 }
 
 
+/*=== MWV - Wind Speed and Angle ===
+ *
+ * ------------------------------------------------------------------------------
+ *        1   2 3   4 5
+ *         |   | |   | |
+ *  $--MWV,x.x,a,x.x,a*hh<CR><LF>
+ * ------------------------------------------------------------------------------
+ *
+ * Field Number:
+ *
+ * 1. Wind Angle, 0 to 360 degrees
+ * 2. Reference, R = Relative, T = True
+ * 3. Wind Speed
+ * 4. Wind Speed Units, K/M/N
+ * 5. Status, A = Data Valid
+ * 6. Checksum
+ *
+ */
+char* Wind::getWindNmea() {
+	//Assemble a sentence of the various parts so that we can calculate the proper checksum
+
+	PString str(windSentence, sizeof(windSentence));
+	str.print("$WIMWV,");
+	str.print(model->getSignalkValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT));
+	str.print(",R,");
+	str.print(model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDAPPARENT));
+	str.print(",N,A*");
+	//calculate the checksum
+
+	cs = getChecksum(windSentence); //clear any old checksum
+	//bug - arduino prints 0x007 as 7, 0x02B as 2B, so we add it now
+	if (cs < 0x10) str.print('0');
+	str.print(cs, HEX); // Assemble the final message and send it out the serial port
+	return windSentence;
+
+}
+
+byte Wind::getChecksum(char* str) {
+	byte cs = 0; //clear any old checksum
+	for (unsigned int n = 1; n < strlen(str) - 1; n++) {
+		cs ^= str[n]; //calculates the checksum
+	}
+	return cs;
+}
+

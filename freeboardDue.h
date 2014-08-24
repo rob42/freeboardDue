@@ -42,7 +42,7 @@ typedef unsigned char byte;
 #include <Gps.h>
 #include "Anchor.h"
 #include "NmeaRelay.h"
-#include "Autopilot.h"
+#include <Autopilot.h>
 /*
 #include <EEPROM.h>
 #include "Seatalk.h"
