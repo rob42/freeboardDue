@@ -61,6 +61,14 @@ KangarooChannel K1(K, '1');
 Autopilot::Autopilot(FreeBoardModel* model) {
 	//this->serial=serial;
 	this->model = model;
+	//set defaults
+	this->inputAutopilotPos=0;
+	this->inputSerialPos=0;
+	autopilotTargetHeading = 0.0;
+	autopilotCurrentHeading = 0.0;
+	autopilotRudderCommand = 0.0;
+	lastDirection=true;
+	lastRudderCommand=0.0;
 }
 
 void Autopilot::init() {

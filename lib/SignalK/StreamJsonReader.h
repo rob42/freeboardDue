@@ -24,13 +24,10 @@
 #define TYPE_NUMERIC 2
 #define TYPE_BOOLEAN 3
 
-//#include "lasote/stringutils/cstringutils.h"
+
 #include <HardwareSerial.h>
-#include "../../SignalkModel.h"
+#include "SignalkModel.h"
 
-//using namespace cstringutils;
-
-namespace stream_json_reader {
 
 class StreamJsonReader {
 public:
@@ -99,6 +96,6 @@ private:
 
 //void append_to(char* string, char c, int max_size);
 int atoi(char c);
-}
+
 
 #endif /* STREAM_JSON_READER_H_ */

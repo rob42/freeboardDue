@@ -19,7 +19,7 @@
  */
 // Do not remove the include below
 #include "freeboardDue.h"
-using namespace stream_json_reader;
+
 
 volatile boolean execute = false;
 volatile int interval = 0;
@@ -449,13 +449,3 @@ byte getChecksum(char* str) {
 	return cs;
 }
 
-unsigned long hash(const char *str)
-{
-    unsigned long hash = 5381;
-    int c;
-
-    while ((c = *str++))
-        hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
-
-    return hash;
-}

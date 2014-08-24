@@ -29,7 +29,8 @@
 #define SIGNALKMODEL_H_
 
 #include "Arduino.h"
-#include "FreeboardConstants.h"
+//#include "StreamJsonReader.h"
+//#include "FreeboardConstants.h"
 
 typedef enum {ALRM_MESSAGE,ALRM_SOUND,ALRM_SMS,ALRM_EMAIL,ALRM_DSC} AlarmMethodType;
 static const char *AlarmMethodString[] = {"message", "sound","sms","email","dsc",};
@@ -77,6 +78,7 @@ public:
 	void setSignalkValue(char* attribute, float value);
 	//void setSignalkValue(char* attribute, long value);
 	//void setSignalkValue(char* attribute, int value);
+	unsigned long hash(const char *str);
 	float getNavigationCourseOverGroundMagnetic();
 	float getNavigationCourseOverGroundTrue();
 	float getNavigationCurrentRouteBearingActual();

@@ -29,12 +29,11 @@
 //add your includes for the project freeboardDue here
 typedef unsigned char byte;
 
-#include "Arduino.h"
-//add your includes for the project  here
 #include "FreeboardConstants.h"
 #include <DueTimer.h>
 #include <MultiSerial.h>
-#include <stream_json_reader.h>
+#include <SignalkModel.h>
+#include <StreamJsonReader.h>
 #include "FreeBoardModel.h"
 #include "NmeaSerial.h"
 #include "Alarm.h"

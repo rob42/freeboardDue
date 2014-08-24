@@ -11,16 +11,13 @@
  *
  */
 
-#include "stream_json_reader.h"
+#include "StreamJsonReader.h"
 #include <math.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 
 
-//using namespace std;
-
-namespace stream_json_reader {
 
 	StreamJsonReader::StreamJsonReader(HardwareSerial* serial, SignalkModel* model,
 									  const char* queries[],
@@ -499,4 +496,3 @@ namespace stream_json_reader {
 	        return true;
 	    }
 
-} /* namespace weather_reader */

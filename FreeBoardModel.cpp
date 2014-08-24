@@ -273,15 +273,16 @@ int FreeBoardModel::receiveData(HardwareSerial& ser, char name) {
 }
 
 template<class T> int EEPROM_writeAnything(int ee, T& value) {
-	unsigned char* p = (unsigned char*) (void*) &value;
+	//unsigned char* p = (unsigned char*) (void*) &value;
 	unsigned int i;
-	for (i = 0; i < sizeof(value); i++)
+	for (i = 0; i < sizeof(value); i++){
 		//EEPROM.write(ee++, *p++);
+	}
 	return i;
 }
 //saving
 template<class T> int EEPROM_readAnything(int ee, T& value) {
-	unsigned char* p = (unsigned char*) (void*) &value;
+	//unsigned char* p = (unsigned char*) (void*) &value;
 	unsigned int i;
 	for (i = 0; i < sizeof(value); i++)
 		//*p++ = EEPROM.read(ee++);
@@ -296,15 +297,15 @@ void FreeBoardModel::saveConfig() {
 
 void FreeBoardModel::readConfig() {
 	//check versions here
-	int ver;
-	EEPROM_readAnything(0, ver);
-	if (ver != version) {
+	//int ver;
+	//EEPROM_readAnything(0, ver);
+	//if (ver != version) {
 		//save a default config, since we cant read the old one safely
-		saveConfig();
-	}
+	//	saveConfig();
+	//}
 
 	//now we know its compatible
-	EEPROM_readAnything(EEPROM_DATA, config);
+	//EEPROM_readAnything(EEPROM_DATA, config);
 
 }
 
