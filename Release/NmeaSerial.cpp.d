@@ -139,13 +139,13 @@ NmeaSerial.cpp.d: ../NmeaSerial.cpp ../NmeaSerial.h \
  /home/robert/gitrep/freeboardDue/lib/MultiSerial/MultiSerial.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Stream.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h \
- /home/robert/gitrep/freeboardDue/lib/JsonStream/stream_json_reader.h \
+ /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h \
+ /home/robert/gitrep/freeboardDue/lib/SignalK/StreamJsonReader.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/HardwareSerial.h \
- /home/robert/gitrep/freeboardDue/lib/JsonStream/../../SignalkModel.h \
- /home/robert/gitrep/freeboardDue/lib/JsonStream/../../FreeboardConstants.h \
- ../Alarm.h ../Wind.h \
- /home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h ../Gps.h \
- ../Anchor.h ../NmeaRelay.h ../Autopilot.h \
+ /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h \
+ /home/robert/gitrep/freeboardDue/lib/Wind/Wind.h \
+ /home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h \
+ ../Alarm.h ../Gps.h ../Anchor.h ../NmeaRelay.h ../Autopilot.h \
  /home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h \
  /home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h
 
@@ -435,19 +435,19 @@ NmeaSerial.cpp.d: ../NmeaSerial.cpp ../NmeaSerial.h \
 
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h:
 
-/home/robert/gitrep/freeboardDue/lib/JsonStream/stream_json_reader.h:
+/home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h:
+
+/home/robert/gitrep/freeboardDue/lib/SignalK/StreamJsonReader.h:
 
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/HardwareSerial.h:
 
-/home/robert/gitrep/freeboardDue/lib/JsonStream/../../SignalkModel.h:
+/home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h:
 
-/home/robert/gitrep/freeboardDue/lib/JsonStream/../../FreeboardConstants.h:
-
-../Alarm.h:
-
-../Wind.h:
+/home/robert/gitrep/freeboardDue/lib/Wind/Wind.h:
 
 /home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h:
+
+../Alarm.h:
 
 ../Gps.h:
 

@@ -135,20 +135,12 @@ Autopilot.cpp.d: ../Autopilot.cpp ../Autopilot.h \
  /home/robert/gitrep/freeboardDue/lib/NMEA/nmea.h ../Gps.h \
  /home/robert/gitrep/freeboardDue/lib/PString/PString.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Print.h \
- ../freeboardDue.h \
- /home/robert/gitrep/freeboardDue/lib/DueTimer/DueTimer.h \
+ /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h \
+ /home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h \
+ /home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h \
  /home/robert/gitrep/freeboardDue/lib/MultiSerial/MultiSerial.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Stream.h \
- /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h \
- /home/robert/gitrep/freeboardDue/lib/JsonStream/stream_json_reader.h \
- /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/HardwareSerial.h \
- /home/robert/gitrep/freeboardDue/lib/JsonStream/../../SignalkModel.h \
- /home/robert/gitrep/freeboardDue/lib/JsonStream/../../FreeboardConstants.h \
- ../NmeaSerial.h ../Alarm.h ../Wind.h \
- /home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h \
- ../Anchor.h ../NmeaRelay.h \
- /home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h \
- /home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h
+ /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h
 
 ../Autopilot.h:
 
@@ -428,36 +420,14 @@ Autopilot.cpp.d: ../Autopilot.cpp ../Autopilot.h \
 
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Print.h:
 
-../freeboardDue.h:
+/home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h:
 
-/home/robert/gitrep/freeboardDue/lib/DueTimer/DueTimer.h:
+/home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h:
+
+/home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h:
 
 /home/robert/gitrep/freeboardDue/lib/MultiSerial/MultiSerial.h:
 
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Stream.h:
 
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h:
-
-/home/robert/gitrep/freeboardDue/lib/JsonStream/stream_json_reader.h:
-
-/home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/HardwareSerial.h:
-
-/home/robert/gitrep/freeboardDue/lib/JsonStream/../../SignalkModel.h:
-
-/home/robert/gitrep/freeboardDue/lib/JsonStream/../../FreeboardConstants.h:
-
-../NmeaSerial.h:
-
-../Alarm.h:
-
-../Wind.h:
-
-/home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h:
-
-../Anchor.h:
-
-../NmeaRelay.h:
-
-/home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h:
-
-/home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h:

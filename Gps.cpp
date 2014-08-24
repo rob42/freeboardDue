@@ -22,7 +22,7 @@ PString gpsStr(gpsBuffer, sizeof(gpsBuffer));
 
 Gps::~Gps() {
 }
-Gps::Gps(NMEA* gpsSource, FreeBoardModel* model) {
+Gps::Gps(NMEA* gpsSource, SignalkModel* model) {
 
 	this->model = model;
 	this->gpsSource = gpsSource;
@@ -172,7 +172,7 @@ void Gps::setupGps() {
 	//now flush and restart
 	Serial1.flush();
 	Serial1.end();
-	Serial1.begin(model->getSerialBaud1());
+	Serial1.begin(model->getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
 	//Serial1.begin(38400, SERIAL_8N1);
 }
 
@@ -201,21 +201,22 @@ float Gps::getMetersTo(float targetLat, float targetLon, float currentLat, float
 
 bool Gps::decode(byte inByte) {
 	// check if the character completes a valid GPS sentence
-	model->setGpsDecode(gpsSource->decode(inByte));
+	bool dc = (gpsSource->decode(inByte)!=0);
+	model->setSignalkValue(_ARDUINO_GPS_DECODE,dc);
 	//if(DEBUG)
 	//Serial.println(inByte);
-	if (model->isGpsDecode()) {
-		model->setGpsStatus(gpsSource->gprmc_status());
+	if (dc) {
+		model->setSignalkValue(_ARDUINO_GPS_STATUS, gpsSource->gprmc_status());
 		if (gpsSource->gprmc_status() == 'A' && gpsSource->term(0)[2] != 'R' && gpsSource->term(0)[3] != 'M' && gpsSource->term(0)[4] != 'C') {
-			model->setGpsLastFix(millis());
-			model->setGpsCourse(gpsSource->gprmc_course());
-			model->setGpsLatitude(gpsSource->gprmc_latitude());
-			model->setGpsLongitude(gpsSource->gprmc_longitude());
-			model->setGpsSpeed(gpsSource->gprmc_speed(model->getGpsSpeedUnit()));
-			model->setGpsUtc(gpsSource->gprmc_utc());
+			model->setSignalkValue(_ARDUINO_GPS_LASTFIX,millis());
+			model->setSignalkValue(NAVIGATION_COURSEOVERGROUNDTRUE, gpsSource->gprmc_course());
+			model->setSignalkValue(NAVIGATION_POSITION_LATITUDE,gpsSource->gprmc_latitude());
+			model->setSignalkValue(NAVIGATION_POSITION_LONGITUDE,gpsSource->gprmc_longitude());
+			model->setSignalkValue(NAVIGATION_SPEEDOVERGROUND,gpsSource->gprmc_speed(KTS));
+			model->setSignalkValue(_ARDUINO_GPS_UTC, gpsSource->gprmc_utc());
 		}
 	}
-	return model->isGpsDecode();
+	return dc;
 }
 
 /*
@@ -281,10 +282,11 @@ PString Gps::getLonString(float lon, int decimals, int padding, PString str) {
 void Gps::setupGpsImpl(){
 	//setup based on GPS type - probably wants a more modular way if many GPS types appear
 	Serial.println("Setting GPS config..." );
-	if(GPS_GENERIC == model->getGpsModel()){
+	int gpsModel = model->getSignalkValueInt(_ARDUINO_GPS_MODEL);
+	if(GPS_GENERIC == gpsModel){
 			Serial.println("Setting GPS to GENERIC" );
 	}
-	if(GPS_EM_406A == model->getGpsModel()){
+	if(GPS_EM_406A == gpsModel){
 		Serial.println("Setting GPS to EM_406A" );
 		//Serial1.begin(38400, 8, 1, 0); //gps
 		//set debug on
@@ -318,7 +320,7 @@ void Gps::setupGpsImpl(){
 		char gpsSentence [30];
 		PString str(gpsSentence, sizeof(gpsSentence));
 		str.print("$PSRF100,1,");
-		str.print(model->getSerialBaud1());
+		str.print(model->getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
 		str.print(",8,1,0*");
 		//calculate the checksum
 		byte cs = getChecksum(gpsSentence); //clear any old checksum
@@ -329,7 +331,7 @@ void Gps::setupGpsImpl(){
 		//Serial1.println("$PSRF100,1,38400,8,1,0*3D");
 		Serial.println(gpsSentence);
 	}
-	if(GPS_MTEK_3329 == model->getGpsModel()){
+	if(GPS_MTEK_3329 == gpsModel){
 		Serial.println("Setting GPS to MTEK_3329");
 		//setting update rate to 1Hz
 		Serial1.println("$PMTK220,1000*1F");
@@ -353,7 +355,7 @@ void Gps::setupGpsImpl(){
 		char gpsSentence [30];
 		PString str(gpsSentence, sizeof(gpsSentence));
 		str.print("$PMTK251,");
-		str.print(model->getSerialBaud1());
+		str.print(model->getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
 		str.print("*");
 		//calculate the checksum
 		byte cs = getChecksum(gpsSentence); //clear any old checksum
@@ -363,4 +365,13 @@ void Gps::setupGpsImpl(){
 		Serial1.println(gpsSentence);
 
 	}
+
+
 }
+byte Gps::getChecksum(char* str) {
+		byte cs = 0; //clear any old checksum
+		for (unsigned int n = 1; n < strlen(str) - 1; n++) {
+			cs ^= str[n]; //calculates the checksum
+		}
+		return cs;
+	}

@@ -27,8 +27,19 @@
 
 #ifndef SIGNALKMODEL_H_
 #define SIGNALKMODEL_H_
-
+#define DEBUG true
 #include "Arduino.h"
+
+//uncomment to support different GPS
+#define GPS_GENERIC 0
+#define GPS_EM_406A 1
+#define GPS_MTEK_3329 2
+
+//EM406A pin 3 = RX to arduino TX - pin18, RX to pin19
+//GPS pins are Serial1
+#define GPS_RX_PIN 19
+#define GPS_TX_PIN 18
+
 //#include "StreamJsonReader.h"
 //#include "FreeboardConstants.h"
 #define NAVIGATION_COURSEOVERGROUNDMAGNETIC 177632231UL
@@ -84,6 +95,9 @@
 #define ALARMS_SILENTINTERVAL 357415143UL
 #define ALARMS_WINDALARMMETHOD 1899960179UL
 #define ALARMS_WINDALARMSTATE 3449122451UL
+//TODO: hash codes
+#define ALARMS_GENERICALARMMETHOD 6UL
+#define ALARMS_GENERICALARMSTATE 7UL
 #define ENVIRONMENT_WIND_DIRECTIONAPPARENT 3267532580UL
 #define ENVIRONMENT_WIND_DIRECTIONCHANGEALARM 4209206332UL
 #define ENVIRONMENT_WIND_DIRECTIONTRUE 1752542857UL
@@ -103,12 +117,16 @@
 #define _ARDUINO_ALARM_LEVEL3_LOWER 382252737UL
 #define _ARDUINO_SEATALK 3540059849UL
 //TODO: get hash
-#define _ARDUINO_WINDZEROOFFSET 0UL
-#define _ARDUINO_WINDLASTUPDATE 0UL
+#define _ARDUINO_WIND_ZEROOFFSET 0UL
+#define _ARDUINO_WIND_LASTUPDATE 1UL
+#define _ARDUINO_GPS_LASTFIX 1UL
+#define _ARDUINO_GPS_UTC 3UL
+#define _ARDUINO_GPS_STATUS 4UL
+#define _ARDUINO_GPS_DECODE 5UL
 
-#define _ARDUINO_WINDAVERAGE 2851759217UL
-#define _ARDUINO_WINDFACTOR 1428475061UL
-#define _ARDUINO_WINDMAX 287358556UL
+#define _ARDUINO_WIND_AVERAGE 2851759217UL
+#define _ARDUINO_WIND_FACTOR 1428475061UL
+#define _ARDUINO_WIND_MAX 287358556UL
 #define _ARDUINO_ALARM_SNOOZE 2215576829UL
 #define _ARDUINO_ANCHOR_RADIUSDEG 439059557UL
 #define _ARDUINO_ANCHOR_NORTH 3020492120UL
@@ -159,14 +177,18 @@ public:
 	SignalkModel();
 	void setSignalkValue(char* attribute, bool value);
 	void setSignalkValue(char* attribute, char* value);
+	void setSignalkValue(char* attribute, char value);
 	void setSignalkValue(char* attribute, float value);
 	void setSignalkValue(char* attribute, long value);
+	void setSignalkValue(char* attribute, unsigned long value);
 	void setSignalkValue(char* attribute, int value);
 
 	void setSignalkValue(unsigned long key, bool value);
 	void setSignalkValue(unsigned long key, char* value);
+	void setSignalkValue(unsigned long key, char value);
 	void setSignalkValue(unsigned long key, float value);
 	void setSignalkValue(unsigned long key, long value);
+	void setSignalkValue(unsigned long key, unsigned long value);
 	void setSignalkValue(unsigned long key, int value);
 
 	bool getSignalkValueBool(unsigned long key);
@@ -312,7 +334,11 @@ private:
 
 	struct ConfigStruct {
 		struct GpsStruct {
+			bool decode;
 			int model;
+			unsigned long lastFix;
+			unsigned long utc;
+			char status;
 		}gps;
 		struct SerialStruct{
 			long baud0;
@@ -335,11 +361,13 @@ private:
 			float west;
 		}anchor;
 		bool seatalk;
-		long windLastUpdate;
-		float windAverage;
-		float windFactor;
-		float windMax;
-		float windZeroOffset;
+		struct WindStruct{
+			long lastUpdate;
+			float average;
+			float factor;
+			float max;
+			float zeroOffset;
+		}wind;
 
 	}_arduino;
 };
@@ -347,6 +375,11 @@ private:
 
 
 			/*
+gpsState.gpsDecode = false; //flag to indicate a new sentence was decoded.
+	gpsState.gpsLastFix = 0; //time of last good gps fix.
+	gpsState.gpsUtc = 0; // decimal value of UTC term in last full GPRMC sentence
+	gpsState.gpsStatus = 'V'; //  status character in last full GPRMC sentence ('A' or 'V')
+
 
 			"_arduino.gps.model",
 			"_arduino.serial.baud0",

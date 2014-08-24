@@ -301,12 +301,12 @@ void Wind::calcWindData() {
 	if (millis() < lastSpeedPulse) lastSpeedPulse = millis();
 	if (millis() < lastDirPulse) lastDirPulse = millis();
 
-	model->setSignalkValue(_ARDUINO_WINDLASTUPDATE, (long)millis());
+	model->setSignalkValue(_ARDUINO_WIND_LASTUPDATE, (long)millis());
 
 //convert to windAverage
 	if (millis() - lastSpeedPulse > 3000) {
 		//no rotation, no wind
-		model->setSignalkValue(_ARDUINO_WINDAVERAGE,0);
+		model->setSignalkValue(_ARDUINO_WIND_AVERAGE,0);
 		//Serial.println("Wind speed reset");
 	} else {
 		//windSpeedDur is type long -  max sensor value = 3000000 micros
@@ -319,23 +319,23 @@ void Wind::calcWindData() {
 			if (windSpeedRps < 323) {
 				//need extra accuracy here, zero is very unlikely
 				windSpeedRps = windSpeedRps * 10;
-				model->setSignalkValue(_ARDUINO_WINDAVERAGE,(((((windSpeedRps * windSpeedRps) / -105) + ((25476 * windSpeedRps) / 100) - 12260)) / model->getSignalkValueFloat(_ARDUINO_WINDFACTOR)/10));
+				model->setSignalkValue(_ARDUINO_WIND_AVERAGE,(((((windSpeedRps * windSpeedRps) / -105) + ((25476 * windSpeedRps) / 100) - 12260)) / model->getSignalkValueFloat(_ARDUINO_WIND_FACTOR)/10));
 			} else if (windSpeedRps < 5436) {
 				//rps2 = min 10426441, max 30,864,197, cant get div/0 here?
-				model->setSignalkValue(_ARDUINO_WINDAVERAGE,(((windSpeedRps * windSpeedRps) / 2222) + ((19099 * windSpeedRps) / 100) + 9638) / model->getSignalkValueFloat(_ARDUINO_WINDFACTOR));
+				model->setSignalkValue(_ARDUINO_WIND_AVERAGE,(((windSpeedRps * windSpeedRps) / 2222) + ((19099 * windSpeedRps) / 100) + 9638) / model->getSignalkValueFloat(_ARDUINO_WIND_FACTOR));
 			} else {
-				model->setSignalkValue(_ARDUINO_WINDAVERAGE,((((windSpeedRps * windSpeedRps) / 1042) * 100) - (8314700 * windSpeedRps) + 2866500) / model->getSignalkValueFloat(_ARDUINO_WINDFACTOR));
+				model->setSignalkValue(_ARDUINO_WIND_AVERAGE,((((windSpeedRps * windSpeedRps) / 1042) * 100) - (8314700 * windSpeedRps) + 2866500) / model->getSignalkValueFloat(_ARDUINO_WIND_FACTOR));
 			}
 		}
 		//update gusts
-		if (model->getSignalkValueFloat(_ARDUINO_WINDAVERAGE) > model->getSignalkValueFloat(_ARDUINO_WINDMAX)) model->setSignalkValue(_ARDUINO_WINDMAX,model->getSignalkValueFloat(_ARDUINO_WINDAVERAGE));
+		if (model->getSignalkValueFloat(_ARDUINO_WIND_AVERAGE) > model->getSignalkValueFloat(_ARDUINO_WIND_MAX)) model->setSignalkValue(_ARDUINO_WIND_MAX,model->getSignalkValueFloat(_ARDUINO_WIND_AVERAGE));
 
 		// calc direction, in degrees clockwise
 		//should round to int, min 1
 		int dir = (int) getRotationalAverage();
 		//limit to +-360, after adjust zero
 		//C = A – B * (A / B)
-		dir = (dir + model->getSignalkValueFloat(_ARDUINO_WINDZEROOFFSET)); // %360;
+		dir = (dir + model->getSignalkValueFloat(_ARDUINO_WIND_ZEROOFFSET)); // %360;
 		//if (dir != 0) {
 		//	dir = dir - 360 * (dir / 360);
 		//}
@@ -352,7 +352,7 @@ void Wind::checkWindAlarm(){
 		if (!model->isAlarmTriggered(ALARMS_WINDALARMSTATE))return;
 
 		if (model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM) > 0
-				&& model->getSignalkValueFloat(_ARDUINO_WINDAVERAGE) > model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM)) {
+				&& model->getSignalkValueFloat(_ARDUINO_WIND_AVERAGE) > model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM)) {
 			//TODO: Alarm snooze, better handling of this
 			//setSnoozeAlarm(0);
 			if (!model->isAlarmTriggered(ALARMS_WINDALARMSTATE)){

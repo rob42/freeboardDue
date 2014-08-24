@@ -9,12 +9,13 @@ RM := rm -rf
 # All of the sources participating in the build are defined here
 -include sources.mk
 -include subdir.mk
+-include lib/Wind/subdir.mk
+-include lib/SignalK/subdir.mk
 -include lib/PString/subdir.mk
 -include lib/PID_v1/subdir.mk
 -include lib/NMEA/subdir.mk
 -include lib/MultiSerial/subdir.mk
 -include lib/Kangaroo/subdir.mk
--include lib/JsonStream/subdir.mk
 -include lib/DueTimer/subdir.mk
 -include arduino/variant/subdir.mk
 -include arduino/core/avr/subdir.mk

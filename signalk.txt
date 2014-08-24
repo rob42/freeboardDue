@@ -58,6 +58,9 @@ environment.wind.speedAlarm
 environment.wind.speedTrue
 environment.wind.speedApparent
 _arduino.gps.model
+_arduino.gps.lastFix
+_arduino.gps.utc
+_arduino.gps.status
 _arduino.serial.baud0
 _arduino.serial.baud1
 _arduino.serial.baud2
@@ -69,10 +72,11 @@ _arduino.alarm.level2.lower
 _arduino.alarm.level3.upper
 _arduino.alarm.level3.lower
 _arduino.seatalk
-_arduino.windLastUpdate
-_arduino.windAverage
-_arduino.windFactor
-_arduino.windMax
+_arduino.wind.lastUpdate
+_arduino.wind.average
+_arduino.wind.factor
+_arduino.wind.max
+_arduino.wind.zeroOffset
 _arduino.alarm.snooze
 _arduino.anchor.radiusDeg
 _arduino.anchor.north

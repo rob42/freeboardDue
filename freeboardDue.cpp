@@ -55,7 +55,7 @@ Alarm alarm(&model);
 Wind wind(&signalkModel);
 
 //Gps
-Gps gps(&gpsSource, &model);
+Gps gps(&gpsSource, &signalkModel);
 
 
 MultiSerial mSerial1 = MultiSerial(CS_PIN,1); //NMEA4
@@ -79,10 +79,19 @@ boolean inputSerial4Complete = false; // whether the string is complete
 
 //json support
 //{"navigation":{ "position":{"longitude":173.5, "latitude":-43.5}}}
-static const char* queries[] = {"alarms.alarms.genericAlarmState",
+static const char* queries[] = {
+					"alarms.alarms.genericAlarmState",
 					"alarms.genericAlarmMethod",
-					"_arduino.windLastUpdate",
-					"_arduino.windZeroOffset"};
+					"_arduino.wind.average",
+					"_arduino.wind.factor",
+					"_arduino.wind.max",
+					"_arduino.wind.lastUpdate",
+					"_arduino.wind.zeroOffset"
+					"_arduino.gps.lastFix",
+					"_arduino.gps.utc",
+					"_arduino.gps.status",
+					"_arduino.gps.decode",
+					};
 
 StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
 

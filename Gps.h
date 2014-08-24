@@ -30,14 +30,14 @@
 
 #include <nmea.h>
 #include <PString.h>
-#include "FreeboardConstants.h"
-#include "FreeBoardModel.h"
-#include "freeboardDue.h"
+//#include "FreeboardConstants.h"
+#include <SignalkModel.h>
+//#include "freeboardDue.h"
 
 
 class Gps {
 public:
-	Gps(NMEA* gpsSource, FreeBoardModel* model);
+	Gps(NMEA* gpsSource, SignalkModel* model);
 	virtual ~Gps();
 
 	/* NMEA GPS routines
@@ -68,11 +68,11 @@ private:
 	void setupGpsImpl();
 	//bool gpsDecode;
 	//unsigned long gpsLastFix;
-
+	byte getChecksum(char* str);
 
 	// create a GPS data connection to GPRMC sentence type
 	//NMEA gps(GPRMC);
 	NMEA* gpsSource;
-	FreeBoardModel* model;
+	SignalkModel* model;
 };
 #endif /* GPS_H_ */

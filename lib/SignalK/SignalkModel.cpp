@@ -101,6 +101,8 @@ SignalkModel::SignalkModel() {
 	alarms.silentInterval = 300; //seconds?
 	alarms.windAlarmMethod = ALRM_SOUND;
 	alarms.windAlarmState = ALRM_DISABLED;
+	alarms.genericAlarmMethod = ALRM_SOUND;
+	alarms.genericAlarmState = ALRM_DISABLED;
 	environment.airPressureChangeRateAlarm = 0.0;
 	environment.airPressure = 1024.0;
 	environment.airTemp = 0.0;
@@ -149,15 +151,35 @@ void SignalkModel::setSignalkValue(unsigned long key, bool value) {
 	case _ARDUINO_SEATALK:
 		_arduino.seatalk = value;
 		break;
+	case _ARDUINO_GPS_DECODE:
+			_arduino.gps.decode = value;
+			break;
 	default:
 		break;
 
 	}
 }
+void SignalkModel::setSignalkValue(char* attribute, char value) {
+	unsigned long key = hash(attribute);
+	setSignalkValue(key,value);
+}
+
+void SignalkModel::setSignalkValue(unsigned long key, char value) {
+
+	switch (key) {
+
+		case _ARDUINO_GPS_STATUS:
+			_arduino.gps.status=value;
+		break;
+	}
+}
+
 void SignalkModel::setSignalkValue(char* attribute, char* value) {
 	unsigned long key = hash(attribute);
 	setSignalkValue(key,value);
 }
+
+
 
 void SignalkModel::setSignalkValue(unsigned long key, char* value) {
 
@@ -286,22 +308,103 @@ void SignalkModel::setSignalkValue(unsigned long key, char* value) {
 			alarms.windAlarmState = static_cast<AlarmStateType>(c);
 		}
 		break;
+	case ALARMS_GENERICALARMMETHOD:
+			if ((c = findInArray(AlarmMethodString, value)) > -1) {
+				alarms.genericAlarmMethod = static_cast<AlarmMethodType>(c);
+			}
+			break;
+	case ALARMS_GENERICALARMSTATE:
+			if ((c = findInArray(AlarmStateString, value)) > -1) {
+				alarms.genericAlarmState = static_cast<AlarmStateType>(c);
+			}
+		break;
 	default:
 		break;
 
 	}
 }
 void SignalkModel::setSignalkValue(char* attribute, int value) {
-	setSignalkValue(hash(attribute), (float)value);
+	setSignalkValue(hash(attribute), (int)value);
 	//Serial.print(" setSignalkValue:");
 	//Serial.println(key);
+}
+void SignalkModel::setSignalkValue(unsigned long key, int value) {
+
+	switch (key) {
+		case _ARDUINO_GPS_MODEL:
+			_arduino.gps.model = (int)value;
+			break;
+		case STEERING_AUTOPILOT_GAIN:
+			steering.autopilot.gain = (int)value;
+			break;
+		case ALARMS_SILENTINTERVAL:
+			alarms.silentInterval = (int)value;
+			break;
+		case _ARDUINO_ALARM_LEVEL1_UPPER:
+			_arduino.alarm.level1.upper = (int)value;
+			break;
+		case _ARDUINO_ALARM_LEVEL1_LOWER:
+			_arduino.alarm.level1.lower = (int)value;
+			break;
+		case _ARDUINO_ALARM_LEVEL2_UPPER:
+			_arduino.alarm.level2.upper = (int)value;
+			break;
+		case _ARDUINO_ALARM_LEVEL2_LOWER:
+			_arduino.alarm.level2.lower = (int)value;
+			break;
+		case _ARDUINO_ALARM_LEVEL3_UPPER:
+			_arduino.alarm.level3.upper = (int)value;
+			break;
+		case _ARDUINO_ALARM_LEVEL3_LOWER:
+			_arduino.alarm.level3.lower = (int)value;
+			break;
+	}
+}
+void SignalkModel::setSignalkValue(char* attribute, long value) {
+	setSignalkValue(hash(attribute), (long)value);
+	//Serial.print(" setSignalkValue:");
+	//Serial.println(key);
+}
+void SignalkModel::setSignalkValue(unsigned long key, long value) {
+
+	switch (key) {
+
+	case _ARDUINO_SERIAL_BAUD0:
+			_arduino.serial.baud0 = (long)value;
+			break;
+		case _ARDUINO_SERIAL_BAUD1:
+			_arduino.serial.baud1 = (long)value;
+			break;
+		case _ARDUINO_SERIAL_BAUD2:
+			_arduino.serial.baud2 = (long)value;
+			break;
+		case _ARDUINO_SERIAL_BAUD3:
+			_arduino.serial.baud3 = (long)value;
+			break;
+		case _ARDUINO_ALARM_SNOOZE:
+			_arduino.alarm.snooze = (long)value;
+			break;
+	}
 }
 
-void SignalkModel::setSignalkValue(char* attribute, long value) {
-	setSignalkValue(hash(attribute), (float)value);
+void SignalkModel::setSignalkValue(char* attribute, unsigned long value) {
+	setSignalkValue(hash(attribute), (unsigned long)value);
 	//Serial.print(" setSignalkValue:");
 	//Serial.println(key);
 }
+void SignalkModel::setSignalkValue(unsigned long key, unsigned long value) {
+
+	switch (key) {
+
+		case _ARDUINO_GPS_LASTFIX:
+			_arduino.gps.status=value;
+		break;
+		case _ARDUINO_GPS_UTC:
+					_arduino.gps.status=value;
+				break;
+	}
+}
+
 void SignalkModel::setSignalkValue(char* attribute, float value) {
 	setSignalkValue(hash(attribute), value);
 	//Serial.print(" setSignalkValue:");
@@ -310,50 +413,6 @@ void SignalkModel::setSignalkValue(char* attribute, float value) {
 void SignalkModel::setSignalkValue(unsigned long key, float value) {
 
 	switch (key) {
-	case _ARDUINO_SERIAL_BAUD0:
-		_arduino.serial.baud0 = (long)value;
-		break;
-	case _ARDUINO_SERIAL_BAUD1:
-		_arduino.serial.baud1 = (long)value;
-		break;
-	case _ARDUINO_SERIAL_BAUD2:
-		_arduino.serial.baud2 = (long)value;
-		break;
-	case _ARDUINO_SERIAL_BAUD3:
-		_arduino.serial.baud3 = (long)value;
-		break;
-	case _ARDUINO_ALARM_SNOOZE:
-		_arduino.alarm.snooze = (long)value;
-		break;
-
-	case _ARDUINO_GPS_MODEL:
-		_arduino.gps.model = (int)value;
-		break;
-	case STEERING_AUTOPILOT_GAIN:
-		steering.autopilot.gain = (int)value;
-		break;
-	case ALARMS_SILENTINTERVAL:
-		alarms.silentInterval = (int)value;
-		break;
-	case _ARDUINO_ALARM_LEVEL1_UPPER:
-		_arduino.alarm.level1.upper = (int)value;
-		break;
-	case _ARDUINO_ALARM_LEVEL1_LOWER:
-		_arduino.alarm.level1.lower = (int)value;
-		break;
-	case _ARDUINO_ALARM_LEVEL2_UPPER:
-		_arduino.alarm.level2.upper = (int)value;
-		break;
-	case _ARDUINO_ALARM_LEVEL2_LOWER:
-		_arduino.alarm.level2.lower = (int)value;
-		break;
-	case _ARDUINO_ALARM_LEVEL3_UPPER:
-		_arduino.alarm.level3.upper = (int)value;
-		break;
-	case _ARDUINO_ALARM_LEVEL3_LOWER:
-		_arduino.alarm.level3.lower = (int)value;
-		break;
-
 	case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
 			navigation.courseOverGroundMagnetic = value;
 		break;
@@ -456,14 +515,14 @@ void SignalkModel::setSignalkValue(unsigned long key, float value) {
 	case ENVIRONMENT_WIND_SPEEDAPPARENT:
 			environment.wind.speedApparent = value;
 		break;
-	case _ARDUINO_WINDAVERAGE:
-			_arduino.windAverage = value;
+	case _ARDUINO_WIND_AVERAGE:
+			_arduino.wind.average = value;
 		break;
-	case _ARDUINO_WINDFACTOR:
-			_arduino.windFactor = value;
+	case _ARDUINO_WIND_FACTOR:
+			_arduino.wind.factor = value;
 		break;
-	case _ARDUINO_WINDMAX:
-			_arduino.windMax = value;
+	case _ARDUINO_WIND_MAX:
+			_arduino.wind.max = value;
 		break;
 	case _ARDUINO_ANCHOR_RADIUSDEG:
 			_arduino.anchor.radiusDeg = value;
@@ -647,14 +706,14 @@ float SignalkModel::getSignalkValueFloat(unsigned long key){
 		case ENVIRONMENT_WIND_SPEEDAPPARENT:
 				return environment.wind.speedApparent;
 			break;
-		case _ARDUINO_WINDAVERAGE:
-				return _arduino.windAverage;
+		case _ARDUINO_WIND_AVERAGE:
+				return _arduino.wind.average;
 			break;
-		case _ARDUINO_WINDFACTOR:
-				return _arduino.windFactor;
+		case _ARDUINO_WIND_FACTOR:
+				return _arduino.wind.factor;
 			break;
-		case _ARDUINO_WINDMAX:
-				return _arduino.windMax;
+		case _ARDUINO_WIND_MAX:
+				return _arduino.wind.max;
 			break;
 		case _ARDUINO_ANCHOR_RADIUSDEG:
 				return _arduino.anchor.radiusDeg;

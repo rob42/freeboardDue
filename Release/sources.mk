@@ -35,12 +35,13 @@ SIZEDUMMY :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+lib/Wind \
+lib/SignalK \
 lib/PString \
 lib/PID_v1 \
 lib/NMEA \
 lib/MultiSerial \
 lib/Kangaroo \
-lib/JsonStream \
 lib/DueTimer \
 . \
 arduino/variant \
