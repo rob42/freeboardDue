@@ -30,9 +30,7 @@
 
 #include <nmea.h>
 #include <PString.h>
-//#include "FreeboardConstants.h"
 #include <SignalkModel.h>
-//#include "freeboardDue.h"
 
 
 class Gps {

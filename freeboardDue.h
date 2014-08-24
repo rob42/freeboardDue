@@ -39,7 +39,7 @@ typedef unsigned char byte;
 #include "NmeaSerial.h"
 #include "Alarm.h"
 #include "Wind.h"
-#include "Gps.h"
+#include <Gps.h>
 #include "Anchor.h"
 #include "NmeaRelay.h"
 #include "Autopilot.h"
