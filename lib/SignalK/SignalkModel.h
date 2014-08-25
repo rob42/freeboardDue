@@ -34,6 +34,10 @@
 #define GPS_GENERIC 0
 #define GPS_EM_406A 1
 #define GPS_MTEK_3329 2
+//Gps STATUS, V=Navigation receiver warning A=Valid
+#define GPS_WARN 'V'
+#define GPS_VALID 'A'
+
 
 //EM406A pin 3 = RX to arduino TX - pin18, RX to pin19
 //GPS pins are Serial1
@@ -58,6 +62,8 @@
 #define NAVIGATION_SPEEDOVERGROUND 3375602335UL
 #define NAVIGATION_SPEEDTHROUGHWATER 2011270296UL
 #define NAVIGATION_STATE 2246585668UL
+//TODO: hash codes
+#define NAVIGATION_ANCHOR_ALARMRADIUS 10UL
 #define NAVIGATION_ANCHOR_MAXRADIUS 3688841722UL
 #define NAVIGATION_ANCHOR_CURRENTRADIUS 2152304183UL
 #define NAVIGATION_ANCHOR_POSITION_ALTITUDE 3067744843UL
@@ -98,6 +104,10 @@
 //TODO: hash codes
 #define ALARMS_GENERICALARMMETHOD 6UL
 #define ALARMS_GENERICALARMSTATE 7UL
+#define ALARMS_RADARALARMMETHOD 16UL
+#define ALARMS_RADARALARMSTATE 17UL
+#define ALARMS_MOBALARMMETHOD 26UL
+#define ALARMS_MOBALARMSTATE 27UL
 #define ENVIRONMENT_WIND_DIRECTIONAPPARENT 3267532580UL
 #define ENVIRONMENT_WIND_DIRECTIONCHANGEALARM 4209206332UL
 #define ENVIRONMENT_WIND_DIRECTIONTRUE 1752542857UL
@@ -195,7 +205,8 @@ public:
 	void setSignalkValue(unsigned long key, int value);
 
 	bool getSignalkValueBool(unsigned long key);
-	char* getSignalkValueChar(unsigned long key);
+	char* getSignalkValueCharArray(unsigned long key);
+	char getSignalkValueChar(unsigned long key);
 	float getSignalkValueFloat(unsigned long key);
 	double getSignalkValueDouble(unsigned long key);
 	long getSignalkValueLong(unsigned long key);
@@ -203,6 +214,7 @@ public:
 	volatile bool isAlarmTriggered() ;
 	volatile bool isAutopilotOn() ;
 	volatile bool isAlarmTriggered(unsigned long key);
+	volatile bool isAlarmOn(unsigned long key);
 	unsigned long hash(const char *str);
 
 
@@ -247,6 +259,7 @@ private:
 			NavigationStateType state;
 			struct Anchor {
 				Position  position ;
+				float alarmRadius;
 				float maxRadius;
 				float currentRadius;
 			}anchor;
@@ -296,6 +309,10 @@ private:
 		AlarmStateType windAlarmState;
 		AlarmMethodType genericAlarmMethod;
 		AlarmStateType genericAlarmState;
+		AlarmMethodType radarAlarmMethod;
+		AlarmStateType radarAlarmState;
+		AlarmMethodType mobAlarmMethod;
+		AlarmStateType mobAlarmState;
 	} alarms ;
 
 	struct WindStruct {

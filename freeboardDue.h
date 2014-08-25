@@ -38,9 +38,8 @@ typedef unsigned char byte;
 #include "FreeBoardModel.h"
 #include "NmeaSerial.h"
 #include "Alarm.h"
-#include "Wind.h"
 #include <Gps.h>
-#include "Anchor.h"
+#include <Anchor.h>
 #include "NmeaRelay.h"
 #include <Autopilot.h>
 /*

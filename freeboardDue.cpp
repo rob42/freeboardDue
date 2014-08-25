@@ -64,7 +64,7 @@ MultiSerial mSerial1 = MultiSerial(CS_PIN,1); //NMEA4
 Autopilot autopilot( &signalkModel);
 
 //Anchor
-Anchor anchor(&model);
+Anchor anchor(&signalkModel);
 
 //Seatalk seatalk(&Serial2, &model);
 
@@ -80,8 +80,13 @@ boolean inputSerial4Complete = false; // whether the string is complete
 //json support
 //{"navigation":{ "position":{"longitude":173.5, "latitude":-43.5}}}
 static const char* queries[] = {
-					"alarms.alarms.genericAlarmState",
+					"alarms.genericAlarmState",
 					"alarms.genericAlarmMethod",
+					"alarms.radarAlarmState",
+					"alarms.radarAlarmMethod",
+					"alarms.mobAlarmState",
+					"alarms.mobAlarmMethod",
+					"navigation.anchor.alarmRadius",
 					"_arduino.wind.average",
 					"_arduino.wind.factor",
 					"_arduino.wind.max",

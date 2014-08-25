@@ -60,7 +60,8 @@ SignalkModel::SignalkModel() {
 	navigation.speedOverGround = 0.0;
 	navigation.speedThroughWater = 0.0;
 	navigation.state = NAV_NOT_DEFINED;
-	navigation.anchor.maxRadius=40.0;
+	navigation.anchor.alarmRadius=0.0;
+	navigation.anchor.maxRadius=0.0;
 	navigation.anchor.currentRadius=0.0;
 	navigation.anchor.position.altitude=0.0;
 	navigation.anchor.position.latitude=0.0;
@@ -103,6 +104,10 @@ SignalkModel::SignalkModel() {
 	alarms.windAlarmState = ALRM_DISABLED;
 	alarms.genericAlarmMethod = ALRM_SOUND;
 	alarms.genericAlarmState = ALRM_DISABLED;
+	alarms.radarAlarmMethod = ALRM_SOUND;
+	alarms.radarAlarmState = ALRM_DISABLED;
+	alarms.mobAlarmMethod = ALRM_SOUND;
+	alarms.mobAlarmState = ALRM_DISABLED;
 	environment.airPressureChangeRateAlarm = 0.0;
 	environment.airPressure = 1024.0;
 	environment.airTemp = 0.0;
@@ -328,6 +333,26 @@ void SignalkModel::setSignalkValue(unsigned long key, char* value) {
 				alarms.genericAlarmState = static_cast<AlarmStateType>(c);
 			}
 		break;
+	case ALARMS_RADARALARMMETHOD:
+			if ((c = findInArray(AlarmMethodString, value)) > -1) {
+				alarms.radarAlarmMethod = static_cast<AlarmMethodType>(c);
+			}
+			break;
+	case ALARMS_RADARALARMSTATE:
+			if ((c = findInArray(AlarmStateString, value)) > -1) {
+				alarms.radarAlarmState = static_cast<AlarmStateType>(c);
+			}
+		break;
+	case ALARMS_MOBALARMMETHOD:
+			if ((c = findInArray(AlarmMethodString, value)) > -1) {
+				alarms.mobAlarmMethod = static_cast<AlarmMethodType>(c);
+			}
+			break;
+	case ALARMS_MOBALARMSTATE:
+			if ((c = findInArray(AlarmStateString, value)) > -1) {
+				alarms.mobAlarmState = static_cast<AlarmStateType>(c);
+			}
+		break;
 	default:
 		break;
 
@@ -470,6 +495,9 @@ void SignalkModel::setSignalkValue(unsigned long key, float value) {
 		break;
 	case NAVIGATION_SPEEDTHROUGHWATER:
 			navigation.speedThroughWater = value;
+		break;
+	case NAVIGATION_ANCHOR_ALARMRADIUS:
+			navigation.anchor.alarmRadius = value;
 		break;
 	case NAVIGATION_ANCHOR_MAXRADIUS:
 			navigation.anchor.maxRadius = value;
@@ -674,6 +702,9 @@ float SignalkModel::getSignalkValueFloat(unsigned long key){
 		case NAVIGATION_SPEEDTHROUGHWATER:
 				return navigation.speedThroughWater;
 			break;
+		case NAVIGATION_ANCHOR_ALARMRADIUS:
+				return navigation.anchor.alarmRadius;
+			break;
 		case NAVIGATION_ANCHOR_MAXRADIUS:
 				return navigation.anchor.maxRadius;
 			break;
@@ -763,6 +794,16 @@ float SignalkModel::getSignalkValueFloat(unsigned long key){
 	return NAN;
 }
 
+char SignalkModel::getSignalkValueChar(unsigned long key) {
+
+	switch (key) {
+		case _ARDUINO_GPS_STATUS:
+			return _arduino.gps.status;
+		break;
+	}
+	return NULL;
+}
+
 volatile bool SignalkModel::isAutopilotOn() {
 	if(steering.autopilot.state==AP_OFF)
 			return false;
@@ -780,6 +821,8 @@ volatile bool SignalkModel::isAlarmTriggered() {
 			|| alarms.powerAlarmState>ALRM_ENABLED
 			|| alarms.fireAlarmState>ALRM_ENABLED
 			|| alarms.genericAlarmState>ALRM_ENABLED
+			|| alarms.radarAlarmState>ALRM_ENABLED
+			|| alarms.mobAlarmState>ALRM_ENABLED
 			)	return true;
 	return false;
 
@@ -823,6 +866,69 @@ volatile bool SignalkModel::isAlarmTriggered(unsigned long key ) {
 		case ALARMS_WINDALARMSTATE:
 			return (alarms.windAlarmState > ALRM_ENABLED);
 			break;
+		case ALARMS_GENERICALARMSTATE:
+			return (alarms.genericAlarmState > ALRM_ENABLED);
+			break;
+		case ALARMS_RADARALARMSTATE:
+			return (alarms.radarAlarmState > ALRM_ENABLED);
+			break;
+		case ALARMS_MOBALARMSTATE:
+			return (alarms.mobAlarmState > ALRM_ENABLED);
+			break;
+		default:
+			break;
+
+	}
+	return false;
+}
+
+volatile bool SignalkModel::isAlarmOn(unsigned long key ) {
+	switch (key) {
+
+		case ALARMS_ANCHORALARMSTATE:
+				return (alarms.anchorAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_ENGINEALARMSTATE:
+			return (alarms.engineAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_FIREALARMSTATE:
+			return (alarms.fireAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_GASALARMSTATE:
+			return (alarms.gasAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_GPSALARMSTATE:
+			return (alarms.gpsAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_MAYDAYALARMSTATE:
+			return (alarms.maydayAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_PANPANALARMSTATE:
+			return (alarms.panpanAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_POWERALARMSTATE:
+			return (alarms.powerAlarmState > ALRM_DISABLED);
+			break;
+
+		case ALARMS_WINDALARMSTATE:
+			return (alarms.windAlarmState > ALRM_DISABLED);
+			break;
+		case ALARMS_GENERICALARMSTATE:
+			return (alarms.genericAlarmState > ALRM_DISABLED);
+			break;
+		case ALARMS_RADARALARMSTATE:
+					return (alarms.radarAlarmState > ALRM_DISABLED);
+					break;
+		case ALARMS_MOBALARMSTATE:
+					return (alarms.mobAlarmState > ALRM_DISABLED);
+					break;
 		default:
 			break;
 

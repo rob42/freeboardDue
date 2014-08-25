@@ -76,10 +76,7 @@
 #define lvl1Pin A10
 #define lvl2Pin A11
 
-// 0.00053995680 nautical miles per meter
-//decimal lat lon is in degrees, and we have 60 NM per degree so degrees per meter
-#define  LLMTRS .00000899928
-#define  MINMTRS	LLMTRS*5.0
+
 
 //freeboard model structs
 #define CONFIG_T 'C'
