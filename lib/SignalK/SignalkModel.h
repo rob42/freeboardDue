@@ -136,6 +136,7 @@
 #define _ARDUINO_AUTOPILOT_BAUDRATE 6UL
 #define _ARDUINO_AUTOPILOT_OFFCOURSE 7UL
 #define _ARDUINO_AUTOPILOT_RUDDERCOMMAND 8UL
+#define _ARDUINO_ALARM_LAST 88UL
 #define _ARDUINO_WIND_AVERAGE 2851759217UL
 #define _ARDUINO_WIND_FACTOR 1428475061UL
 #define _ARDUINO_WIND_MAX 287358556UL
@@ -200,7 +201,6 @@ public:
 	void setSignalkValue(unsigned long key, char value);
 	void setSignalkValue(unsigned long key, float value);
 	void setSignalkValue(unsigned long key, double value);
-	void setSignalkValue(unsigned long key, long value);
 	void setSignalkValue(unsigned long key, unsigned long value);
 	void setSignalkValue(unsigned long key, int value);
 
@@ -209,7 +209,7 @@ public:
 	char getSignalkValueChar(unsigned long key);
 	float getSignalkValueFloat(unsigned long key);
 	double getSignalkValueDouble(unsigned long key);
-	long getSignalkValueLong(unsigned long key);
+	unsigned long getSignalkValueLong(unsigned long key);
 	int getSignalkValueInt(unsigned long key);
 	volatile bool isAlarmTriggered() ;
 	volatile bool isAutopilotOn() ;
@@ -227,20 +227,20 @@ private:
 				float bearingActual;
 				float bearingDirect;
 				float courseRequired;
-				long eta;
+				unsigned long eta;
 				String route;
-				long startTime;
+				unsigned long startTime;
 				struct Waypoint {
-					long lastTime;
+					unsigned long lastTime;
 					String last;
-					long nextEta;
+					unsigned long nextEta;
 					String next;
 					float xte;
 				} waypoint;
 			} currentRoute ;
 			float magneticVariation;
 			struct Destination {
-				long eta;
+				unsigned long eta;
 				float longitude;
 				float latitude;
 				float altitude;
@@ -327,8 +327,8 @@ private:
 			float heightHigh;
 			float heightNow;
 			float heightLow;
-			long timeLow;
-			long timeHigh;
+			unsigned long timeLow;
+			unsigned long timeHigh;
 		} tide ;
 
 		struct DepthStruct {
@@ -363,17 +363,17 @@ private:
 			char status;
 		}gps;
 		struct SerialStruct{
-			long baud0;
-			long baud1;
-			long baud2;
-			long baud3;
+			unsigned long baud0;
+			unsigned long baud1;
+			unsigned long baud2;
+			unsigned long baud3;
 		}serial;
 		struct AlarmStruct{
 			LevelStruct level1;
 			LevelStruct level2;
 			LevelStruct level3;
-			long snooze;
-			long last;
+			unsigned long snooze;
+			unsigned long last;
 		}alarm;
 		struct AnchorStruct{
 			float radiusDeg;
@@ -384,7 +384,7 @@ private:
 		}anchor;
 		bool seatalk;
 		struct WindStruct{
-			long lastUpdate;
+			unsigned long lastUpdate;
 			float average;
 			float factor;
 			float max;

@@ -49,7 +49,7 @@ NMEARelay talker3(ALL);
 NMEARelay talker4(ALL);
 
 //alarm
-Alarm alarm(&model);
+Alarm alarm(&signalkModel);
 
 //wind
 Wind wind(&signalkModel);
@@ -68,6 +68,7 @@ Anchor anchor(&signalkModel);
 
 //Seatalk seatalk(&Serial2, &model);
 
+Levels levels(&signalkModel);
 
 char inputSerialArray[200];
 int inputSerialPos=0;
@@ -86,6 +87,7 @@ static const char* queries[] = {
 					"alarms.radarAlarmMethod",
 					"alarms.mobAlarmState",
 					"alarms.mobAlarmMethod",
+					"_arduino.alarm.last",
 					"navigation.anchor.alarmRadius",
 					"_arduino.wind.average",
 					"_arduino.wind.factor",
@@ -205,6 +207,9 @@ void setup()
 			Serial.print("=");
 			Serial.println(signalkModel.hash(queries[x]),DEC);
 		}
+
+		//TODO: setup lvl3 pin - actually its analogue
+		pinMode(lvl3Pin, INPUT);
 }
 
 
@@ -300,23 +305,23 @@ void loop()
 			}
 			if (interval % 50 == 0) {
 				//do every 500ms
-				wind.calcWindSpeedAndDir();
 				wind.calcWindData();
-				//nmea.printWindNmea();
-				//fire any alarms
-				alarm.checkAlarms();
+
 				model.writeSimple(Serial);
 			}
 			if (interval % 100 == 0) {
-
 				//Serial.println(freeMemory());
 				//do every 1000ms
-				anchor.checkAnchor();
 				Serial.println(wind.getWindNmea());
 				//nmea.printNmea(wind.getWindNmea());
-				wind.checkWindAlarm();
-				alarm.checkLvlAlarms();
 				//nmea.printTrueHeading();
+
+				//do alarm stuff here
+				anchor.checkAnchor();
+				wind.checkWindAlarm();
+				levels.checkLvlAlarms();
+				alarm.checkAlarms();
+
 
 			}
 

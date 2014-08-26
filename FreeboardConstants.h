@@ -54,13 +54,7 @@
 #define autopilotTxPin 36
 #define autopilotEngagePin 22
 
-
-//alarm (piezo) - tx only so digital pins 22+
-
-#define alarmPin0 24     // the number of the buzzer pin
-#define alarmPin1 26     // the number of the buzzer pin
-#define alarmPin2 28     // the number of the buzzer pin
-#define alarmPin3 30     // the number of the buzzer pin
+    // the number of the buzzer pin
 
 // need reliable efficient interrupts
 //Wind speed on pin 3 - INT1 - yellow wire
@@ -72,9 +66,7 @@
 #define logPin 20 // pin20
 //#define logInterrupt 3 // INT3
 //#define logPin 21 // pin21 //INT 2
-#define lvl3Pin DAC0 // analogue pin A12
-#define lvl1Pin A10
-#define lvl2Pin A11
+
 
 
 

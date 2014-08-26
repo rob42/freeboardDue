@@ -113,7 +113,7 @@ void Anchor::checkAnchor() {
 		// check if GPS positioning was active, if we havent had a signal in a while that may be a problem....
 		if ((millis() - model->getSignalkValueLong(_ARDUINO_GPS_LASTFIX) > MAX_SINCE_LAST_GPS_FIX)
 				&& model->isAlarmOn(ALARMS_ANCHORALARMSTATE)) {
-			model->setSignalkValue(_ARDUINO_ALARM_SNOOZE,0L);
+			model->setSignalkValue(_ARDUINO_ALARM_SNOOZE,0UL);
 			model->setSignalkValue(ALARMS_ANCHORALARMSTATE, AlarmStateType(ALRM_FIRING));
 		}
 		//now check position - Status, V=Navigation receiver warning A=Valid
@@ -131,7 +131,7 @@ void Anchor::checkAnchor() {
 			if(model->getSignalkValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS) > model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS)) {
 				//we need to sound alarm
 				if (!model->isAlarmTriggered(ALARMS_ANCHORALARMSTATE)) {
-					model->setSignalkValue(_ARDUINO_ALARM_SNOOZE,0L);
+					model->setSignalkValue(_ARDUINO_ALARM_SNOOZE,0UL);
 					model->setSignalkValue(ALARMS_ANCHORALARMSTATE,AlarmStateType(ALRM_FIRING));
 				}
 			}else{

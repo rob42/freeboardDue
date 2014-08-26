@@ -26,39 +26,38 @@
 
 #include "Alarm.h"
 
-Alarm::Alarm(FreeBoardModel* model) {
+Alarm::Alarm(SignalkModel* model) {
 	this->model=model;
 	alarmBeepState=false;
-	model->setAlarmLast(0);
+	model->setSignalkValue(_ARDUINO_ALARM_LAST,0);
 	pinMode(alarmPin0, OUTPUT); //main MOSFET pin
 	pinMode(alarmPin1, OUTPUT);
 	pinMode(alarmPin2, OUTPUT);
 	pinMode(alarmPin3, OUTPUT);
-	//TODO: setup lvl3 pin - actually its analogue
-	pinMode(lvl3Pin, INPUT);
+
 }
 
 Alarm::~Alarm() {
 
 }
 
-bool Alarm::alarmTriggered() {
-	return model->isAlarmTriggered() && model->getAlarmSnooze() < millis() ;
+bool Alarm::isAlarmTriggered() {
+	return model->isAlarmTriggered() && model->getSignalkValueLong(_ARDUINO_ALARM_SNOOZE) < millis() ;
 }
 
 
 /* Take action if alarms are triggered*/
 void Alarm::checkAlarms() {
-	if (alarmTriggered()) {
+	if (isAlarmTriggered()) {
 		//alarm beeps on off on off
 		//once in the alarm state, hitting any button will give a 5 minute respite from the beeping, eg snooze
-		if (millis() - model->getAlarmLast() > 1000) {
+		if ((millis() - model->getSignalkValueLong(_ARDUINO_ALARM_LAST)) > 1000UL) {
 			digitalWrite(alarmPin0, alarmBeepState);
 			digitalWrite(alarmPin1, alarmBeepState);
 			digitalWrite(alarmPin2, alarmBeepState);
 			digitalWrite(alarmPin3, alarmBeepState);
 			alarmBeepState = !alarmBeepState;
-			model->setAlarmLast(millis());
+			model->setSignalkValue(_ARDUINO_ALARM_LAST, (unsigned long)millis());
 			//model->setAlarmSnooze(0); //5 minute alarm snooze
 		}
 	} else {
@@ -70,39 +69,5 @@ void Alarm::checkAlarms() {
 	}
 }
 
-void Alarm::checkWindAlarm(){
-	//check alarm val
-		if (model->isWindAlarmOn() && model->getWindAlarmSpeed() > 0
-				&& model->getWindAverage() > model->getWindAlarmSpeed()) {
-			//TODO: Alarm snooze, better handling of this
-			//setSnoozeAlarm(0);
-			model->setWindAlarmTriggered(true);
-		} else {
-			model->setWindAlarmTriggered(false);
-		}
-}
 
-void Alarm::checkLvlAlarms(){
-	//check lvl* alarm val, 0 is low, 1024 is high
-	int lvl1 = analogRead(lvl1Pin);
-			if ( lvl1 < model->getLvl1LowerLimit() || lvl1 >model->getLvl1UpperLimit()) {
 
-				model->setLvl1AlarmTriggered(true);
-			} else {
-				model->setLvl1AlarmTriggered(false);
-			}
-	int lvl2 = analogRead(lvl2Pin);
-			if ( lvl2 < model->getLvl2LowerLimit() || lvl2 >model->getLvl2UpperLimit()) {
-
-				model->setLvl2AlarmTriggered(true);
-			} else {
-				model->setLvl2AlarmTriggered(false);
-			}
-	int lvl3 = analogRead(lvl3Pin);
-		if ( lvl3 < model->getLvl3LowerLimit() || lvl3 >model->getLvl3UpperLimit()) {
-
-			model->setLvl3AlarmTriggered(true);
-		} else {
-			model->setLvl3AlarmTriggered(false);
-		}
-}

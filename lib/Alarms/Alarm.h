@@ -28,20 +28,25 @@
 
 #include "Arduino.h"
 
-#include "FreeboardConstants.h"
-#include "FreeBoardModel.h"
+//alarm (piezo) - tx only so digital pins 22+
+
+#define alarmPin0 24     // the number of the buzzer pin
+#define alarmPin1 26     // the number of the buzzer pin
+#define alarmPin2 28     // the number of the buzzer pin
+#define alarmPin3 30     // the number of the buzzer pin
+
+//#include "FreeboardConstants.h"
+#include <SignalkModel.h>
 
 class Alarm {
 public:
-	Alarm(FreeBoardModel* model);
+	Alarm(SignalkModel* model);
 	virtual ~Alarm();
 	void checkAlarms();
-	bool alarmTriggered();
-	void checkWindAlarm();
-	void checkLvlAlarms();
+	bool isAlarmTriggered();
 
 private:
-	FreeBoardModel* model;
+	SignalkModel* model;
 	//unsigned long alarmLast;   //toggle to make alarm beep - beep beep
 	bool alarmBeepState; //beep on or off
 	//char alarmValue;

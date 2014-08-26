@@ -100,6 +100,7 @@ Wind::Wind(SignalkModel* model) {
 	windSpeedDur = 0;
 	windSpeedFlag = true;
 	dirList.reset();
+	cs=0;
 
 	// read the last wind alarm values
 	if (model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM) > 99.0) {
@@ -301,7 +302,7 @@ void Wind::calcWindData() {
 	if (millis() < lastSpeedPulse) lastSpeedPulse = millis();
 	if (millis() < lastDirPulse) lastDirPulse = millis();
 
-	model->setSignalkValue(_ARDUINO_WIND_LASTUPDATE, (long)millis());
+	model->setSignalkValue(_ARDUINO_WIND_LASTUPDATE, (unsigned long)millis());
 
 //convert to windAverage
 	if (millis() - lastSpeedPulse > 3000) {
