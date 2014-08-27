@@ -29,20 +29,8 @@
 #define SIGNALKMODEL_H_
 #define DEBUG true
 #include "Arduino.h"
+#include "FreeboardConstants.h"
 
-//uncomment to support different GPS
-#define GPS_GENERIC 0
-#define GPS_EM_406A 1
-#define GPS_MTEK_3329 2
-//Gps STATUS, V=Navigation receiver warning A=Valid
-#define GPS_WARN 'V'
-#define GPS_VALID 'A'
-
-
-//EM406A pin 3 = RX to arduino TX - pin18, RX to pin19
-//GPS pins are Serial1
-#define GPS_RX_PIN 19
-#define GPS_TX_PIN 18
 
 //#include "StreamJsonReader.h"
 //#include "FreeboardConstants.h"
@@ -119,6 +107,8 @@
 #define _ARDUINO_SERIAL_BAUD1 1806063391UL
 #define _ARDUINO_SERIAL_BAUD2 1806063392UL
 #define _ARDUINO_SERIAL_BAUD3 1806063393UL
+#define _ARDUINO_SERIAL_BAUD4 12UL
+#define _ARDUINO_SERIAL_BAUD5 13UL
 #define _ARDUINO_ALARM_LEVEL1_UPPER 2104985698UL
 #define _ARDUINO_ALARM_LEVEL1_LOWER 2094284095UL
 #define _ARDUINO_ALARM_LEVEL2_UPPER 3396453667UL
@@ -146,14 +136,23 @@
 #define _ARDUINO_ANCHOR_SOUTH 3026424992UL
 #define _ARDUINO_ANCHOR_EAST 3214803994UL
 #define _ARDUINO_ANCHOR_WEST 3215455216UL
-
+/* add defines
+ * navigation.destination.eta;
+steering.rudderAngle;
+steering.rudderAngleTarget;
+steering.autopilot.portLock;
+steering.autopilot.starboardLock;
+environment.airPressureChangeRateAlarm;
+environment.airPressure;
+environment.waterTemp;
+ */
 typedef enum {ALRM_MESSAGE,ALRM_SOUND,ALRM_SMS,ALRM_EMAIL,ALRM_DSC} AlarmMethodType;
 static const char *AlarmMethodString[] = {"message", "sound","sms","email","dsc",};
 typedef enum {ALRM_DISABLED,ALRM_ENABLED,ALRM_FIRING,ALRM_SILENT} AlarmStateType;
 static const char *AlarmStateString[] = {"disabled", "enabled", "firing", "silent",};
 
-typedef enum {AP_ON,AP_OFF,AP_ALARM} AutopilotStateType;
-static const char *AutopilotStateString[] = {"on", "off", "alarm",};
+typedef enum {AP_OFF,AP_ON,AP_ALARM} AutopilotStateType;
+static const char *AutopilotStateString[] = {"off", "on", "alarm",};
 typedef enum {AP_POWERSAVE,AP_NORMAL,AP_ACCURATE} AutopilotModeType;
 static const char *AutopilotModeString[] = { "powersave", "normal", "accurate",};
 
@@ -363,10 +362,12 @@ private:
 			char status;
 		}gps;
 		struct SerialStruct{
-			unsigned long baud0;
-			unsigned long baud1;
-			unsigned long baud2;
-			unsigned long baud3;
+			unsigned long baud0;//console
+			unsigned long baud1;//GPS
+			unsigned long baud2;//NMEA1 or Seatalk
+			unsigned long baud3;//NMEA2
+			unsigned long baud4;//NMEA3 - SPI-2
+			unsigned long baud5;//NMEA talker - AltSoftSerial
 		}serial;
 		struct AlarmStruct{
 			LevelStruct level1;
@@ -391,7 +392,7 @@ private:
 			float zeroOffset;
 		}wind;
 		struct AutopilotStruct{
-			long baudRate;
+			long baudRate;//autopilot - SPI-1
 			double offcourse;
 			double rudderCommand;
 		}autopilot;
@@ -399,66 +400,5 @@ private:
 	}_arduino;
 };
 
-
-
-			/*
-gpsState.gpsDecode = false; //flag to indicate a new sentence was decoded.
-	gpsState.gpsLastFix = 0; //time of last good gps fix.
-	gpsState.gpsUtc = 0; // decimal value of UTC term in last full GPRMC sentence
-	gpsState.gpsStatus = 'V'; //  status character in last full GPRMC sentence ('A' or 'V')
-
-
-			"_arduino.gps.model",
-			"_arduino.serial.baud0",
-			"_arduino.serial.baud1",
-			"_arduino.serial.baud2",
-			"_arduino.serial.baud3",
-			"_arduino.alarm.level1.upper",
-			"_arduino.alarm.level1.lower",
-			"_arduino.alarm.level2.upper",
-			"_arduino.alarm.level2.lower",
-			"_arduino.alarm.level3.upper",
-			"_arduino.alarm.level3.lower",
-			"_arduino.seatalk",
-			"_arduino.windAverage ",
-			"_arduino.windFactor ",
-			"_arduino.windMax",
-			"_arduino.alarm.snooze",
-			"_arduino.anchorRadiusDeg ",
-			"_arduino.anchorDistance",
-			"_arduino.anchorMaxDistance"
-					};*/
-
-/*
-_arduino.gps.model
-_arduino.serial.baud0
-_arduino.serial.baud1
-_arduino.serial.baud2
-_arduino.serial.baud3
-_arduino.alarm.level1.upper
-_arduino.alarm.level1.lower
-_arduino.alarm.level2.upper
-_arduino.alarm.level2.lower
-_arduino.alarm.level3.upper
-_arduino.alarm.level3.lower
-_arduino.seatalk
-
-_arduino.windLastUpdate //32 bits (4 bytes). non neg
-_arduino.windAverage //16 bits (2 bytes)
-_arduino.windFactor		//32 bits (4 bytes). 
-_arduino.windMax
-_arduino.alarm.last //toggle to make alarm beep - beep beep
-_arduino.alarm.snooze
-	
-_arduino.anchorRadiusDeg //anchor alarm radius in decimal degrees, eg 1deg = 60NM.
-_arduino.anchorDistance
-_arduino.anchorMaxDistance
-//a box around the anchor, shrinks with every GPS reading to home in on the anchor itself
-_arduino.anchorN
-_arduino.anchorS
-_arduino.anchorE
-_arduino.anchorW
-
-*/
 
 #endif /* SIGNALKMODEL_H_ */

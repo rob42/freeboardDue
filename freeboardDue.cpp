@@ -31,7 +31,7 @@ char input;
 
 
 //freeboard model
-FreeBoardModel model;
+//FreeBoardModel model;
 SignalkModel signalkModel;
 
 
@@ -87,8 +87,8 @@ static const char* queries[] = {
 					"alarms.radarAlarmMethod",
 					"alarms.mobAlarmState",
 					"alarms.mobAlarmMethod",
-					"_arduino.alarm.last",
 					"navigation.anchor.alarmRadius",
+					"_arduino.alarm.last",
 					"_arduino.wind.average",
 					"_arduino.wind.factor",
 					"_arduino.wind.max",
@@ -101,6 +101,16 @@ static const char* queries[] = {
 					"_arduino.autopilot.baudRate",
 					"_arduino.autopilot.offcourse",
 					"_arduino.autopilot.rudderCommand",
+					"_arduino.serial.baud4",
+					"_arduino.serial.baud5",
+					"environment.airPressureChangeRateAlarm",
+					"environment.airPressure",
+					"environment.waterTemp",
+					"steering.autopilot.portLock",
+					"steering.autopilot.starboardLock",
+					"steering.rudderAngle",
+					"steering.rudderAngleTarget",
+					"navigation.destination.eta",
 					};
 
 StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
@@ -129,7 +139,7 @@ void setup()
 {
 // Add your initialization code here
 	// initialize  serial ports:
-		Serial.begin(model.getSerialBaud());
+		Serial.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD0));
 		if (DEBUG) Serial.println("Initializing..");
 
 		//start gps on serial1, autobaud
@@ -137,27 +147,27 @@ void setup()
 		//gps.setupGps();
 		if (DEBUG) {
 			Serial.print("Start GPS Rx - serial1 at ");
-			Serial.println(model.getSerialBaud1());
+			Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
 		}
 
-		Serial1.begin(model.getSerialBaud1());
+		Serial1.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
 
-		if (model.getSeaTalk()) {
+		if (signalkModel.getSignalkValueBool(_ARDUINO_SEATALK)) {
 			if (DEBUG) Serial.println("Start seatalk - serial2 at 4800");
 			//Serial2.begin(4800, SERIAL_9N1); //Seatalk interface
 		} else {
 			if (DEBUG) {
 				Serial.print("Start nmea Rx - serial2 at ");
-				Serial.println(model.getSerialBaud2());
+				Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD2));
 			}
-			Serial2.begin(model.getSerialBaud2(), SERIAL_8N1);
+			Serial2.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD2), SERIAL_8N1);
 		}
 
 		if (DEBUG) {
 			Serial.print("Start nmea Rx - serial3 at ");
-			Serial.println(model.getSerialBaud3());
+			Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD3));
 		}
-		Serial3.begin(model.getSerialBaud3(), SERIAL_8N1); //talker2
+		Serial3.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD3), SERIAL_8N1); //talker2
 
 		if (DEBUG) Serial.println("Start SPI uarts..");
 			delay(1000);
@@ -170,7 +180,7 @@ void setup()
 
 		if (DEBUG) {
 				Serial.print("Start nmea Rx - serial4 at ");
-				Serial.println(model.getSerialBaud4());
+				Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD4));
 			}
 		//mSerial1.begin(model.getSerialBaud4()); //talker3
 		delay(100);
@@ -179,9 +189,9 @@ void setup()
 			pinMode(nmeaTxPin, OUTPUT);
 			if (DEBUG) {
 				Serial.print("Start nmea Tx - on pins 46 Tx, 48 Rx at ");
-				Serial.println(model.getSerialBaud5());
+				Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD5));
 			}
-		//nmea.begin(model.getSerialBaud5());
+		//nmea.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD5));
 
 		autopilot.init();
 
@@ -248,7 +258,7 @@ void serialEvent1() {
 
 void serialEvent2() {
 	while (Serial2.available()) {
-		if (model.getSeaTalk()) {
+		if (signalkModel.getSignalkValueBool(_ARDUINO_SEATALK)) {
 			//seatalk.processSeaTalkByte(Serial2.read());
 		} else {
 			inputSerial2Complete = talker2.decode(Serial2.read());
@@ -307,7 +317,7 @@ void loop()
 				//do every 500ms
 				wind.calcWindData();
 
-				model.writeSimple(Serial);
+				//signalkModel.writeSimple(Serial);
 			}
 			if (interval % 100 == 0) {
 				//Serial.println(freeMemory());
@@ -322,150 +332,12 @@ void loop()
 				levels.checkLvlAlarms();
 				alarm.checkAlarms();
 
-
 			}
 
 			execute = false;
 		}
 }
 
-
-
-void process(char * s, char parser) {
-	//if (DEBUG) Serial.print("Process str:");
-	//if (DEBUG) Serial.println(s);
-	char *cmd = strtok(s, ",");
-	while (cmd != NULL && strlen(cmd) > 3) {
-		//starts with # its a command
-		//if (DEBUG) Serial.print("Process incoming..l=");
-		//if (DEBUG) Serial.print(strlen(cmd));
-		//if (DEBUG) Serial.print(", ");
-		//if (DEBUG) Serial.println(cmd);
-
-		char key[5];
-		int l = strlen(cmd);
-		bool save = false;
-		if (cmd[0] == '#') {
-			//
-			strncpy(key, cmd, 4);
-			key[4] = '\0';
-			char val[l - 4];
-			memcpy(val, &cmd[5], l - 5);
-			val[l - 5] = '\0';
-			//if (DEBUG) Serial.print(key);
-			//if (DEBUG) Serial.print(" = ");
-			//if (DEBUG) Serial.println(val);
-
-			//anchor
-			if (strcmp(key, ANCHOR_ALARM_STATE) == 0) {
-				//if (DEBUG) Serial.print("AA Entered..");
-				model.setAnchorAlarmOn(atoi(val));
-				if (atoi(val) == 1) {
-					anchor.setAnchorPoint();
-				}
-				save = true;
-			} else if (strcmp(key, ANCHOR_ALARM_ADJUST) == 0) {
-				model.setAnchorRadius(model.getAnchorRadius() + atof(val));
-				save = true;
-			} else if (strcmp(key, ANCHOR_ALARM_LAT) == 0) {
-				model.setAnchorLat(atof(val));
-				save = true;
-			} else if (strcmp(key, ANCHOR_ALARM_LON) == 0) {
-				model.setAnchorLon(atof(val));
-				save = true;
-			}
-			//autopliot
-			else if (strcmp(key, AUTOPILOT_STATE) == 0) {
-				//if (DEBUG) Serial.print("AP Entered..");
-				//if (DEBUG) Serial.println(val);
-				//this is potentailly dangerous, since we dont want the boat diving off on an old target heading.
-				//in model we ALWAYS reset to current magnetic or wind heading at this point
-				model.setAutopilotOn(atoi(val));
-			} else if (strcmp(key, AUTOPILOT_ADJUST) == 0) {
-				model.setAutopilotTargetHeading(model.getAutopilotTargetHeading() + atol(val));
-			} else if (strcmp(key, AUTOPILOT_SOURCE) == 0) {
-				model.setAutopilotReference(val[0]);
-			}
-			//wind
-			else if (strcmp(key, WIND_SPEED_ALARM_STATE) == 0) {
-				model.setWindAlarmOn(atoi(val));
-				save = true;
-			} else if (strcmp(key, WIND_ALARM_KNOTS) == 0) {
-				model.setWindAlarmSpeed(atoi(val));
-				save = true;
-			} else if (strcmp(key, WIND_ZERO_ADJUST) == 0) {
-				model.setWindZeroOffset(atoi(val));
-				save = true;
-			} else if (strcmp(key, LEVEL1_UPPER_ALARM) == 0) {
-				model.setLvl1UpperLimit(atoi(val));
-				save = true;
-			} else if (strcmp(key, LEVEL1_LOWER_ALARM) == 0) {
-				model.setLvl1LowerLimit(atoi(val));
-				save = true;
-			} else if (strcmp(key, LEVEL2_UPPER_ALARM) == 0) {
-				model.setLvl2UpperLimit(atoi(val));
-				save = true;
-			} else if (strcmp(key, LEVEL2_LOWER_ALARM) == 0) {
-				model.setLvl2LowerLimit(atoi(val));
-				save = true;
-			} else if (strcmp(key, LEVEL3_UPPER_ALARM) == 0) {
-				model.setLvl3UpperLimit(atoi(val));
-				save = true;
-			} else if (strcmp(key, LEVEL3_LOWER_ALARM) == 0) {
-				model.setLvl3LowerLimit(atoi(val));
-				save = true;
-			}else if (strcmp(key, CONFIG) == 0) {
-				//Serial.println("Sending config..");
-				model.writeConfig(Serial);
-			}
-			//gps,serial,seatalk
-			else if (strcmp(key, GPS_MODEL) == 0) {
-				model.setGpsModel(atoi(val));
-				save = true;
-			} else if (strcmp(key, SERIAL_BAUD0) == 0) {
-				model.setSerialBaud(atol(val));
-				save = true;
-			} else if (strcmp(key, SERIAL_BAUD1) == 0) {
-				model.setSerialBaud1(atol(val));
-				save = true;
-			} else if (strcmp(key, SERIAL_BAUD2) == 0) {
-				model.setSerialBaud2(atol(val));
-				save = true;
-			} else if (strcmp(key, SERIAL_BAUD3) == 0) {
-				model.setSerialBaud3(atol(val));
-				save = true;
-			} else if (strcmp(key, SEATALK) == 0) {
-				model.setSeaTalk(atoi(val));
-				save = true;
-			}
-			if (save) model.saveConfig();
-
-		} else {
-			strncpy(key, cmd, 3);
-			key[3] = '\0';
-			char val[l - 3];
-			memcpy(val, &cmd[4], l - 4);
-			val[l - 4] = '\0';
-			//if (DEBUG) Serial.print(key);
-			//if (DEBUG) Serial.print(" = ");
-			//if (DEBUG) Serial.println(val);
-			// incoming data = WST,WSA,WDT,WDA,WSU,LAT,LON,COG,MGH,SOG,YAW
-			if (strcmp(key, MGH) == 0) {
-				model.setMagneticHeading(atof(val));
-			}
-			if (strcmp(key, DECL) == 0) {
-				model.setDeclination(atof(val));
-			}
-			if (strcmp(key, F_WDT) == 0) {
-				model.setWindTrueDir(atoi(val));
-			}
-
-		}
-		//next token
-		cmd = strtok(NULL, ",");
-	}
-	//if (DEBUG) Serial.println("Process str exit");
-}
 
 byte getChecksum(char* str) {
 	byte cs = 0; //clear any old checksum

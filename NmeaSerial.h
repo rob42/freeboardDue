@@ -28,24 +28,20 @@
 
 #include "Arduino.h"
 #include <PString.h>
+#include <SignalkModel.h>
 
-
-#include "FreeboardConstants.h"
-#include "FreeBoardModel.h"
-#include "freeboardDue.h"
 
 class NmeaSerial: HardwareSerial {
 public:
-	NmeaSerial(FreeBoardModel* model):model(model){};
+	NmeaSerial(SignalkModel* model):model(model){};
 	virtual ~NmeaSerial();
 	void printNmea(char* sentence);
-	void printWindNmea();
 	void printTrueHeading();
 	void begin(long speed);
 	virtual size_t write(uint8_t) = 0;
 	    using Print::write; // pull in write(str) and write(buf, size) from Print
 private:
-	FreeBoardModel* model;
+	SignalkModel* model;
 	char windSentence [30];
 	char trueHeadingSentence [20];
 	byte cs;

@@ -29,13 +29,11 @@
 //add your includes for the project freeboardDue here
 typedef unsigned char byte;
 
-#include "FreeboardConstants.h"
 #include <DueTimer.h>
 #include <MultiSerial.h>
 #include <SignalkModel.h>
 #include <StreamJsonReader.h>
 #include <Wind.h>
-#include "FreeBoardModel.h"
 #include "NmeaSerial.h"
 #include <Alarm.h>
 #include <Gps.h>

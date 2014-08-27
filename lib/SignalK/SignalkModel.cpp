@@ -81,33 +81,33 @@ SignalkModel::SignalkModel() {
 	steering.autopilot.maxDriveRate = 0.0;
 	steering.autopilot.portLock = 0.0;
 	steering.autopilot.starboardLock = 0.0;
-	alarms.anchorAlarmMethod = ALRM_SOUND;
-	alarms.anchorAlarmState = ALRM_DISABLED;
-	alarms.autopilotAlarmMethod = ALRM_SOUND;
-	alarms.autopilotAlarmState = ALRM_DISABLED;
-	alarms.engineAlarmMethod = ALRM_SOUND;
-	alarms.engineAlarmState = ALRM_DISABLED;
-	alarms.fireAlarmMethod = ALRM_SOUND;
-	alarms.fireAlarmState = ALRM_DISABLED;
-	alarms.gasAlarmMethod = ALRM_SOUND;
-	alarms.gasAlarmState = ALRM_DISABLED;
-	alarms.gpsAlarmMethod = ALRM_SOUND;
-	alarms.gpsAlarmState = ALRM_DISABLED;
-	alarms.maydayAlarmMethod = ALRM_SOUND;
-	alarms.maydayAlarmState = ALRM_DISABLED;
-	alarms.panpanAlarmMethod = ALRM_SOUND;
-	alarms.panpanAlarmState = ALRM_DISABLED;
-	alarms.powerAlarmMethod = ALRM_SOUND;
-	alarms.powerAlarmState = ALRM_DISABLED;
+	alarms.anchorAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.anchorAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.autopilotAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.autopilotAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.engineAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.engineAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.fireAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.fireAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.gasAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.gasAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.gpsAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.gpsAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.maydayAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.maydayAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.panpanAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.panpanAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.powerAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.powerAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
 	alarms.silentInterval = 300; //seconds?
-	alarms.windAlarmMethod = ALRM_SOUND;
-	alarms.windAlarmState = ALRM_DISABLED;
-	alarms.genericAlarmMethod = ALRM_SOUND;
-	alarms.genericAlarmState = ALRM_DISABLED;
-	alarms.radarAlarmMethod = ALRM_SOUND;
-	alarms.radarAlarmState = ALRM_DISABLED;
-	alarms.mobAlarmMethod = ALRM_SOUND;
-	alarms.mobAlarmState = ALRM_DISABLED;
+	alarms.windAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.windAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.genericAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.genericAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.radarAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.radarAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
+	alarms.mobAlarmMethod = static_cast<AlarmMethodType>(ALRM_SOUND);
+	alarms.mobAlarmState = static_cast<AlarmStateType>(ALRM_DISABLED);
 	environment.airPressureChangeRateAlarm = 0.0;
 	environment.airPressure = 1024.0;
 	environment.airTemp = 0.0;
@@ -132,8 +132,71 @@ SignalkModel::SignalkModel() {
 	environment.wind.speedAlarm = 0.0;
 	environment.wind.speedTrue = 0.0;
 	environment.wind.speedApparent = 0.0;
-
+	environment.airPressureChangeRateAlarm = 0.0;
+	environment.airPressure = 0.0;
+	environment.waterTemp = 0.0;
+	steering.rudderAngle = 0.0;
+	steering.rudderAngleTarget = 0.0;
+	steering.autopilot.state = static_cast<AutopilotStateType>(AP_OFF);
+	steering.autopilot.mode = AutopilotModeType();
+	steering.autopilot.targetHeadingNorth = 0.0;
+	steering.autopilot.targetHeadingMagnetic = 0.0;
+	steering.autopilot.alarmHeadingXte = 0.0;
+	steering.autopilot.headingSource = static_cast<AutopilotHeadingSourceType>(AP_COMPASS);
+	steering.autopilot.deadZone = 0.0;
+	steering.autopilot.backlash = 0.0;
+	steering.autopilot.gain = 0;
+	steering.autopilot.maxDriveAmps = 0.0;
+	steering.autopilot.maxDriveRate = 0.0;
+	steering.autopilot.portLock = 0.0;
+	steering.autopilot.starboardLock = 0.0;
+	_arduino.gps.decode = false;
+	_arduino.gps.model = 0;
+	_arduino.gps.lastFix = 0UL;
+	_arduino.gps.utc = 0UL;
+	_arduino.gps.status = GPS_WARN;
+	_arduino.serial.baud0 = 38400UL;
+	_arduino.serial.baud1 = 38400UL;
+	_arduino.serial.baud2 = 9600UL;
+	_arduino.serial.baud3 = 9600UL;
+	_arduino.serial.baud4 = 3840UL;
+	_arduino.serial.baud5 = 4800UL;
+	_arduino.alarm.level1.upper = 0;
+	_arduino.alarm.level2.upper = 0;
+	_arduino.alarm.level3.upper = 0;
+	_arduino.alarm.level1.lower = 0;
+	_arduino.alarm.level2.lower = 0;
+	_arduino.alarm.level3.lower = 0;
+	_arduino.alarm.snooze = 0UL;
+	_arduino.alarm.last = 0UL;
+	_arduino.anchor.radiusDeg = 0.0;
+	_arduino.anchor.north = 0.0;
+	_arduino.anchor.south = 0.0;
+	_arduino.anchor.east = 0.0;
+	_arduino.anchor.west = 0.0;
+	_arduino.seatalk = false;
+	_arduino.wind.lastUpdate = 0UL;
+	_arduino.wind.average = 0.0;
+	_arduino.wind.factor = 0.0;
+	_arduino.wind.max = 0.0;
+	_arduino.wind.zeroOffset = 0.0;
+	_arduino.autopilot.baudRate = 0UL;
+	_arduino.autopilot.offcourse = 0.0;
+	_arduino.autopilot.rudderCommand = 0.0;
 }
+
+/* Add to setSignalk
+navigation.destination.eta;
+steering.rudderAngle;
+steering.rudderAngleTarget;
+steering.autopilot.portLock;
+steering.autopilot.starboardLock;
+environment.airPressureChangeRateAlarm;
+environment.airPressure;
+environment.waterTemp;
+_arduino.wind.lastUpdate;
+_arduino.autopilot.rudderCommand;
+ */
 
 int findInArray(const char *array[], const char* value) {
 
@@ -414,6 +477,12 @@ void SignalkModel::setSignalkValue(unsigned long key, unsigned long value) {
 	case _ARDUINO_SERIAL_BAUD3:
 		_arduino.serial.baud3 = value;
 		break;
+	case _ARDUINO_SERIAL_BAUD4:
+		_arduino.serial.baud4 = value;
+		break;
+	case _ARDUINO_SERIAL_BAUD5:
+		_arduino.serial.baud5 = value;
+		break;
 
 	case _ARDUINO_AUTOPILOT_BAUDRATE:
 		_arduino.autopilot.baudRate = value;
@@ -578,6 +647,15 @@ void SignalkModel::setSignalkValue(unsigned long key, float value) {
 	}
 
 }
+
+bool SignalkModel::getSignalkValueBool(unsigned long key) {
+	switch (key) {
+	case _ARDUINO_SEATALK:
+			return true;
+			break;
+	}
+	return false;
+}
 int SignalkModel::getSignalkValueInt(unsigned long key) {
 	switch (key) {
 	case _ARDUINO_GPS_MODEL:
@@ -624,6 +702,12 @@ unsigned long SignalkModel::getSignalkValueLong(unsigned long key) {
 		break;
 	case _ARDUINO_SERIAL_BAUD3:
 		return _arduino.serial.baud3;
+		break;
+	case _ARDUINO_SERIAL_BAUD4:
+		return _arduino.serial.baud4;
+		break;
+	case _ARDUINO_SERIAL_BAUD5:
+		return _arduino.serial.baud5;
 		break;
 	case _ARDUINO_ALARM_SNOOZE:
 		return _arduino.alarm.snooze;
@@ -935,6 +1019,28 @@ volatile bool SignalkModel::isAlarmOn(unsigned long key) {
 	}
 	return false;
 }
+
+/* Add to get
+navigation.state;
+steering.rudderAngle;
+steering.rudderAngleTarget;
+steering.autopilot.state;
+steering.autopilot.mode;
+steering.autopilot.headingSource;
+steering.autopilot.portLock;
+steering.autopilot.starboardLock;
+alarms.autopilotAlarmState;
+alarms.autopilotAlarmMethod;
+environment.airPressureChangeRateAlarm;
+environment.airPressure;
+environment.waterTemp;
+_arduino.gps.decode;
+_arduino.seatalk;
+_arduino.wind.lastUpdate;
+_arduino.wind.zeroOffset;
+_arduino.autopilot.baudRate;
+ *
+ */
 
 unsigned long SignalkModel::hash(const char *str) {
 	unsigned long hash = 5381;

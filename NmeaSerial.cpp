@@ -29,7 +29,7 @@ NmeaSerial::~NmeaSerial() {
 
 }
 void NmeaSerial::begin(long speed) {
-	//initialise the nmea output, always pind 46/48 for AltSoftSerial
+	//initialise the nmea output, always pin 46/48 for AltSoftSerial
 	HardwareSerial::begin(speed);
 }
 
@@ -42,43 +42,6 @@ void NmeaSerial::printNmea(char* sentence) {
 	//if(DEBUG)Serial.println(sentence);
 }
 
-/*=== MWV - Wind Speed and Angle ===
- *
- * ------------------------------------------------------------------------------
- *        1   2 3   4 5
- *         |   | |   | |
- *  $--MWV,x.x,a,x.x,a*hh<CR><LF>
- * ------------------------------------------------------------------------------
- *
- * Field Number:
- *
- * 1. Wind Angle, 0 to 360 degrees
- * 2. Reference, R = Relative, T = True
- * 3. Wind Speed
- * 4. Wind Speed Units, K/M/N
- * 5. Status, A = Data Valid
- * 6. Checksum
- *
- */
-void NmeaSerial::printWindNmea() {
-	//Assemble a sentence of the various parts so that we can calculate the proper checksum
-
-	PString str(windSentence, sizeof(windSentence));
-	str.print("$WIMWV,");
-	str.print(model->getWindApparentDir());
-	str.print(".0,R,");
-	str.print(model->getWindAverage());
-	str.print(",N,A*");
-	//calculate the checksum
-
-	cs = getChecksum(windSentence); //clear any old checksum
-	//bug - arduino prints 0x007 as 7, 0x02B as 2B, so we add it now
-	if (cs < 0x10) str.print('0');
-	str.print(cs, HEX); // Assemble the final message and send it out the serial port
-	Serial.println(windSentence);
-	printNmea(windSentence);
-
-}
 
 /*
  * Heading, True.
@@ -91,11 +54,11 @@ void NmeaSerial::printWindNmea() {
 void NmeaSerial::printTrueHeading() {
 	//Assemble a sentence of the various parts so that we can calculate the proper checksum
 	// declination is positive when true N is west of MagN, eg subtract the declination
-	if(model->getDeclination()==0.0)return;
+	if(model->getSignalkValueFloat(NAVIGATION_MAGNETICVARIATION)==0.0)return;
 
 	PString str(trueHeadingSentence, sizeof(trueHeadingSentence));
 	str.print("$HCHDT,");
-	float trueHeading = model->getMagneticHeading()-model->getDeclination();
+	float trueHeading = model->getSignalkValueFloat(NAVIGATION_HEADINGMAGNETIC)-model->getSignalkValueFloat(NAVIGATION_MAGNETICVARIATION);
 	str.print(trueHeading);
 	str.print(",T*");
 	//calculate the checksum
