@@ -394,7 +394,7 @@ char* Wind::getWindNmea() {
 	str.print(",N,A*");
 	//calculate the checksum
 
-	cs = getChecksum(windSentence); //clear any old checksum
+	cs = signalkModel->getChecksum(windSentence); //clear any old checksum
 	//bug - arduino prints 0x007 as 7, 0x02B as 2B, so we add it now
 	if (cs < 0x10) str.print('0');
 	str.print(cs, HEX); // Assemble the final message and send it out the serial port
@@ -402,23 +402,5 @@ char* Wind::getWindNmea() {
 
 }
 
-void Wind::printWindBranch(HardwareSerial* serial, bool last){
-	signalkModel->openBranch(serial,SignalkModel::j_wind);
-	signalkModel->printValue(serial, SignalkModel::j_speedAlarm, signalkModel->getValueFloat(ENVIRONMENT_WIND_SPEEDALARM), false);
-	signalkModel->printValue(serial, SignalkModel::j_directionChangeAlarm, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONCHANGEALARM), false);
-	signalkModel->printValue(serial, SignalkModel::j_directionApparent, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
-	signalkModel->printValue(serial, SignalkModel::j_directionTrue, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
-	signalkModel->printValue(serial, SignalkModel::j_speedApparent, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
-	signalkModel->printValue(serial, SignalkModel::j_speedTrue, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), true);
-	signalkModel->closeBranch(&Serial, last);
 
-}
-
-byte Wind::getChecksum(char* str) {
-	byte cs = 0; //clear any old checksum
-	for (unsigned int n = 1; n < strlen(str) - 1; n++) {
-		cs ^= str[n]; //calculates the checksum
-	}
-	return cs;
-}
 

@@ -63,8 +63,8 @@ unsigned long hash( const char *str);
 
 //add your function definitions for the project freeboardDue here
 
+//void printNavigationBranch(HardwareSerial* serial, bool last);
+//void printSteeringBranch(HardwareSerial* serial, bool last);
 
-
-byte getChecksum(char* str);
 //Do not add code below this line
 #endif /* _freeboardDue_H_ */

@@ -45,6 +45,7 @@ public:
 	void checkAlarms();
 	bool isAlarmTriggered();
 
+
 private:
 	SignalkModel* model;
 	//unsigned long alarmLast;   //toggle to make alarm beep - beep beep

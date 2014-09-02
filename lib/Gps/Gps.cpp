@@ -323,7 +323,7 @@ void Gps::setupGpsImpl(){
 		str.print(model->getValueLong(_ARDUINO_SERIAL_BAUD1));
 		str.print(",8,1,0*");
 		//calculate the checksum
-		byte cs = getChecksum(gpsSentence); //clear any old checksum
+		byte cs = model->getChecksum(gpsSentence); //clear any old checksum
 		//bug - arduino prints 0x007 as 7, 0x02B as 2B, so we add it now
 		if (cs < 0x10) str.print('0');
 		str.print(cs, HEX); // Assemble the final message and send it out the serial port
@@ -358,7 +358,7 @@ void Gps::setupGpsImpl(){
 		str.print(model->getValueLong(_ARDUINO_SERIAL_BAUD1));
 		str.print("*");
 		//calculate the checksum
-		byte cs = getChecksum(gpsSentence); //clear any old checksum
+		byte cs = model->getChecksum(gpsSentence); //clear any old checksum
 		//bug - arduino prints 0x007 as 7, 0x02B as 2B, so we add it now
 		if (cs < 0x10) str.print('0');
 		str.print(cs, HEX); // Assemble the final message and send it out the serial port
@@ -369,18 +369,5 @@ void Gps::setupGpsImpl(){
 
 }
 
-void Gps::printPositionBranch(HardwareSerial* serial, bool last){
-	model->openBranch(serial,SignalkModel::j_position);
-	model->printValue(serial, SignalkModel::j_latitude, model->getValueFloat(NAVIGATION_POSITION_LATITUDE), false);
-	model->printValue(serial, SignalkModel::j_longitude, model->getValueFloat(NAVIGATION_POSITION_LONGITUDE), false);
-	model->printValue(serial, SignalkModel::j_altitude, model->getValueFloat(NAVIGATION_POSITION_ALTITUDE), true);
-	model->closeBranch(&Serial, last);
 
-}
-byte Gps::getChecksum(char* str) {
-		byte cs = 0; //clear any old checksum
-		for (unsigned int n = 1; n < strlen(str) - 1; n++) {
-			cs ^= str[n]; //calculates the checksum
-		}
-		return cs;
-	}
+

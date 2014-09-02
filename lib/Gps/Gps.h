@@ -52,7 +52,8 @@ public:
 	//bool getGpsDecode();
 	unsigned long getLastGpsFix();
 
-	void printPositionBranch(HardwareSerial* serial, bool last);
+
+
 	/*
 	 Set baud rate and various message frequencies.
 	 */
@@ -68,7 +69,6 @@ private:
 	void setupGpsImpl();
 	//bool gpsDecode;
 	//unsigned long gpsLastFix;
-	byte getChecksum(char* str);
 
 	// create a GPS data connection to GPRMC sentence type
 	//NMEA gps(GPRMC);

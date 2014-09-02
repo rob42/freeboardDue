@@ -216,7 +216,7 @@ public:
 	void setValue(unsigned long key, int value);
 
 	bool getValueBool(unsigned long key);
-	char* getValueCharArray(unsigned long key);
+	const char* getValueCharArray(unsigned long key);
 	char getValueChar(unsigned long key);
 	float getValueFloat(unsigned long key);
 	double getValueDouble(unsigned long key);
@@ -228,6 +228,17 @@ public:
 	volatile bool isAlarmOn(unsigned long key);
 	unsigned long hash(const char *str);
 
+	void printVesselWrapper(HardwareSerial* serial);
+	void printSteeringBranch(HardwareSerial* serial, bool last);
+	void printNavigationBranch(HardwareSerial* serial, bool last);
+	void printEnvironmentBranch(HardwareSerial* serial, bool last);
+	void printAlarmBranch(HardwareSerial* serial, bool last);
+	void printAnchorBranch(HardwareSerial* serial, bool last);
+	void printPositionBranch(HardwareSerial* serial, bool last);
+	void printAutopilotBranch(HardwareSerial* serial, bool last);
+	void printWindBranch(HardwareSerial* serial, bool last);
+	void printConfigBranch(HardwareSerial* serial, bool last);
+
 	void openMessage(HardwareSerial* serial);;
 	void closeMessage(HardwareSerial* serial);;
 	void openBranch(HardwareSerial* serial, const char* key);
@@ -235,11 +246,16 @@ public:
 
 	void printValue(HardwareSerial* serial, const char* key, const float value, bool last);
 	void printValue(HardwareSerial* serial, const char* key, const unsigned long value, bool last);
+	void printValue(HardwareSerial* serial, const char* key, const int value, bool last);
 	void printValue(HardwareSerial* serial, const char* key, const long value, bool last);
 	void printValue(HardwareSerial* serial, const char* key, const bool value, bool last);
 	void printValue(HardwareSerial* serial, const char* key,  const char* value, bool last);
+	void printValue(HardwareSerial* serial, const char* key,  const char value, bool last);
 
+	byte getChecksum(char* str);
 
+	static const char* j_vessels ;
+	static const char* j_self ;
 	static const char* j_arduino ;
 	static const char* j_airPressure ;
 	static const char* j_airPressureChangeRateAlarm ;
@@ -316,6 +332,8 @@ public:
 	static const char* j_level1 ;
 	static const char* j_level2 ;
 	static const char* j_level3 ;
+	static const char* j_upper ;
+	static const char* j_lower ;
 	static const char* j_longitude ;
 	static const char* j_magneticVariation ;
 	static const char* j_max ;

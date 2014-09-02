@@ -68,6 +68,7 @@ public:
 	void autopilotEvent();
 	void init();
 
+
 private:
 
 	double autopilotTargetHeading; //Setpoint

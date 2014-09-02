@@ -26,6 +26,8 @@
 #include "SignalkModel.h"
 //#include "freeboardDue.h"
 
+const char * SignalkModel::j_vessels = "vessels";
+const char * SignalkModel::j_self = "self";
 const char * SignalkModel::j_arduino = "_arduino";
 const char * SignalkModel::j_airPressure = "airPressure";
 		const char * SignalkModel::j_airPressureChangeRateAlarm = "airPressureChangeRateAlarm";
@@ -102,6 +104,8 @@ const char * SignalkModel::j_airPressure = "airPressure";
 		const char * SignalkModel::j_level1 = "level1";
 		const char * SignalkModel::j_level2 = "level2";
 		const char * SignalkModel::j_level3 = "level3";
+		const char * SignalkModel::j_upper = "upper";
+		const char * SignalkModel::j_lower = "lower";
 		const char * SignalkModel::j_longitude = "longitude";
 		const char * SignalkModel::j_magneticVariation = "magneticVariation";
 		const char * SignalkModel::j_max = "max";
@@ -833,7 +837,7 @@ int SignalkModel::getValueInt(unsigned long key) {
 		return _arduino.alarm.level3.lower;
 		break;
 	}
-	return NAN;
+	return INT16_MAX;
 }
 
 unsigned long SignalkModel::getValueLong(unsigned long key) {
@@ -869,7 +873,7 @@ unsigned long SignalkModel::getValueLong(unsigned long key) {
 		return _arduino.gps.utc;
 		break;
 	}
-	return NAN;
+	return SIZE_MAX;
 }
 
 
@@ -882,7 +886,7 @@ double SignalkModel::getValueDouble(unsigned long key) {
 		return _arduino.autopilot.rudderCommand;
 		break;
 	}
-	return NAN;
+	return SIZE_MAX;
 }
 
 float SignalkModel::getValueFloat(unsigned long key) {
@@ -1033,6 +1037,109 @@ char SignalkModel::getValueChar(unsigned long key) {
 		break;
 	}
 	return '0';
+}
+
+const char* SignalkModel::getValueCharArray(unsigned long key) {
+
+
+		switch (key) {
+
+		case NAVIGATION_STATE:
+				return NavigationStateString[navigation.state];
+			break;
+		case STEERING_AUTOPILOT_STATE:
+			return AutopilotStateString[steering.autopilot.state];
+			break;
+		case STEERING_AUTOPILOT_MODE:
+			return AutopilotModeString[steering.autopilot.mode];
+			break;
+		case STEERING_AUTOPILOT_HEADINGSOURCE:
+			return AutopilotHeadingSourceString[steering.autopilot.headingSource];
+			break;
+		case ALARMS_ANCHORALARMMETHOD:
+			return AlarmMethodString[alarms.anchorAlarmMethod];
+			break;
+		case ALARMS_ANCHORALARMSTATE:
+			return AlarmStateString[alarms.anchorAlarmState];
+			break;
+		case ALARMS_AUTOPILOTALARMMETHOD:
+			return AlarmMethodString[alarms.autopilotAlarmMethod];
+			break;
+		case ALARMS_AUTOPILOTALARMSTATE:
+			return AlarmStateString[alarms.autopilotAlarmState];
+			break;
+		case ALARMS_ENGINEALARMMETHOD:
+			return AlarmMethodString[alarms.engineAlarmMethod];
+			break;
+		case ALARMS_ENGINEALARMSTATE:
+			return AlarmStateString[alarms.engineAlarmState];
+			break;
+		case ALARMS_FIREALARMMETHOD:
+			return AlarmMethodString[alarms.fireAlarmMethod];
+			break;
+		case ALARMS_FIREALARMSTATE:
+			return AlarmStateString[alarms.fireAlarmState];
+			break;
+		case ALARMS_GASALARMMETHOD:
+			return AlarmMethodString[alarms.gasAlarmMethod];
+			break;
+		case ALARMS_GASALARMSTATE:
+			return AlarmStateString[alarms.gasAlarmState];
+			break;
+		case ALARMS_GPSALARMMETHOD:
+			return AlarmMethodString[alarms.gpsAlarmMethod];
+			break;
+		case ALARMS_GPSALARMSTATE:
+			return AlarmStateString[alarms.gpsAlarmState];
+			break;
+		case ALARMS_MAYDAYALARMMETHOD:
+			return AlarmMethodString[alarms.maydayAlarmMethod];
+			break;
+		case ALARMS_MAYDAYALARMSTATE:
+			return AlarmStateString[alarms.maydayAlarmState];
+			break;
+		case ALARMS_PANPANALARMMETHOD:
+			return AlarmMethodString[alarms.panpanAlarmMethod];
+			break;
+		case ALARMS_PANPANALARMSTATE:
+			return AlarmStateString[alarms.panpanAlarmState];
+			break;
+		case ALARMS_POWERALARMMETHOD:
+			return AlarmMethodString[alarms.powerAlarmMethod];
+			break;
+		case ALARMS_POWERALARMSTATE:
+			return AlarmStateString[alarms.powerAlarmState];
+			break;
+
+		case ALARMS_WINDALARMMETHOD:
+			return AlarmMethodString[alarms.windAlarmMethod];
+			break;
+		case ALARMS_WINDALARMSTATE:
+			return AlarmStateString[alarms.windAlarmState];
+			break;
+		case ALARMS_GENERICALARMMETHOD:
+			return AlarmMethodString[alarms.genericAlarmMethod];
+			break;
+		case ALARMS_GENERICALARMSTATE:
+			return AlarmStateString[alarms.genericAlarmState];
+			break;
+		case ALARMS_RADARALARMMETHOD:
+			return AlarmMethodString[alarms.radarAlarmMethod];
+			break;
+		case ALARMS_RADARALARMSTATE:
+			return AlarmStateString[alarms.radarAlarmState];
+			break;
+		case ALARMS_MOBALARMMETHOD:
+			return AlarmMethodString[alarms.mobAlarmMethod];
+			break;
+		case ALARMS_MOBALARMSTATE:
+			return AlarmStateString[alarms.mobAlarmState];
+			break;
+		default:
+			break;
+
+		}
+		return "ERROR";
 }
 
 volatile bool SignalkModel::isAutopilotOn() {
@@ -1211,7 +1318,7 @@ void SignalkModel::openBranch(HardwareSerial* serial, const char* key){
 	serial->print("\":{");
 }
 void SignalkModel::closeBranch(HardwareSerial* serial, bool last){
-	serial->println("}");
+	serial->print("}");
 	if(!last)serial->print(",");
 }
 
@@ -1219,34 +1326,311 @@ void SignalkModel::printValue(HardwareSerial* serial, const char* key, const flo
 	serial->print("\"");
 	serial->print(key);
 	serial->print("\":");
-	serial->print(value,DEC);
+	if( value!=value){
+		serial->print("null");
+	}else{
+		serial->print(value,DEC);
+	}
 	if(!last)serial->print(",");
 }
 void SignalkModel::printValue(HardwareSerial* serial, const char* key, const unsigned long value, bool last){
 	serial->print("\"");
 	serial->print(key);
 	serial->print("\":");
-	serial->print(value,DEC);
+	if(value==SIZE_MAX){
+			serial->print("null");
+		}else{
+			serial->print(value,DEC);
+		}
 	if(!last)serial->print(",");
 }
 void SignalkModel::printValue(HardwareSerial* serial, const char* key, const long value, bool last){
 	serial->print("\"");
 	serial->print(key);
 	serial->print("\":");
-	serial->print(value,DEC);
+	if(value==SIZE_MAX){
+			serial->print("null");
+		}else{
+			serial->print(value,DEC);
+		}
 	if(!last)serial->print(",");
 }
 void SignalkModel::printValue(HardwareSerial* serial, const char* key, const bool value, bool last){
 	serial->print("\"");
 	serial->print(key);
 	serial->print("\":");
-	serial->print(value);
+	if(value){
+			serial->print("true");
+	}else{
+		serial->print("false");
+	}
 	if(!last)serial->print(",");
 }
 void SignalkModel::printValue(HardwareSerial* serial, const char* key,  const char* value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":\"");
+	serial->print(value);
+	serial->print("\"");
+	if(!last)serial->print(",");
+}
+void SignalkModel::printValue(HardwareSerial* serial, const char* key,  const char value, bool last){
 	serial->print("\"");
 	serial->print(key);
 	serial->print("\":");
 	serial->print(value);
 	if(!last)serial->print(",");
 }
+
+/*
+	Output, with the trailing comma if last = false
+
+	*/
+void SignalkModel::printAlarmBranch(HardwareSerial* serial, bool last){
+	openBranch(serial,SignalkModel::j_alarm);
+		printValue(serial, SignalkModel::j_anchorAlarmMethod, getValueCharArray(ALARMS_ANCHORALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_anchorAlarmState, getValueCharArray(ALARMS_ANCHORALARMSTATE), false);
+		printValue(serial, SignalkModel::j_autopilotAlarmMethod, getValueCharArray(ALARMS_AUTOPILOTALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_autopilotAlarmState, getValueCharArray(ALARMS_AUTOPILOTALARMSTATE), false);
+		printValue(serial, SignalkModel::j_engineAlarmMethod, getValueCharArray(ALARMS_ENGINEALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_engineAlarmState, getValueCharArray(ALARMS_ENGINEALARMSTATE), false);
+		printValue(serial, SignalkModel::j_fireAlarmMethod, getValueCharArray(ALARMS_FIREALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_fireAlarmState, getValueCharArray(ALARMS_FIREALARMSTATE), false);
+		printValue(serial, SignalkModel::j_gasAlarmMethod, getValueCharArray(ALARMS_GASALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_gasAlarmState, getValueCharArray(ALARMS_GASALARMSTATE), false);
+		printValue(serial, SignalkModel::j_gpsAlarmMethod, getValueCharArray(ALARMS_GPSALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_gpsAlarmState, getValueCharArray(ALARMS_GPSALARMSTATE), false);
+		printValue(serial, SignalkModel::j_maydayAlarmMethod, getValueCharArray(ALARMS_MAYDAYALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_maydayAlarmState, getValueCharArray(ALARMS_MAYDAYALARMSTATE), false);
+		printValue(serial, SignalkModel::j_panpanAlarmMethod, getValueCharArray(ALARMS_PANPANALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_panpanAlarmState, getValueCharArray(ALARMS_PANPANALARMSTATE), false);
+		printValue(serial, SignalkModel::j_powerAlarmMethod, getValueCharArray(ALARMS_POWERALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_powerAlarmState, getValueCharArray(ALARMS_POWERALARMSTATE), false);
+		printValue(serial, SignalkModel::j_silentInterval, (long)getValueInt(ALARMS_SILENTINTERVAL), false);
+		printValue(serial, SignalkModel::j_windAlarmMethod, getValueCharArray(ALARMS_WINDALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_windAlarmState, getValueCharArray(ALARMS_WINDALARMSTATE), false);
+		printValue(serial, SignalkModel::j_genericAlarmMethod, getValueCharArray(ALARMS_GENERICALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_genericAlarmState, getValueCharArray(ALARMS_GENERICALARMSTATE), false);
+		printValue(serial, SignalkModel::j_radarAlarmMethod, getValueCharArray(ALARMS_RADARALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_radarAlarmState, getValueCharArray(ALARMS_RADARALARMSTATE), false);
+		printValue(serial, SignalkModel::j_mobAlarmMethod, getValueCharArray(ALARMS_MOBALARMMETHOD), false);
+		printValue(serial, SignalkModel::j_mobAlarmState, getValueCharArray(ALARMS_MOBALARMSTATE), true);
+	closeBranch(&Serial, last);
+
+}
+
+/*
+ Output, with the trailing comma if last = false
+				float alarmRadius;
+				float maxRadius;
+				float currentRadius;
+
+ */
+
+void SignalkModel::printAnchorBranch(HardwareSerial* serial, bool last){
+	openBranch(serial,SignalkModel::j_anchor);
+	printValue(serial, SignalkModel::j_alarmRadius, getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS), false);
+	printValue(serial, SignalkModel::j_maxRadius, getValueFloat(NAVIGATION_ANCHOR_MAXRADIUS), false);
+		openBranch(serial,SignalkModel::j_position);
+			printValue(serial, SignalkModel::j_latitude, getValueFloat(NAVIGATION_POSITION_LATITUDE), false);
+			printValue(serial, SignalkModel::j_longitude, getValueFloat(NAVIGATION_POSITION_LONGITUDE), false);
+			printValue(serial, SignalkModel::j_altitude, getValueFloat(NAVIGATION_POSITION_ALTITUDE), true);
+		closeBranch(&Serial, true);
+	closeBranch(&Serial, last);
+
+}
+
+/*
+ Output, with the trailing comma if last = false:
+"position": {
+		"latitude": 0,
+		"longitude": 0,
+		"altitude": 0
+	},
+*/
+void SignalkModel::printPositionBranch(HardwareSerial* serial, bool last){
+	openBranch(serial,SignalkModel::j_position);
+		printValue(serial, SignalkModel::j_latitude, getValueFloat(NAVIGATION_POSITION_LATITUDE), false);
+		printValue(serial, SignalkModel::j_longitude, getValueFloat(NAVIGATION_POSITION_LONGITUDE), false);
+		printValue(serial, SignalkModel::j_altitude, getValueFloat(NAVIGATION_POSITION_ALTITUDE), true);
+	closeBranch(&Serial, last);
+
+}
+
+/*
+	Output, with the trailing comma if last = false
+	"wind": {
+		   "speedAlarm": 0,
+		   "directionChangeAlarm": 0,
+		   "directionApparent": 0,
+		   "directionTrue": 0,
+		   "speedApparent": 0,
+		   "speedTrue": 0
+	   },
+	*/
+void SignalkModel::printAutopilotBranch(HardwareSerial* serial, bool last){
+	openBranch(serial,SignalkModel::j_autopilot);
+		printValue(serial, SignalkModel::j_state, getValueCharArray(STEERING_AUTOPILOT_STATE), false);
+		printValue(serial, SignalkModel::j_mode, getValueCharArray(STEERING_AUTOPILOT_MODE), false);
+		printValue(serial, SignalkModel::j_targetHeadingNorth, getValueFloat(STEERING_AUTOPILOT_TARGETHEADINGNORTH), false);
+		printValue(serial, SignalkModel::j_targetHeadingMagnetic, getValueFloat(STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC), false);
+		printValue(serial, SignalkModel::j_alarmHeadingXte, getValueFloat(STEERING_AUTOPILOT_ALARMHEADINGXTE), false);
+		printValue(serial, SignalkModel::j_headingSource, getValueCharArray(STEERING_AUTOPILOT_HEADINGSOURCE), false);
+		printValue(serial, SignalkModel::j_deadZone, getValueFloat(STEERING_AUTOPILOT_DEADZONE), false);
+		printValue(serial, SignalkModel::j_backlash, getValueFloat(STEERING_AUTOPILOT_BACKLASH), false);
+		printValue(serial, SignalkModel::j_gain,(long) getValueInt(STEERING_AUTOPILOT_GAIN), false);
+		printValue(serial, SignalkModel::j_maxDriveAmps, getValueFloat(STEERING_AUTOPILOT_MAXDRIVEAMPS), false);
+		printValue(serial, SignalkModel::j_maxDriveRate, getValueFloat(STEERING_AUTOPILOT_MAXDRIVERATE), false);
+		printValue(serial, SignalkModel::j_portLock, getValueFloat(STEERING_AUTOPILOT_PORTLOCK), false);
+		printValue(serial, SignalkModel::j_starboardLock, getValueFloat(STEERING_AUTOPILOT_STARBOARDLOCK), true);
+	closeBranch(&Serial, last);
+
+}
+/*
+	Output, with the trailing comma if last = false
+	"wind": {
+		   "speedAlarm": 0,
+		   "directionChangeAlarm": 0,
+		   "directionApparent": 0,
+		   "directionTrue": 0,
+		   "speedApparent": 0,
+		   "speedTrue": 0
+	   },
+	*/
+void SignalkModel::printWindBranch(HardwareSerial* serial, bool last){
+	openBranch(serial,SignalkModel::j_wind);
+		printValue(serial, SignalkModel::j_speedAlarm, getValueFloat(ENVIRONMENT_WIND_SPEEDALARM), false);
+		printValue(serial, SignalkModel::j_directionChangeAlarm, getValueFloat(ENVIRONMENT_WIND_DIRECTIONCHANGEALARM), false);
+		printValue(serial, SignalkModel::j_directionApparent, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
+		printValue(serial, SignalkModel::j_directionTrue, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
+		printValue(serial, SignalkModel::j_speedApparent, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
+		printValue(serial, SignalkModel::j_speedTrue, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), true);
+	closeBranch(&Serial, last);
+
+}
+void SignalkModel::printConfigBranch(HardwareSerial* serial, bool last){
+
+	openBranch(serial,SignalkModel::j_arduino);
+	openBranch(serial,SignalkModel::j_gps);
+	printValue(serial, SignalkModel::j_decode, getValueBool(_ARDUINO_GPS_DECODE), false);
+	printValue(serial, SignalkModel::j_model, (long)getValueInt(_ARDUINO_GPS_MODEL), false);
+				printValue(serial, SignalkModel::j_lastFix, getValueLong(_ARDUINO_GPS_LASTFIX), false);
+				printValue(serial, SignalkModel::j_utc, getValueLong(_ARDUINO_GPS_UTC), false);
+				printValue(serial, SignalkModel::j_status, getValueChar(_ARDUINO_GPS_STATUS), true);
+			closeBranch(&Serial, false);
+			openBranch(serial,SignalkModel::j_serial);
+				printValue(serial, SignalkModel::j_baud0, getValueLong(_ARDUINO_SERIAL_BAUD0), false);//console
+				printValue(serial, SignalkModel::j_baud1, getValueLong(_ARDUINO_SERIAL_BAUD1), false);//GPS
+				printValue(serial, SignalkModel::j_baud2, getValueLong(_ARDUINO_SERIAL_BAUD2), false);//NMEA1 or Seatalk
+				printValue(serial, SignalkModel::j_baud3, getValueLong(_ARDUINO_SERIAL_BAUD3), false);//NMEA2
+				printValue(serial, SignalkModel::j_baud4, getValueLong(_ARDUINO_SERIAL_BAUD4), false);//NMEA3 - SPI-2
+				printValue(serial, SignalkModel::j_baud5, getValueLong(_ARDUINO_SERIAL_BAUD5), true);//NMEA talker - AltSoftSerial
+			closeBranch(&Serial, false);
+			openBranch(serial,SignalkModel::j_alarm);
+				openBranch(serial, SignalkModel::j_level1);
+					printValue(serial, SignalkModel::j_upper, getValueCharArray(_ARDUINO_ALARM_LEVEL1_UPPER), false);
+					printValue(serial, SignalkModel::j_lower, getValueCharArray(_ARDUINO_ALARM_LEVEL1_LOWER), true);
+				closeBranch(&Serial, false);
+				openBranch(serial, SignalkModel::j_level2);
+					printValue(serial, SignalkModel::j_upper, getValueCharArray(_ARDUINO_ALARM_LEVEL2_UPPER), false);
+					printValue(serial, SignalkModel::j_lower, getValueCharArray(_ARDUINO_ALARM_LEVEL2_LOWER), true);
+				closeBranch(&Serial, false);
+				openBranch(serial, SignalkModel::j_level3);
+					printValue(serial, SignalkModel::j_upper, getValueCharArray(_ARDUINO_ALARM_LEVEL3_UPPER), false);
+					printValue(serial, SignalkModel::j_lower, getValueCharArray(_ARDUINO_ALARM_LEVEL3_LOWER), true);
+				closeBranch(&Serial, false);
+				printValue(serial, SignalkModel::j_snooze, getValueLong(_ARDUINO_ALARM_SNOOZE), false);
+				printValue(serial, SignalkModel::j_last, getValueLong(_ARDUINO_ALARM_LAST), true);
+			closeBranch(&Serial, false);
+			openBranch(serial,SignalkModel::j_anchor);
+				printValue(serial, SignalkModel::j_radiusDeg, getValueFloat(_ARDUINO_ANCHOR_RADIUSDEG), false);
+				printValue(serial, SignalkModel::j_north, getValueFloat(_ARDUINO_ANCHOR_NORTH), false);
+				printValue(serial, SignalkModel::j_south, getValueFloat(_ARDUINO_ANCHOR_SOUTH), false);
+				printValue(serial, SignalkModel::j_east, getValueFloat(_ARDUINO_ANCHOR_EAST), false);
+				printValue(serial, SignalkModel::j_west, getValueFloat(_ARDUINO_ANCHOR_WEST), true);
+			closeBranch(&Serial, false);
+			printValue(serial, SignalkModel::j_seatalk, getValueBool(_ARDUINO_SEATALK), false);
+			openBranch(serial,SignalkModel::j_wind);
+				printValue(serial, SignalkModel::j_lastUpdate, getValueFloat(_ARDUINO_WIND_LASTUPDATE), false);
+				printValue(serial, SignalkModel::j_average, getValueFloat(_ARDUINO_WIND_AVERAGE), false);
+				printValue(serial, SignalkModel::j_factor, getValueFloat(_ARDUINO_WIND_FACTOR), false);
+				printValue(serial, SignalkModel::j_max, getValueFloat(_ARDUINO_WIND_MAX), false);
+				printValue(serial, SignalkModel::j_zeroOffset, getValueFloat(_ARDUINO_WIND_ZEROOFFSET), true);
+			closeBranch(&Serial, false);
+				printValue(serial, SignalkModel::j_baudRate, getValueLong(_ARDUINO_AUTOPILOT_BAUDRATE), false);//autopilot - SPI-1
+				printValue(serial, SignalkModel::j_offcourse, getValueFloat(_ARDUINO_AUTOPILOT_OFFCOURSE), false);
+				printValue(serial, SignalkModel::j_rudderCommand, getValueFloat(_ARDUINO_AUTOPILOT_RUDDERCOMMAND), true);
+			closeBranch(&Serial, true);
+	closeBranch(&Serial, last);
+
+}
+
+void SignalkModel::printVesselWrapper(HardwareSerial* serial){
+	openMessage(&Serial);
+		openBranch(&Serial,SignalkModel::j_vessels);
+			openBranch(&Serial,SignalkModel::j_self);
+				printNavigationBranch(serial, false);
+				printAlarmBranch(serial, false);
+				printSteeringBranch(serial,false);
+				printEnvironmentBranch(serial,true);
+			closeBranch(serial, true);
+		closeBranch(serial, true);
+	closeMessage(serial);
+
+}
+void SignalkModel::printNavigationBranch(HardwareSerial* serial, bool last){
+	//navigation
+	openBranch(&Serial,SignalkModel::j_navigation);
+		printValue(&Serial, SignalkModel::j_courseOverGroundTrue, getValueFloat(NAVIGATION_COURSEOVERGROUNDTRUE), false);
+		printValue(&Serial, SignalkModel::j_courseOverGroundMagnetic, getValueFloat(NAVIGATION_COURSEOVERGROUNDMAGNETIC), false);
+		printValue(&Serial, SignalkModel::j_headingMagnetic, getValueFloat(NAVIGATION_HEADINGMAGNETIC), false);
+		printValue(&Serial, SignalkModel::j_magneticVariation, getValueFloat(NAVIGATION_MAGNETICVARIATION), false);
+		//printValue(&Serial, SignalkModel::j_drift, getValueFloat(NAVIGATION_DRIFT), false);
+		printValue(&Serial, SignalkModel::j_headingTrue, getValueFloat(NAVIGATION_HEADINGTRUE), false);
+		printValue(&Serial, SignalkModel::j_pitch, getValueFloat(NAVIGATION_PITCH), false);
+		printValue(&Serial, SignalkModel::j_rateOfTurn, getValueFloat(NAVIGATION_RATEOFTURN), false);
+		printValue(&Serial, SignalkModel::j_roll, getValueFloat(NAVIGATION_ROLL), false);
+		//printValue(&Serial, SignalkModel::j_set, getValueFloat(NAVIGATION_SET), false);
+		printValue(&Serial, SignalkModel::j_speedOverGround, getValueFloat(NAVIGATION_SPEEDOVERGROUND), false);
+		printValue(&Serial, SignalkModel::j_speedThroughWater, getValueFloat(NAVIGATION_SPEEDTHROUGHWATER), false);
+		printValue(&Serial, SignalkModel::j_state, getValueCharArray(NAVIGATION_STATE), false);
+		//currentRoute ;
+		//destination;
+		//gnss
+		printAnchorBranch(serial,false);
+		//position
+		printPositionBranch(&Serial,true);
+	closeBranch(&Serial, last);
+	//closed navigation
+}
+void SignalkModel::printEnvironmentBranch(HardwareSerial* serial, bool last){
+	openBranch(&Serial,SignalkModel::j_environment);
+		printValue(&Serial, SignalkModel::j_airPressureChangeRateAlarm, getValueFloat(ENVIRONMENT_AIRPRESSURECHANGERATEALARM), false);
+		printValue(&Serial, SignalkModel::j_airPressure, getValueFloat(ENVIRONMENT_AIRPRESSURE), false);
+		//printValue(&Serial, SignalkModel::j_airTemp, getValueFloat(ENVIRONMENT_AIRTEMP), false);
+		//printValue(&Serial, SignalkModel::j_currentDirection, getValueFloat(ENVIRONMENT_CURRENTDIRECTION), false);
+		//printValue(&Serial, SignalkModel::j_currentSpeed, getValueFloat(ENVIRONMENT_CURRENTSPEED), false);
+		//printValue(&Serial, SignalkModel::j_humidity, getValueFloat(ENVIRONMENT_HUMIDITY), false);
+		//printValue(&Serial, SignalkModel::j_salinity, getValueFloat(ENVIRONMENT_SALINITY), false);
+		printValue(&Serial, SignalkModel::j_waterTemp, getValueFloat(ENVIRONMENT_WATERTEMP), false);
+		//	DepthStruct depth;
+		//	TideStruct tide;
+			printWindBranch(serial,true);
+	closeBranch(&Serial, last);
+}
+
+void SignalkModel::printSteeringBranch(HardwareSerial* serial, bool last){
+	openBranch(&Serial,SignalkModel::j_steering);
+		printValue(&Serial, SignalkModel::j_rudderAngle, getValueFloat(STEERING_RUDDERANGLE), false);
+		printValue(&Serial, SignalkModel::j_rudderAngleTarget, getValueFloat(STEERING_RUDDERANGLETARGET), false);
+		printAutopilotBranch(serial,true);
+	closeBranch(&Serial, last);
+}
+
+byte SignalkModel::getChecksum(char* str) {
+		byte cs = 0; //clear any old checksum
+		for (unsigned int n = 1; n < strlen(str) - 1; n++) {
+			cs ^= str[n]; //calculates the checksum
+		}
+		return cs;
+	}

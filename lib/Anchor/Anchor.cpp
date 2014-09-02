@@ -89,7 +89,7 @@ void Anchor::setAnchorRadius(float radius) {
 	float change = radius -  model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS);
 	 model->setValue(NAVIGATION_ANCHOR_ALARMRADIUS, radius);
 	 model->setValue(_ARDUINO_ANCHOR_RADIUSDEG, model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS) * LLMTRS);
-	saveAnchorAlarmRadius(model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS));
+	//saveAnchorAlarmRadius(model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS));
 
 	//deal with the changed box size
 	if (change <= 0) {
@@ -150,6 +150,7 @@ void Anchor::setAnchorPoint() {
 	model->setValue(NAVIGATION_ANCHOR_MAXRADIUS,0);
 
 }
+
 
 
 

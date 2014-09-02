@@ -37,15 +37,15 @@
 #include <Gps.h>
 #include <SignalkModel.h>
 
-extern void saveAnchorAlarmState(bool anchorAlarmOn) ;
-extern void saveAnchorAlarmLat(float anchorLat) ;
-extern void saveAnchorAlarmLon(float anchorLon) ;
-extern void saveAnchorAlarmRadius(float anchorRadius);
+//extern void saveAnchorAlarmState(bool anchorAlarmOn) ;
+//extern void saveAnchorAlarmLat(float anchorLat) ;
+//extern void saveAnchorAlarmLon(float anchorLon) ;
+//extern void saveAnchorAlarmRadius(float anchorRadius);
 // read the last anchor alarm values
-extern bool getAnchorAlarmState() ;
-extern float getAnchorAlarmLat();
-extern float getAnchorAlarmLon();
-extern float getAnchorAlarmRadius();
+//extern bool getAnchorAlarmState() ;
+//extern float getAnchorAlarmLat();
+//extern float getAnchorAlarmLon();
+//extern float getAnchorAlarmRadius();
 
 
 

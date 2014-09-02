@@ -190,25 +190,9 @@ void setup()
 		}
 
 		//test json print
-		//open
-		signalkModel.openMessage(&Serial);
-			//navigation
-			signalkModel.openBranch(&Serial,SignalkModel::j_navigation);
-			signalkModel.printValue(&Serial, SignalkModel::j_courseOverGroundTrue, signalkModel.getValueFloat(NAVIGATION_COURSEOVERGROUNDTRUE), false);
-			signalkModel.printValue(&Serial, SignalkModel::j_courseOverGroundMagnetic, signalkModel.getValueFloat(NAVIGATION_COURSEOVERGROUNDMAGNETIC), false);
-			signalkModel.printValue(&Serial, SignalkModel::j_headingMagnetic, signalkModel.getValueFloat(NAVIGATION_HEADINGMAGNETIC), false);
-				//position
-				gps.printPositionBranch(&Serial,true);
-			signalkModel.closeBranch(&Serial, false);
-			//closed navigation
-			//open environment
-			signalkModel.openBranch(&Serial,SignalkModel::j_environment);
-				//wind
-				wind.printWindBranch(&Serial,true);
-			signalkModel.closeBranch(&Serial, true);
-			//closed environment
-		signalkModel.closeMessage(&Serial);
-		//closed
+
+		signalkModel.printVesselWrapper(&Serial);
+
 
 		//Serial.print((char*)signalkModel.abc.pointer);
 		//TODO: setup lvl3 pin - actually its analogue
@@ -315,7 +299,7 @@ void loop()
 			if (interval % 100 == 0) {
 				//Serial.println(freeMemory());
 				//do every 1000ms
-				Serial.println(wind.getWindNmea());
+				//Serial.println(wind.getWindNmea());
 				//nmea.printNmea(wind.getWindNmea());
 				//nmea.printTrueHeading();
 
@@ -324,19 +308,11 @@ void loop()
 				wind.checkWindAlarm();
 				levels.checkLvlAlarms();
 				alarm.checkAlarms();
-
+				signalkModel.printVesselWrapper(&Serial);
 			}
 
 			execute = false;
 		}
 }
 
-
-byte getChecksum(char* str) {
-	byte cs = 0; //clear any old checksum
-	for (unsigned int n = 1; n < strlen(str) - 1; n++) {
-		cs ^= str[n]; //calculates the checksum
-	}
-	return cs;
-}
 
