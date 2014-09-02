@@ -89,15 +89,15 @@
 				switch(element_type){
 					case TYPE_STRING:
 						Serial.println("Send to signalk String");
-						model->setSignalkValue(trace, result);
+						model->setValue(trace, result);
 						break;
 					case TYPE_NUMERIC:
 						Serial.println("Send to signalk Float");
-						model->setSignalkValue(trace, atoff(result));
+						model->setValue(trace, atoff(result));
 						break;
 					case TYPE_BOOLEAN:
 						Serial.println("Send to signalk Bool");
-						model->setSignalkValue(trace, result && strcmp(result,"true")==0);
+						model->setValue(trace, result && strcmp(result,"true")==0);
 						break;
 					default:
 						break;

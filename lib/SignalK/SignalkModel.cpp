@@ -26,20 +26,166 @@
 #include "SignalkModel.h"
 //#include "freeboardDue.h"
 
-SignalkModel::SignalkModel() {
+const char * SignalkModel::j_arduino = "_arduino";
+const char * SignalkModel::j_airPressure = "airPressure";
+		const char * SignalkModel::j_airPressureChangeRateAlarm = "airPressureChangeRateAlarm";
+		const char * SignalkModel::j_airTemp = "airTemp";
+		const char * SignalkModel::j_alarm = "alarm";
+		const char * SignalkModel::j_alarmHeadingXte = "alarmHeadingXte";
+		const char * SignalkModel::j_alarmRadius = "alarmRadius";
+		const char * SignalkModel::j_alarms = "alarms";
+		const char * SignalkModel::j_altitude = "altitude";
+		const char * SignalkModel::j_anchor = "anchor";
+		const char * SignalkModel::j_anchorAlarmMethod = "anchorAlarmMethod";
+		const char * SignalkModel::j_anchorAlarmState = "anchorAlarmState";
+		const char * SignalkModel::j_autopilot = "autopilot";
+		const char * SignalkModel::j_autopilotAlarmMethod = "autopilotAlarmMethod";
+		const char * SignalkModel::j_autopilotAlarmState = "autopilotAlarmState";
+		const char * SignalkModel::j_average = "average";
+		const char * SignalkModel::j_backlash = "backlash";
+		const char * SignalkModel::j_baud0 = "baud0";
+		const char * SignalkModel::j_baud1 = "baud1";
+		const char * SignalkModel::j_baud2 = "baud2";
+		const char * SignalkModel::j_baud3 = "baud3";
+		const char * SignalkModel::j_baud4 = "baud4";
+		const char * SignalkModel::j_baud5 = "baud5";
+		const char * SignalkModel::j_baudRate = "baudRate";
+		const char * SignalkModel::j_bearingActual = "bearingActual";
+		const char * SignalkModel::j_bearingDirect = "bearingDirect";
+		const char * SignalkModel::j_belowKeel = "belowKeel";
+		const char * SignalkModel::j_belowSurface = "belowSurface";
+		const char * SignalkModel::j_belowTransducer = "belowTransducer";
+		const char * SignalkModel::j_status = "status";
+		const char * SignalkModel::j_courseOverGroundMagnetic = "courseOverGroundMagnetic";
+		const char * SignalkModel::j_courseOverGroundTrue = "courseOverGroundTrue";
+		const char * SignalkModel::j_courseRequired = "courseRequired";
+		const char * SignalkModel::j_currentDirection = "currentDirection";
+		const char * SignalkModel::j_currentRadius = "currentRadius";
+		const char * SignalkModel::j_currentRoute = "currentRoute";
+		const char * SignalkModel::j_currentSpeed = "currentSpeed";
+		const char * SignalkModel::j_deadZone = "deadZone";
+		const char * SignalkModel::j_decode = "decode";
+		const char * SignalkModel::j_depth = "depth";
+		const char * SignalkModel::j_destination = "destination";
+		const char * SignalkModel::j_directionApparent = "directionApparent";
+		const char * SignalkModel::j_directionChangeAlarm = "directionChangeAlarm";
+		const char * SignalkModel::j_directionTrue = "directionTrue";
+		const char * SignalkModel::j_drift = "drift";
+		const char * SignalkModel::j_east = "east";
+		const char * SignalkModel::j_engineAlarmMethod = "engineAlarmMethod";
+		const char * SignalkModel::j_engineAlarmState = "engineAlarmState";
+		const char * SignalkModel::j_environment = "environment";
+		const char * SignalkModel::j_eta = "eta";
+		const char * SignalkModel::j_factor = "factor";
+		const char * SignalkModel::j_fireAlarmMethod = "fireAlarmMethod";
+		const char * SignalkModel::j_fireAlarmState = "fireAlarmState";
+		const char * SignalkModel::j_gain = "gain";
+		const char * SignalkModel::j_gasAlarmMethod = "gasAlarmMethod";
+		const char * SignalkModel::j_gasAlarmState = "gasAlarmState";
+		const char * SignalkModel::j_genericAlarmMethod = "genericAlarmMethod";
+		const char * SignalkModel::j_genericAlarmState = "genericAlarmState";
+		const char * SignalkModel::j_gps = "gps";
+		const char * SignalkModel::j_gpsAlarmMethod = "gpsAlarmMethod";
+		const char * SignalkModel::j_gpsAlarmState = "gpsAlarmState";
+		const char * SignalkModel::j_headingMagnetic = "headingMagnetic";
+		const char * SignalkModel::j_headingSource = "headingSource";
+		const char * SignalkModel::j_headingTrue = "headingTrue";
+		const char * SignalkModel::j_heightHigh = "heightHigh";
+		const char * SignalkModel::j_heightLow = "heightLow";
+		const char * SignalkModel::j_heightNow = "heightNow";
+		const char * SignalkModel::j_humidity = "humidity";
+		const char * SignalkModel::j_last = "last";
+		const char * SignalkModel::j_lastFix = "lastFix";
+		const char * SignalkModel::j_lastTime = "lastTime";
+		const char * SignalkModel::j_lastUpdate = "lastUpdate";
+		const char * SignalkModel::j_latitude = "latitude";
+		const char * SignalkModel::j_level1 = "level1";
+		const char * SignalkModel::j_level2 = "level2";
+		const char * SignalkModel::j_level3 = "level3";
+		const char * SignalkModel::j_longitude = "longitude";
+		const char * SignalkModel::j_magneticVariation = "magneticVariation";
+		const char * SignalkModel::j_max = "max";
+		const char * SignalkModel::j_maxDriveAmps = "maxDriveAmps";
+		const char * SignalkModel::j_maxDriveRate = "maxDriveRate";
+		const char * SignalkModel::j_maxRadius = "maxRadius";
+		const char * SignalkModel::j_maydayAlarmMethod = "maydayAlarmMethod";
+		const char * SignalkModel::j_maydayAlarmState = "maydayAlarmState";
+		const char * SignalkModel::j_mobAlarmMethod = "mobAlarmMethod";
+		const char * SignalkModel::j_mobAlarmState = "mobAlarmState";
+		const char * SignalkModel::j_mode = "mode";
+		const char * SignalkModel::j_model = "model";
+		const char * SignalkModel::j_navigation = "navigation";
+		const char * SignalkModel::j_next = "next";
+		const char * SignalkModel::j_nextEta = "nextEta";
+		const char * SignalkModel::j_north = "north";
+		const char * SignalkModel::j_offcourse = "offcourse";
+		const char * SignalkModel::j_panpanAlarmMethod = "panpanAlarmMethod";
+		const char * SignalkModel::j_panpanAlarmState = "panpanAlarmState";
+		const char * SignalkModel::j_pitch = "pitch";
+		const char * SignalkModel::j_portLock = "portLock";
+		const char * SignalkModel::j_position = "position";
+		const char * SignalkModel::j_powerAlarmMethod = "powerAlarmMethod";
+		const char * SignalkModel::j_powerAlarmState = "powerAlarmState";
+		const char * SignalkModel::j_radarAlarmMethod = "radarAlarmMethod";
+		const char * SignalkModel::j_radarAlarmState = "radarAlarmState";
+		const char * SignalkModel::j_radiusDeg = "radiusDeg";
+		const char * SignalkModel::j_rateOfTurn = "rateOfTurn";
+		const char * SignalkModel::j_roll = "roll";
+		const char * SignalkModel::j_route = "route";
+		const char * SignalkModel::j_rudderAngle = "rudderAngle";
+		const char * SignalkModel::j_rudderAngleTarget = "rudderAngleTarget";
+		const char * SignalkModel::j_rudderCommand = "rudderCommand";
+		const char * SignalkModel::j_salinity = "salinity";
+		const char * SignalkModel::j_seatalk = "seatalk";
+		const char * SignalkModel::j_serial = "serial";
+		const char * SignalkModel::j_set = "set";
+		const char * SignalkModel::j_silentInterval = "silentInterval";
+		const char * SignalkModel::j_snooze = "snooze";
+		const char * SignalkModel::j_south = "south";
+		const char * SignalkModel::j_speedAlarm = "speedAlarm";
+		const char * SignalkModel::j_speedApparent = "speedApparent";
+		const char * SignalkModel::j_speedOverGround = "speedOverGround";
+		const char * SignalkModel::j_speedThroughWater = "speedThroughWater";
+		const char * SignalkModel::j_speedTrue = "speedTrue";
+		const char * SignalkModel::j_starboardLock = "starboardLock";
+		const char * SignalkModel::j_startTime = "startTime";
+		const char * SignalkModel::j_state = "state";
+		const char * SignalkModel::j_steering = "steering";
+		const char * SignalkModel::j_surfaceToTransducer = "surfaceToTransducer";
+		const char * SignalkModel::j_targetHeadingMagnetic = "targetHeadingMagnetic";
+		const char * SignalkModel::j_targetHeadingNorth = "targetHeadingNorth";
+		const char * SignalkModel::j_tide = "tide";
+		const char * SignalkModel::j_timeHigh = "timeHigh";
+		const char * SignalkModel::j_timeLow = "timeLow";
+		const char * SignalkModel::j_transducerToKeel = "transducerToKeel";
+		const char * SignalkModel::j_utc = "utc";
+		const char * SignalkModel::j_waterTemp = "waterTemp";
+		const char * SignalkModel::j_waypoint = "waypoint";
+		const char * SignalkModel::j_west = "west";
+		const char * SignalkModel::j_wind = "wind";
+		const char * SignalkModel::j_windAlarmMethod = "windAlarmMethod";
+		const char * SignalkModel::j_windAlarmState = "windAlarmState";
+		const char * SignalkModel::j_xte = "xte";
+		const char * SignalkModel::j_zeroOffset = "zeroOffset";
 
-	navigation.courseOverGroundMagnetic = 0.0;
+
+SignalkModel::SignalkModel() {
+//abc = (SignalkJson){NAVIGATION_COURSEOVERGROUNDMAGNETIC,J_FLOAT,j_courseOverGroundMagnetic};
+
+
+
+	navigation.courseOverGroundMagnetic = 93.0;
 	navigation.courseOverGroundTrue = 0.0;
 	navigation.currentRoute.bearingActual = 0.0;
 	navigation.currentRoute.bearingDirect = 0.0;
 	navigation.currentRoute.courseRequired = 0.0;
 	navigation.currentRoute.eta = 0;
-	navigation.currentRoute.route = "";
+	navigation.currentRoute.route = "The current route";
 	navigation.currentRoute.startTime = 0;
 	navigation.currentRoute.waypoint.lastTime = 0;
-	navigation.currentRoute.waypoint.last = "";
+	//navigation.currentRoute.waypoint.last = "";
 	navigation.currentRoute.waypoint.nextEta = 0;
-	navigation.currentRoute.waypoint.next = "";
+	//navigation.currentRoute.waypoint.next = "";
 	navigation.currentRoute.waypoint.xte = 0.0;
 	navigation.magneticVariation = 0.0;
 	navigation.destination.eta = 0;
@@ -47,6 +193,7 @@ SignalkModel::SignalkModel() {
 	navigation.destination.latitude = 0.0;
 	navigation.destination.altitude = 0.0;
 	navigation.drift = 0.0;
+	//abc = {NAVIGATION_COURSEOVERGROUNDMAGNETIC,J_FLOAT,j_courseOverGroundMagnetic, navigation.currentRoute.route};
 	//navigation.gnss
 	navigation.headingMagnetic = 0.0;
 	navigation.headingTrue = 0.0;
@@ -208,12 +355,12 @@ int findInArray(const char *array[], const char* value) {
 	return -1;
 }
 
-void SignalkModel::setSignalkValue(char* attribute, bool value) {
+void SignalkModel::setValue(char* attribute, bool value) {
 	unsigned long key = hash(attribute);
-	setSignalkValue(key, value);
+	setValue(key, value);
 
 }
-void SignalkModel::setSignalkValue(unsigned long key, bool value) {
+void SignalkModel::setValue(unsigned long key, bool value) {
 	switch (key) {
 
 	case _ARDUINO_SEATALK:
@@ -227,12 +374,12 @@ void SignalkModel::setSignalkValue(unsigned long key, bool value) {
 
 	}
 }
-void SignalkModel::setSignalkValue(char* attribute, char value) {
+void SignalkModel::setValue(char* attribute, char value) {
 	unsigned long key = hash(attribute);
-	setSignalkValue(key, value);
+	setValue(key, value);
 }
 
-void SignalkModel::setSignalkValue(unsigned long key, char value) {
+void SignalkModel::setValue(unsigned long key, char value) {
 
 	switch (key) {
 
@@ -242,7 +389,7 @@ void SignalkModel::setSignalkValue(unsigned long key, char value) {
 	}
 }
 
-void SignalkModel::setSignalkValue(unsigned long key, double value) {
+void SignalkModel::setValue(unsigned long key, double value) {
 
 	switch (key) {
 
@@ -252,12 +399,12 @@ void SignalkModel::setSignalkValue(unsigned long key, double value) {
 	}
 }
 
-void SignalkModel::setSignalkValue(char* attribute, char* value) {
+void SignalkModel::setValue(char* attribute, char* value) {
 	unsigned long key = hash(attribute);
-	setSignalkValue(key, value);
+	setValue(key, value);
 }
 
-void SignalkModel::setSignalkValue(unsigned long key, char* value) {
+void SignalkModel::setValue(unsigned long key, char* value) {
 
 	int c;
 	switch (key) {
@@ -419,12 +566,12 @@ void SignalkModel::setSignalkValue(unsigned long key, char* value) {
 
 	}
 }
-void SignalkModel::setSignalkValue(char* attribute, int value) {
-	setSignalkValue(hash(attribute), (int) value);
-	//Serial.print(" setSignalkValue:");
+void SignalkModel::setValue(char* attribute, int value) {
+	setValue(hash(attribute), (int) value);
+	//Serial.print(" setValue:");
 	//Serial.println(key);
 }
-void SignalkModel::setSignalkValue(unsigned long key, int value) {
+void SignalkModel::setValue(unsigned long key, int value) {
 
 	switch (key) {
 	case _ARDUINO_GPS_MODEL:
@@ -457,12 +604,12 @@ void SignalkModel::setSignalkValue(unsigned long key, int value) {
 	}
 }
 
-void SignalkModel::setSignalkValue(char* attribute, unsigned long value) {
-	setSignalkValue(hash(attribute), (unsigned long) value);
-	//Serial.print(" setSignalkValue:");
+void SignalkModel::setValue(char* attribute, unsigned long value) {
+	setValue(hash(attribute), (unsigned long) value);
+	//Serial.print(" setValue:");
 	//Serial.println(key);
 }
-void SignalkModel::setSignalkValue(unsigned long key, unsigned long value) {
+void SignalkModel::setValue(unsigned long key, unsigned long value) {
 
 	switch (key) {
 	case _ARDUINO_SERIAL_BAUD0:
@@ -502,12 +649,12 @@ void SignalkModel::setSignalkValue(unsigned long key, unsigned long value) {
 	}
 }
 
-void SignalkModel::setSignalkValue(char* attribute, float value) {
-	setSignalkValue(hash(attribute), value);
-	//Serial.print(" setSignalkValue:");
+void SignalkModel::setValue(char* attribute, float value) {
+	setValue(hash(attribute), value);
+	//Serial.print(" setValue:");
 	//Serial.println(key);
 }
-void SignalkModel::setSignalkValue(unsigned long key, float value) {
+void SignalkModel::setValue(unsigned long key, float value) {
 
 	switch (key) {
 	case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
@@ -648,7 +795,7 @@ void SignalkModel::setSignalkValue(unsigned long key, float value) {
 
 }
 
-bool SignalkModel::getSignalkValueBool(unsigned long key) {
+bool SignalkModel::getValueBool(unsigned long key) {
 	switch (key) {
 	case _ARDUINO_SEATALK:
 			return true;
@@ -656,7 +803,7 @@ bool SignalkModel::getSignalkValueBool(unsigned long key) {
 	}
 	return false;
 }
-int SignalkModel::getSignalkValueInt(unsigned long key) {
+int SignalkModel::getValueInt(unsigned long key) {
 	switch (key) {
 	case _ARDUINO_GPS_MODEL:
 		return _arduino.gps.model;
@@ -689,7 +836,7 @@ int SignalkModel::getSignalkValueInt(unsigned long key) {
 	return NAN;
 }
 
-unsigned long SignalkModel::getSignalkValueLong(unsigned long key) {
+unsigned long SignalkModel::getValueLong(unsigned long key) {
 	switch (key) {
 	case _ARDUINO_SERIAL_BAUD0:
 		return _arduino.serial.baud0;
@@ -726,7 +873,7 @@ unsigned long SignalkModel::getSignalkValueLong(unsigned long key) {
 }
 
 
-double SignalkModel::getSignalkValueDouble(unsigned long key) {
+double SignalkModel::getValueDouble(unsigned long key) {
 	switch (key) {
 	case _ARDUINO_AUTOPILOT_OFFCOURSE:
 		return _arduino.autopilot.offcourse;
@@ -738,7 +885,7 @@ double SignalkModel::getSignalkValueDouble(unsigned long key) {
 	return NAN;
 }
 
-float SignalkModel::getSignalkValueFloat(unsigned long key) {
+float SignalkModel::getValueFloat(unsigned long key) {
 	switch (key) {
 
 	case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
@@ -878,14 +1025,14 @@ float SignalkModel::getSignalkValueFloat(unsigned long key) {
 	return NAN;
 }
 
-char SignalkModel::getSignalkValueChar(unsigned long key) {
+char SignalkModel::getValueChar(unsigned long key) {
 
 	switch (key) {
 	case _ARDUINO_GPS_STATUS:
 		return _arduino.gps.status;
 		break;
 	}
-	return NULL;
+	return '0';
 }
 
 volatile bool SignalkModel::isAutopilotOn() {
@@ -1052,3 +1199,54 @@ unsigned long SignalkModel::hash(const char *str) {
 	return hash;
 }
 
+void SignalkModel::openMessage(HardwareSerial* serial){
+	serial->print("{");
+}
+void SignalkModel::closeMessage(HardwareSerial* serial){
+	serial->println("}");
+}
+void SignalkModel::openBranch(HardwareSerial* serial, const char* key){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":{");
+}
+void SignalkModel::closeBranch(HardwareSerial* serial, bool last){
+	serial->println("}");
+	if(!last)serial->print(",");
+}
+
+void SignalkModel::printValue(HardwareSerial* serial, const char* key, const float value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":");
+	serial->print(value,DEC);
+	if(!last)serial->print(",");
+}
+void SignalkModel::printValue(HardwareSerial* serial, const char* key, const unsigned long value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":");
+	serial->print(value,DEC);
+	if(!last)serial->print(",");
+}
+void SignalkModel::printValue(HardwareSerial* serial, const char* key, const long value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":");
+	serial->print(value,DEC);
+	if(!last)serial->print(",");
+}
+void SignalkModel::printValue(HardwareSerial* serial, const char* key, const bool value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":");
+	serial->print(value);
+	if(!last)serial->print(",");
+}
+void SignalkModel::printValue(HardwareSerial* serial, const char* key,  const char* value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":");
+	serial->print(value);
+	if(!last)serial->print(",");
+}

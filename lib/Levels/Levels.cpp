@@ -42,12 +42,12 @@ void Levels::checkLvlAlarms(){
 	int lvl1 = analogRead(lvl1Pin);
 	int lvl2 = analogRead(lvl2Pin);
 	int lvl3 = analogRead(lvl3Pin);
-			if ( (lvl1 < model->getSignalkValueInt(_ARDUINO_ALARM_LEVEL1_LOWER) || lvl1 >model->getSignalkValueInt(_ARDUINO_ALARM_LEVEL1_UPPER))
-				|| ( lvl2 < model->getSignalkValueInt(_ARDUINO_ALARM_LEVEL2_LOWER)  || lvl2 >model->getSignalkValueInt(_ARDUINO_ALARM_LEVEL2_UPPER))
-				|| ( lvl3 < model->getSignalkValueInt(_ARDUINO_ALARM_LEVEL3_LOWER)  || lvl3 >model->getSignalkValueInt(_ARDUINO_ALARM_LEVEL3_UPPER))) {
+			if ( (lvl1 < model->getValueInt(_ARDUINO_ALARM_LEVEL1_LOWER) || lvl1 >model->getValueInt(_ARDUINO_ALARM_LEVEL1_UPPER))
+				|| ( lvl2 < model->getValueInt(_ARDUINO_ALARM_LEVEL2_LOWER)  || lvl2 >model->getValueInt(_ARDUINO_ALARM_LEVEL2_UPPER))
+				|| ( lvl3 < model->getValueInt(_ARDUINO_ALARM_LEVEL3_LOWER)  || lvl3 >model->getValueInt(_ARDUINO_ALARM_LEVEL3_UPPER))) {
 
-			model->setSignalkValue(ALARMS_GENERICALARMSTATE,true);
+			model->setValue(ALARMS_GENERICALARMSTATE,true);
 		} else {
-			model->setSignalkValue(ALARMS_GENERICALARMSTATE,false);
+			model->setValue(ALARMS_GENERICALARMSTATE,false);
 		}
 }

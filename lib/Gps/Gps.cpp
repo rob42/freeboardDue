@@ -172,7 +172,7 @@ void Gps::setupGps() {
 	//now flush and restart
 	Serial1.flush();
 	Serial1.end();
-	Serial1.begin(model->getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
+	Serial1.begin(model->getValueLong(_ARDUINO_SERIAL_BAUD1));
 	//Serial1.begin(38400, SERIAL_8N1);
 }
 
@@ -202,18 +202,18 @@ float Gps::getMetersTo(float targetLat, float targetLon, float currentLat, float
 bool Gps::decode(byte inByte) {
 	// check if the character completes a valid GPS sentence
 	bool dc = (gpsSource->decode(inByte)!=0);
-	model->setSignalkValue(_ARDUINO_GPS_DECODE,dc);
+	model->setValue(_ARDUINO_GPS_DECODE,dc);
 	//if(DEBUG)
 	//Serial.println(inByte);
 	if (dc) {
-		model->setSignalkValue(_ARDUINO_GPS_STATUS, gpsSource->gprmc_status());
+		model->setValue(_ARDUINO_GPS_STATUS, gpsSource->gprmc_status());
 		if (gpsSource->gprmc_status() == 'A' && gpsSource->term(0)[2] != 'R' && gpsSource->term(0)[3] != 'M' && gpsSource->term(0)[4] != 'C') {
-			model->setSignalkValue(_ARDUINO_GPS_LASTFIX,millis());
-			model->setSignalkValue(NAVIGATION_COURSEOVERGROUNDTRUE, gpsSource->gprmc_course());
-			model->setSignalkValue(NAVIGATION_POSITION_LATITUDE,gpsSource->gprmc_latitude());
-			model->setSignalkValue(NAVIGATION_POSITION_LONGITUDE,gpsSource->gprmc_longitude());
-			model->setSignalkValue(NAVIGATION_SPEEDOVERGROUND,gpsSource->gprmc_speed(KTS));
-			model->setSignalkValue(_ARDUINO_GPS_UTC, gpsSource->gprmc_utc());
+			model->setValue(_ARDUINO_GPS_LASTFIX,(unsigned long)millis());
+			model->setValue(NAVIGATION_COURSEOVERGROUNDTRUE, gpsSource->gprmc_course());
+			model->setValue(NAVIGATION_POSITION_LATITUDE,gpsSource->gprmc_latitude());
+			model->setValue(NAVIGATION_POSITION_LONGITUDE,gpsSource->gprmc_longitude());
+			model->setValue(NAVIGATION_SPEEDOVERGROUND,gpsSource->gprmc_speed(KTS));
+			model->setValue(_ARDUINO_GPS_UTC, gpsSource->gprmc_utc());
 		}
 	}
 	return dc;
@@ -282,7 +282,7 @@ PString Gps::getLonString(float lon, int decimals, int padding, PString str) {
 void Gps::setupGpsImpl(){
 	//setup based on GPS type - probably wants a more modular way if many GPS types appear
 	Serial.println("Setting GPS config..." );
-	int gpsModel = model->getSignalkValueInt(_ARDUINO_GPS_MODEL);
+	int gpsModel = model->getValueInt(_ARDUINO_GPS_MODEL);
 	if(GPS_GENERIC == gpsModel){
 			Serial.println("Setting GPS to GENERIC" );
 	}
@@ -320,7 +320,7 @@ void Gps::setupGpsImpl(){
 		char gpsSentence [30];
 		PString str(gpsSentence, sizeof(gpsSentence));
 		str.print("$PSRF100,1,");
-		str.print(model->getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
+		str.print(model->getValueLong(_ARDUINO_SERIAL_BAUD1));
 		str.print(",8,1,0*");
 		//calculate the checksum
 		byte cs = getChecksum(gpsSentence); //clear any old checksum
@@ -355,7 +355,7 @@ void Gps::setupGpsImpl(){
 		char gpsSentence [30];
 		PString str(gpsSentence, sizeof(gpsSentence));
 		str.print("$PMTK251,");
-		str.print(model->getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
+		str.print(model->getValueLong(_ARDUINO_SERIAL_BAUD1));
 		str.print("*");
 		//calculate the checksum
 		byte cs = getChecksum(gpsSentence); //clear any old checksum
@@ -366,6 +366,15 @@ void Gps::setupGpsImpl(){
 
 	}
 
+
+}
+
+void Gps::printPositionBranch(HardwareSerial* serial, bool last){
+	model->openBranch(serial,SignalkModel::j_position);
+	model->printValue(serial, SignalkModel::j_latitude, model->getValueFloat(NAVIGATION_POSITION_LATITUDE), false);
+	model->printValue(serial, SignalkModel::j_longitude, model->getValueFloat(NAVIGATION_POSITION_LONGITUDE), false);
+	model->printValue(serial, SignalkModel::j_altitude, model->getValueFloat(NAVIGATION_POSITION_ALTITUDE), true);
+	model->closeBranch(&Serial, last);
 
 }
 byte Gps::getChecksum(char* str) {

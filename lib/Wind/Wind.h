@@ -41,8 +41,9 @@ extern bool readWindAlarmState();
 class Wind {
 
 public:
-	Wind( SignalkModel* model);
+	Wind( SignalkModel* signalkModel);
 	char* getWindNmea();
+	void printWindBranch(HardwareSerial* serial, bool last);
 	void calcWindSpeedAndDir();
 	void calcWindData();
 	void readWindDataSpeed();
@@ -59,7 +60,7 @@ private:
 	byte getChecksum(char* str);
 	char windSentence [30];
 	byte cs;
-	SignalkModel* model;
+	SignalkModel* signalkModel;
 
 };
 #endif /* WIND_H_ */

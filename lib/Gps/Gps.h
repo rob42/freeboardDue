@@ -51,6 +51,8 @@ public:
 	//float getLongitude();
 	//bool getGpsDecode();
 	unsigned long getLastGpsFix();
+
+	void printPositionBranch(HardwareSerial* serial, bool last);
 	/*
 	 Set baud rate and various message frequencies.
 	 */

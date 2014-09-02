@@ -33,7 +33,7 @@
 
 class NmeaSerial: HardwareSerial {
 public:
-	NmeaSerial(SignalkModel* model):model(model){};
+	NmeaSerial(SignalkModel* signalkModel):signalkModel(signalkModel),cs(0){};
 	virtual ~NmeaSerial();
 	void printNmea(char* sentence);
 	void printTrueHeading();
@@ -41,7 +41,7 @@ public:
 	virtual size_t write(uint8_t) = 0;
 	    using Print::write; // pull in write(str) and write(buf, size) from Print
 private:
-	SignalkModel* model;
+	SignalkModel* signalkModel;
 	char windSentence [30];
 	char trueHeadingSentence [20];
 	byte cs;

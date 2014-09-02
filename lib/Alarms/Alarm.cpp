@@ -29,7 +29,7 @@
 Alarm::Alarm(SignalkModel* model) {
 	this->model=model;
 	alarmBeepState=false;
-	model->setSignalkValue(_ARDUINO_ALARM_LAST,0);
+	model->setValue(_ARDUINO_ALARM_LAST,0);
 	pinMode(alarmPin0, OUTPUT); //main MOSFET pin
 	pinMode(alarmPin1, OUTPUT);
 	pinMode(alarmPin2, OUTPUT);
@@ -42,7 +42,7 @@ Alarm::~Alarm() {
 }
 
 bool Alarm::isAlarmTriggered() {
-	return model->isAlarmTriggered() && model->getSignalkValueLong(_ARDUINO_ALARM_SNOOZE) < millis() ;
+	return model->isAlarmTriggered() && model->getValueLong(_ARDUINO_ALARM_SNOOZE) < millis() ;
 }
 
 
@@ -51,13 +51,13 @@ void Alarm::checkAlarms() {
 	if (isAlarmTriggered()) {
 		//alarm beeps on off on off
 		//once in the alarm state, hitting any button will give a 5 minute respite from the beeping, eg snooze
-		if ((millis() - model->getSignalkValueLong(_ARDUINO_ALARM_LAST)) > 1000UL) {
+		if ((millis() - model->getValueLong(_ARDUINO_ALARM_LAST)) > 1000UL) {
 			digitalWrite(alarmPin0, alarmBeepState);
 			digitalWrite(alarmPin1, alarmBeepState);
 			digitalWrite(alarmPin2, alarmBeepState);
 			digitalWrite(alarmPin3, alarmBeepState);
 			alarmBeepState = !alarmBeepState;
-			model->setSignalkValue(_ARDUINO_ALARM_LAST, (unsigned long)millis());
+			model->setValue(_ARDUINO_ALARM_LAST, (unsigned long)millis());
 			//model->setAlarmSnooze(0); //5 minute alarm snooze
 		}
 	} else {

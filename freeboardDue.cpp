@@ -39,7 +39,7 @@ SignalkModel signalkModel;
 // garbage.
 // See http://forums.parallax.com/forums/default.aspx?f=19&m=50925
 // See http://www.avrfreaks.net/index.php?name=PNphpBB2&file=printview&t=63469&start=0
-//NmeaSerial nmea(&model);
+//NmeaSerial nmea(&signalkModel);
 
 //NMEA ports
 NMEA gpsSource(ALL);
@@ -81,36 +81,7 @@ boolean inputSerial4Complete = false; // whether the string is complete
 //json support
 //{"navigation":{ "position":{"longitude":173.5, "latitude":-43.5}}}
 static const char* queries[] = {
-					"alarms.genericAlarmState",
-					"alarms.genericAlarmMethod",
-					"alarms.radarAlarmState",
-					"alarms.radarAlarmMethod",
-					"alarms.mobAlarmState",
-					"alarms.mobAlarmMethod",
-					"navigation.anchor.alarmRadius",
-					"_arduino.alarm.last",
-					"_arduino.wind.average",
-					"_arduino.wind.factor",
-					"_arduino.wind.max",
-					"_arduino.wind.lastUpdate",
-					"_arduino.wind.zeroOffset"
-					"_arduino.gps.lastFix",
-					"_arduino.gps.utc",
-					"_arduino.gps.status",
-					"_arduino.gps.decode",
-					"_arduino.autopilot.baudRate",
-					"_arduino.autopilot.offcourse",
-					"_arduino.autopilot.rudderCommand",
-					"_arduino.serial.baud4",
-					"_arduino.serial.baud5",
-					"environment.airPressureChangeRateAlarm",
-					"environment.airPressure",
-					"environment.waterTemp",
-					"steering.autopilot.portLock",
-					"steering.autopilot.starboardLock",
-					"steering.rudderAngle",
-					"steering.rudderAngleTarget",
-					"navigation.destination.eta",
+					"_arduino.wind.zeroOffset",
 					};
 
 StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
@@ -139,7 +110,7 @@ void setup()
 {
 // Add your initialization code here
 	// initialize  serial ports:
-		Serial.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD0));
+		Serial.begin(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD0));
 		if (DEBUG) Serial.println("Initializing..");
 
 		//start gps on serial1, autobaud
@@ -147,27 +118,27 @@ void setup()
 		//gps.setupGps();
 		if (DEBUG) {
 			Serial.print("Start GPS Rx - serial1 at ");
-			Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
+			Serial.println(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD1));
 		}
 
-		Serial1.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD1));
+		Serial1.begin(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD1));
 
-		if (signalkModel.getSignalkValueBool(_ARDUINO_SEATALK)) {
+		if (signalkModel.getValueBool(_ARDUINO_SEATALK)) {
 			if (DEBUG) Serial.println("Start seatalk - serial2 at 4800");
 			//Serial2.begin(4800, SERIAL_9N1); //Seatalk interface
 		} else {
 			if (DEBUG) {
 				Serial.print("Start nmea Rx - serial2 at ");
-				Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD2));
+				Serial.println(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD2));
 			}
-			Serial2.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD2), SERIAL_8N1);
+			Serial2.begin(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD2), SERIAL_8N1);
 		}
 
 		if (DEBUG) {
 			Serial.print("Start nmea Rx - serial3 at ");
-			Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD3));
+			Serial.println(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD3));
 		}
-		Serial3.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD3), SERIAL_8N1); //talker2
+		Serial3.begin(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD3), SERIAL_8N1); //talker2
 
 		if (DEBUG) Serial.println("Start SPI uarts..");
 			delay(1000);
@@ -180,7 +151,7 @@ void setup()
 
 		if (DEBUG) {
 				Serial.print("Start nmea Rx - serial4 at ");
-				Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD4));
+				Serial.println(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD4));
 			}
 		//mSerial1.begin(model.getSerialBaud4()); //talker3
 		delay(100);
@@ -189,9 +160,9 @@ void setup()
 			pinMode(nmeaTxPin, OUTPUT);
 			if (DEBUG) {
 				Serial.print("Start nmea Tx - on pins 46 Tx, 48 Rx at ");
-				Serial.println(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD5));
+				Serial.println(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD5));
 			}
-		//nmea.begin(signalkModel.getSignalkValueLong(_ARDUINO_SERIAL_BAUD5));
+		//nmea.begin(signalkModel.getValueLong(_ARDUINO_SERIAL_BAUD5));
 
 		autopilot.init();
 
@@ -212,12 +183,34 @@ void setup()
 		if (DEBUG) Serial.println("Setup complete..");
 
 		//execute hashing
-		for(int x=0; x<2; x++){
+		for(int x=0; x<1; x++){
 			Serial.print(queries[x]);
 			Serial.print("=");
 			Serial.println(signalkModel.hash(queries[x]),DEC);
 		}
 
+		//test json print
+		//open
+		signalkModel.openMessage(&Serial);
+			//navigation
+			signalkModel.openBranch(&Serial,SignalkModel::j_navigation);
+			signalkModel.printValue(&Serial, SignalkModel::j_courseOverGroundTrue, signalkModel.getValueFloat(NAVIGATION_COURSEOVERGROUNDTRUE), false);
+			signalkModel.printValue(&Serial, SignalkModel::j_courseOverGroundMagnetic, signalkModel.getValueFloat(NAVIGATION_COURSEOVERGROUNDMAGNETIC), false);
+			signalkModel.printValue(&Serial, SignalkModel::j_headingMagnetic, signalkModel.getValueFloat(NAVIGATION_HEADINGMAGNETIC), false);
+				//position
+				gps.printPositionBranch(&Serial,true);
+			signalkModel.closeBranch(&Serial, false);
+			//closed navigation
+			//open environment
+			signalkModel.openBranch(&Serial,SignalkModel::j_environment);
+				//wind
+				wind.printWindBranch(&Serial,true);
+			signalkModel.closeBranch(&Serial, true);
+			//closed environment
+		signalkModel.closeMessage(&Serial);
+		//closed
+
+		//Serial.print((char*)signalkModel.abc.pointer);
 		//TODO: setup lvl3 pin - actually its analogue
 		pinMode(lvl3Pin, INPUT);
 }
@@ -258,7 +251,7 @@ void serialEvent1() {
 
 void serialEvent2() {
 	while (Serial2.available()) {
-		if (signalkModel.getSignalkValueBool(_ARDUINO_SEATALK)) {
+		if (signalkModel.getValueBool(_ARDUINO_SEATALK)) {
 			//seatalk.processSeaTalkByte(Serial2.read());
 		} else {
 			inputSerial2Complete = talker2.decode(Serial2.read());

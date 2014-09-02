@@ -27,7 +27,7 @@ Anchor::Anchor(SignalkModel* model) {
 
 
 	this->model=model;
-	resetAnchorBox(model->getSignalkValueFloat(NAVIGATION_POSITION_LATITUDE), model->getSignalkValueFloat(NAVIGATION_POSITION_LONGITUDE));
+	resetAnchorBox(model->getValueFloat(NAVIGATION_POSITION_LATITUDE), model->getValueFloat(NAVIGATION_POSITION_LONGITUDE));
 }
 
 Anchor::~Anchor(){
@@ -39,57 +39,57 @@ Anchor::~Anchor(){
 void Anchor::updateAnchorBox(float laty, float lonx) {
 	//TODO: error testing around 0, 90, 180deg
 
-	float n = laty + model->getSignalkValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
-	float s = laty - model->getSignalkValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
-	float e = lonx + model->getSignalkValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
-	float w = lonx - model->getSignalkValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
+	float n = laty + model->getValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
+	float s = laty - model->getValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
+	float e = lonx + model->getValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
+	float w = lonx - model->getValueFloat(_ARDUINO_ANCHOR_RADIUSDEG);
 	//shrink anchor box if we can
-	if ((n - MINMTRS) > model->getSignalkValueFloat(_ARDUINO_ANCHOR_SOUTH) && n < model->getSignalkValueFloat(_ARDUINO_ANCHOR_NORTH))
-		model->setSignalkValue(_ARDUINO_ANCHOR_NORTH,n);
-	if ((s + MINMTRS) < model->getSignalkValueFloat(_ARDUINO_ANCHOR_NORTH) && s > model->getSignalkValueFloat(_ARDUINO_ANCHOR_SOUTH))
-		model->setSignalkValue(_ARDUINO_ANCHOR_SOUTH,s);
-	if ((e - MINMTRS) > model->getSignalkValueFloat(_ARDUINO_ANCHOR_WEST) && e < model->getSignalkValueFloat(_ARDUINO_ANCHOR_EAST))
-		model->setSignalkValue(_ARDUINO_ANCHOR_EAST,e);
-	if ((w + MINMTRS) < model->getSignalkValueFloat(_ARDUINO_ANCHOR_EAST) && w > model->getSignalkValueFloat(_ARDUINO_ANCHOR_WEST))
-		model->setSignalkValue(_ARDUINO_ANCHOR_WEST,w);
+	if ((n - MINMTRS) > model->getValueFloat(_ARDUINO_ANCHOR_SOUTH) && n < model->getValueFloat(_ARDUINO_ANCHOR_NORTH))
+		model->setValue(_ARDUINO_ANCHOR_NORTH,n);
+	if ((s + MINMTRS) < model->getValueFloat(_ARDUINO_ANCHOR_NORTH) && s > model->getValueFloat(_ARDUINO_ANCHOR_SOUTH))
+		model->setValue(_ARDUINO_ANCHOR_SOUTH,s);
+	if ((e - MINMTRS) > model->getValueFloat(_ARDUINO_ANCHOR_WEST) && e < model->getValueFloat(_ARDUINO_ANCHOR_EAST))
+		model->setValue(_ARDUINO_ANCHOR_EAST,e);
+	if ((w + MINMTRS) < model->getValueFloat(_ARDUINO_ANCHOR_EAST) && w > model->getValueFloat(_ARDUINO_ANCHOR_WEST))
+		model->setValue(_ARDUINO_ANCHOR_WEST,w);
 
 }
 
 void Anchor::resetAnchorBox(float laty, float lonx) {
-	model->setSignalkValue(_ARDUINO_ANCHOR_NORTH,90.0);
-	model->setSignalkValue(_ARDUINO_ANCHOR_SOUTH,-90.0);
-	model->setSignalkValue(_ARDUINO_ANCHOR_EAST,180.0);
-	model->setSignalkValue(_ARDUINO_ANCHOR_WEST,-180.0);
-	model->setSignalkValue(_ARDUINO_ANCHOR_RADIUSDEG,model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS) * LLMTRS);
+	model->setValue(_ARDUINO_ANCHOR_NORTH,90.0);
+	model->setValue(_ARDUINO_ANCHOR_SOUTH,-90.0);
+	model->setValue(_ARDUINO_ANCHOR_EAST,180.0);
+	model->setValue(_ARDUINO_ANCHOR_WEST,-180.0);
+	model->setValue(_ARDUINO_ANCHOR_RADIUSDEG,model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS) * LLMTRS);
 	updateAnchorBox(laty, lonx);
 }
 
 
 /*True if the provided lat/lon is within the anchor box*/
 bool Anchor::inAnchorBox(float laty, float lonx) {
-	if (laty < model->getSignalkValueFloat(_ARDUINO_ANCHOR_SOUTH))
+	if (laty < model->getValueFloat(_ARDUINO_ANCHOR_SOUTH))
 		return false;
-	if (laty > model->getSignalkValueFloat(_ARDUINO_ANCHOR_NORTH))
+	if (laty > model->getValueFloat(_ARDUINO_ANCHOR_NORTH))
 		return false;
-	if (lonx > model->getSignalkValueFloat(_ARDUINO_ANCHOR_EAST))
+	if (lonx > model->getValueFloat(_ARDUINO_ANCHOR_EAST))
 		return false;
-	if (lonx < model->getSignalkValueFloat(_ARDUINO_ANCHOR_WEST))
+	if (lonx < model->getValueFloat(_ARDUINO_ANCHOR_WEST))
 		return false;
 	return true;
 }
 
 float Anchor::getAnchorRadius() {
-	return  model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS);
+	return  model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS);
 }
 
 /*set anchor radius and adjust box*/
 void Anchor::setAnchorRadius(float radius) {
 	if (radius < 0)
 		radius = 0;
-	float change = radius -  model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS);
-	 model->setSignalkValue(NAVIGATION_ANCHOR_ALARMRADIUS, radius);
-	 model->setSignalkValue(_ARDUINO_ANCHOR_RADIUSDEG, model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS) * LLMTRS);
-	saveAnchorAlarmRadius(model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS));
+	float change = radius -  model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS);
+	 model->setValue(NAVIGATION_ANCHOR_ALARMRADIUS, radius);
+	 model->setValue(_ARDUINO_ANCHOR_RADIUSDEG, model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS) * LLMTRS);
+	saveAnchorAlarmRadius(model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS));
 
 	//deal with the changed box size
 	if (change <= 0) {
@@ -97,10 +97,10 @@ void Anchor::setAnchorRadius(float radius) {
 	} else {
 		//grow the box? - add change to all edges?
 		change = change * LLMTRS;
-		model->setSignalkValue(_ARDUINO_ANCHOR_NORTH,model->getSignalkValueFloat(_ARDUINO_ANCHOR_NORTH) + change);
-		model->setSignalkValue(_ARDUINO_ANCHOR_SOUTH,model->getSignalkValueFloat(_ARDUINO_ANCHOR_SOUTH) - change);
-		model->setSignalkValue(_ARDUINO_ANCHOR_EAST,model->getSignalkValueFloat(_ARDUINO_ANCHOR_EAST) + change);
-		model->setSignalkValue(_ARDUINO_ANCHOR_WEST,model->getSignalkValueFloat(_ARDUINO_ANCHOR_WEST) - change);
+		model->setValue(_ARDUINO_ANCHOR_NORTH,model->getValueFloat(_ARDUINO_ANCHOR_NORTH) + change);
+		model->setValue(_ARDUINO_ANCHOR_SOUTH,model->getValueFloat(_ARDUINO_ANCHOR_SOUTH) - change);
+		model->setValue(_ARDUINO_ANCHOR_EAST,model->getValueFloat(_ARDUINO_ANCHOR_EAST) + change);
+		model->setValue(_ARDUINO_ANCHOR_WEST,model->getValueFloat(_ARDUINO_ANCHOR_WEST) - change);
 
 	}
 }
@@ -111,32 +111,32 @@ void Anchor::checkAnchor() {
 	if(model->isAlarmOn(ALARMS_ANCHORALARMSTATE)){
 		//TODO: if anchor distance greater than 1000 mtrs its probably a mistake so dont fire alarm?
 		// check if GPS positioning was active, if we havent had a signal in a while that may be a problem....
-		if ((millis() - model->getSignalkValueLong(_ARDUINO_GPS_LASTFIX) > MAX_SINCE_LAST_GPS_FIX)
+		if ((millis() - model->getValueLong(_ARDUINO_GPS_LASTFIX) > MAX_SINCE_LAST_GPS_FIX)
 				&& model->isAlarmOn(ALARMS_ANCHORALARMSTATE)) {
-			model->setSignalkValue(_ARDUINO_ALARM_SNOOZE,0UL);
-			model->setSignalkValue(ALARMS_ANCHORALARMSTATE, AlarmStateType(ALRM_FIRING));
+			model->setValue(_ARDUINO_ALARM_SNOOZE,0UL);
+			model->setValue(ALARMS_ANCHORALARMSTATE, AlarmStateType(ALRM_FIRING));
 		}
 		//now check position - Status, V=Navigation receiver warning A=Valid
-		if (model->getSignalkValueChar(_ARDUINO_GPS_STATUS)==GPS_VALID) {
-			model->setSignalkValue(NAVIGATION_ANCHOR_CURRENTRADIUS,Gps::getMetersTo(model->getSignalkValueFloat(NAVIGATION_ANCHOR_POSITION_LATITUDE), model->getSignalkValueFloat(NAVIGATION_ANCHOR_POSITION_LONGITUDE),
-					model->getSignalkValueFloat(NAVIGATION_POSITION_LATITUDE),model->getSignalkValueFloat(NAVIGATION_POSITION_LONGITUDE)));
-			if (model->getSignalkValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS) > model->getSignalkValueFloat(NAVIGATION_ANCHOR_MAXRADIUS))
-				model->setSignalkValue(NAVIGATION_ANCHOR_MAXRADIUS,model->getSignalkValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS));
+		if (model->getValueChar(_ARDUINO_GPS_STATUS)==GPS_VALID) {
+			model->setValue(NAVIGATION_ANCHOR_CURRENTRADIUS,Gps::getMetersTo(model->getValueFloat(NAVIGATION_ANCHOR_POSITION_LATITUDE), model->getValueFloat(NAVIGATION_ANCHOR_POSITION_LONGITUDE),
+					model->getValueFloat(NAVIGATION_POSITION_LATITUDE),model->getValueFloat(NAVIGATION_POSITION_LONGITUDE)));
+			if (model->getValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS) > model->getValueFloat(NAVIGATION_ANCHOR_MAXRADIUS))
+				model->setValue(NAVIGATION_ANCHOR_MAXRADIUS,model->getValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS));
 
 			//update the anchor box
-			updateAnchorBox(model->getSignalkValueFloat(NAVIGATION_POSITION_LATITUDE), model->getSignalkValueFloat(NAVIGATION_POSITION_LONGITUDE));
+			updateAnchorBox(model->getValueFloat(NAVIGATION_POSITION_LATITUDE), model->getValueFloat(NAVIGATION_POSITION_LONGITUDE));
 
 			// read distance to anchorPoint in meters and set anchorAlarm accordingly
 			// if ( anchorAlarmOn && (anchorDistance > anchorRadius || !inAnchorBox(gps->gprmc_latitude(),gps->gprmc_longitude()))) {
-			if(model->getSignalkValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS) > model->getSignalkValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS)) {
+			if(model->getValueFloat(NAVIGATION_ANCHOR_CURRENTRADIUS) > model->getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS)) {
 				//we need to sound alarm
 				if (!model->isAlarmTriggered(ALARMS_ANCHORALARMSTATE)) {
-					model->setSignalkValue(_ARDUINO_ALARM_SNOOZE,0UL);
-					model->setSignalkValue(ALARMS_ANCHORALARMSTATE,AlarmStateType(ALRM_FIRING));
+					model->setValue(_ARDUINO_ALARM_SNOOZE,0UL);
+					model->setValue(ALARMS_ANCHORALARMSTATE,AlarmStateType(ALRM_FIRING));
 				}
 			}else{
 				//turn off
-				model->setSignalkValue(ALARMS_ANCHORALARMSTATE,AlarmStateType(ALRM_ENABLED));
+				model->setValue(ALARMS_ANCHORALARMSTATE,AlarmStateType(ALRM_ENABLED));
 			}
 		}
 	}
@@ -145,9 +145,9 @@ void Anchor::checkAnchor() {
 
 /*Set anchor position*/
 void Anchor::setAnchorPoint() {
-	model->setSignalkValue(NAVIGATION_ANCHOR_POSITION_LATITUDE,model->getSignalkValueFloat(NAVIGATION_POSITION_LATITUDE));
-	model->setSignalkValue(NAVIGATION_ANCHOR_POSITION_LONGITUDE,model->getSignalkValueFloat(NAVIGATION_POSITION_LONGITUDE));
-	model->setSignalkValue(NAVIGATION_ANCHOR_MAXRADIUS,0);
+	model->setValue(NAVIGATION_ANCHOR_POSITION_LATITUDE,model->getValueFloat(NAVIGATION_POSITION_LATITUDE));
+	model->setValue(NAVIGATION_ANCHOR_POSITION_LONGITUDE,model->getValueFloat(NAVIGATION_POSITION_LONGITUDE));
+	model->setValue(NAVIGATION_ANCHOR_MAXRADIUS,0);
 
 }
 

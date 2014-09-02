@@ -54,11 +54,11 @@ void NmeaSerial::printNmea(char* sentence) {
 void NmeaSerial::printTrueHeading() {
 	//Assemble a sentence of the various parts so that we can calculate the proper checksum
 	// declination is positive when true N is west of MagN, eg subtract the declination
-	if(model->getSignalkValueFloat(NAVIGATION_MAGNETICVARIATION)==0.0)return;
+	if(signalkModel->getValueFloat(NAVIGATION_MAGNETICVARIATION)==0.0)return;
 
 	PString str(trueHeadingSentence, sizeof(trueHeadingSentence));
 	str.print("$HCHDT,");
-	float trueHeading = model->getSignalkValueFloat(NAVIGATION_HEADINGMAGNETIC)-model->getSignalkValueFloat(NAVIGATION_MAGNETICVARIATION);
+	float trueHeading = signalkModel->getValueFloat(NAVIGATION_HEADINGMAGNETIC)-signalkModel->getValueFloat(NAVIGATION_MAGNETICVARIATION);
 	str.print(trueHeading);
 	str.print(",T*");
 	//calculate the checksum

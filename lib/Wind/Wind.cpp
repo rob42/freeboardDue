@@ -91,8 +91,8 @@ const unsigned int isinTable16[] = { 0, 1144, 2287, 3430, 4571, 5712, 6850, 7987
 
 AverageList<val> dirList = AverageList<val>(dirStorage, MAX_NUMBER_OF_READINGS);
 
-Wind::Wind(SignalkModel* model) {
-	this->model = model;
+Wind::Wind(SignalkModel* signalkModel) {
+	this->signalkModel = signalkModel;
 	//initialise the wind interrupt
 	windSpeedMicros = micros();
 	windSpeedMicrosLast = windSpeedMicros;
@@ -103,8 +103,8 @@ Wind::Wind(SignalkModel* model) {
 	cs=0;
 
 	// read the last wind alarm values
-	if (model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM) > 99.0) {
-		model->setSignalkValue(ENVIRONMENT_WIND_SPEEDALARM,99.0f);
+	if (signalkModel->getValueFloat(ENVIRONMENT_WIND_SPEEDALARM) > 99.0) {
+		signalkModel->setValue(ENVIRONMENT_WIND_SPEEDALARM,99.0f);
 	}
 }
 
@@ -302,12 +302,12 @@ void Wind::calcWindData() {
 	if (millis() < lastSpeedPulse) lastSpeedPulse = millis();
 	if (millis() < lastDirPulse) lastDirPulse = millis();
 
-	model->setSignalkValue(_ARDUINO_WIND_LASTUPDATE, (unsigned long)millis());
+	signalkModel->setValue(_ARDUINO_WIND_LASTUPDATE, (unsigned long)millis());
 
 //convert to windAverage
 	if (millis() - lastSpeedPulse > 3000) {
 		//no rotation, no wind
-		model->setSignalkValue(_ARDUINO_WIND_AVERAGE,0);
+		signalkModel->setValue(_ARDUINO_WIND_AVERAGE,0);
 		//Serial.println("Wind speed reset");
 	} else {
 		//windSpeedDur is type long -  max sensor value = 3000000 micros
@@ -320,23 +320,23 @@ void Wind::calcWindData() {
 			if (windSpeedRps < 323) {
 				//need extra accuracy here, zero is very unlikely
 				windSpeedRps = windSpeedRps * 10;
-				model->setSignalkValue(_ARDUINO_WIND_AVERAGE,(((((windSpeedRps * windSpeedRps) / -105) + ((25476 * windSpeedRps) / 100) - 12260)) / model->getSignalkValueFloat(_ARDUINO_WIND_FACTOR)/10));
+				signalkModel->setValue(_ARDUINO_WIND_AVERAGE,(((((windSpeedRps * windSpeedRps) / -105) + ((25476 * windSpeedRps) / 100) - 12260)) / signalkModel->getValueFloat(_ARDUINO_WIND_FACTOR)/10));
 			} else if (windSpeedRps < 5436) {
 				//rps2 = min 10426441, max 30,864,197, cant get div/0 here?
-				model->setSignalkValue(_ARDUINO_WIND_AVERAGE,(((windSpeedRps * windSpeedRps) / 2222) + ((19099 * windSpeedRps) / 100) + 9638) / model->getSignalkValueFloat(_ARDUINO_WIND_FACTOR));
+				signalkModel->setValue(_ARDUINO_WIND_AVERAGE,(((windSpeedRps * windSpeedRps) / 2222) + ((19099 * windSpeedRps) / 100) + 9638) / signalkModel->getValueFloat(_ARDUINO_WIND_FACTOR));
 			} else {
-				model->setSignalkValue(_ARDUINO_WIND_AVERAGE,((((windSpeedRps * windSpeedRps) / 1042) * 100) - (8314700 * windSpeedRps) + 2866500) / model->getSignalkValueFloat(_ARDUINO_WIND_FACTOR));
+				signalkModel->setValue(_ARDUINO_WIND_AVERAGE,((((windSpeedRps * windSpeedRps) / 1042) * 100) - (8314700 * windSpeedRps) + 2866500) / signalkModel->getValueFloat(_ARDUINO_WIND_FACTOR));
 			}
 		}
 		//update gusts
-		if (model->getSignalkValueFloat(_ARDUINO_WIND_AVERAGE) > model->getSignalkValueFloat(_ARDUINO_WIND_MAX)) model->setSignalkValue(_ARDUINO_WIND_MAX,model->getSignalkValueFloat(_ARDUINO_WIND_AVERAGE));
+		if (signalkModel->getValueFloat(_ARDUINO_WIND_AVERAGE) > signalkModel->getValueFloat(_ARDUINO_WIND_MAX)) signalkModel->setValue(_ARDUINO_WIND_MAX,signalkModel->getValueFloat(_ARDUINO_WIND_AVERAGE));
 
 		// calc direction, in degrees clockwise
 		//should round to int, min 1
 		int dir = (int) getRotationalAverage();
 		//limit to +-360, after adjust zero
 		//C = A – B * (A / B)
-		dir = (dir + model->getSignalkValueFloat(_ARDUINO_WIND_ZEROOFFSET)); // %360;
+		dir = (dir + signalkModel->getValueFloat(_ARDUINO_WIND_ZEROOFFSET)); // %360;
 		//if (dir != 0) {
 		//	dir = dir - 360 * (dir / 360);
 		//}
@@ -344,23 +344,23 @@ void Wind::calcWindData() {
 		if (dir < 0) {
 			dir = 360 + dir;
 		}
-		model->setSignalkValue(ENVIRONMENT_WIND_DIRECTIONAPPARENT,(int)dir);
+		signalkModel->setValue(ENVIRONMENT_WIND_DIRECTIONAPPARENT,(int)dir);
 	}
 
 }
 void Wind::checkWindAlarm(){
 	//check alarm val
-		if (!model->isAlarmTriggered(ALARMS_WINDALARMSTATE))return;
+		if (!signalkModel->isAlarmTriggered(ALARMS_WINDALARMSTATE))return;
 
-		if (model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM) > 0
-				&& model->getSignalkValueFloat(_ARDUINO_WIND_AVERAGE) > model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDALARM)) {
+		if (signalkModel->getValueFloat(ENVIRONMENT_WIND_SPEEDALARM) > 0
+				&& signalkModel->getValueFloat(_ARDUINO_WIND_AVERAGE) > signalkModel->getValueFloat(ENVIRONMENT_WIND_SPEEDALARM)) {
 			//TODO: Alarm snooze, better handling of this
 			//setSnoozeAlarm(0);
-			if (!model->isAlarmTriggered(ALARMS_WINDALARMSTATE)){
-				model->setSignalkValue(ALARMS_WINDALARMSTATE, AlarmStateString[ALRM_FIRING]);
+			if (!signalkModel->isAlarmTriggered(ALARMS_WINDALARMSTATE)){
+				signalkModel->setValue(ALARMS_WINDALARMSTATE, AlarmStateString[ALRM_FIRING]);
 			}
 		} else {
-			model->setSignalkValue(ALARMS_WINDALARMSTATE, AlarmStateString[ALRM_ENABLED]);
+			signalkModel->setValue(ALARMS_WINDALARMSTATE, AlarmStateString[ALRM_ENABLED]);
 		}
 }
 
@@ -388,9 +388,9 @@ char* Wind::getWindNmea() {
 
 	PString str(windSentence, sizeof(windSentence));
 	str.print("$WIMWV,");
-	str.print(model->getSignalkValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT));
+	str.print(signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT));
 	str.print(",R,");
-	str.print(model->getSignalkValueFloat(ENVIRONMENT_WIND_SPEEDAPPARENT));
+	str.print(signalkModel->getValueFloat(ENVIRONMENT_WIND_SPEEDAPPARENT));
 	str.print(",N,A*");
 	//calculate the checksum
 
@@ -399,6 +399,18 @@ char* Wind::getWindNmea() {
 	if (cs < 0x10) str.print('0');
 	str.print(cs, HEX); // Assemble the final message and send it out the serial port
 	return windSentence;
+
+}
+
+void Wind::printWindBranch(HardwareSerial* serial, bool last){
+	signalkModel->openBranch(serial,SignalkModel::j_wind);
+	signalkModel->printValue(serial, SignalkModel::j_speedAlarm, signalkModel->getValueFloat(ENVIRONMENT_WIND_SPEEDALARM), false);
+	signalkModel->printValue(serial, SignalkModel::j_directionChangeAlarm, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONCHANGEALARM), false);
+	signalkModel->printValue(serial, SignalkModel::j_directionApparent, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
+	signalkModel->printValue(serial, SignalkModel::j_directionTrue, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
+	signalkModel->printValue(serial, SignalkModel::j_speedApparent, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
+	signalkModel->printValue(serial, SignalkModel::j_speedTrue, signalkModel->getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), true);
+	signalkModel->closeBranch(&Serial, last);
 
 }
 
