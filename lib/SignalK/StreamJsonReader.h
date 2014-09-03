@@ -37,7 +37,6 @@ public:
 	StreamJsonReader(HardwareSerial* serial, SignalkModel* model);
 	virtual ~StreamJsonReader();
 	int process_char(char c);
-	bool finished();
 	void reset();
 
 	short int realloc_increment;
@@ -66,7 +65,6 @@ private:
 	bool append_to_value(char c);
 
 	char* resize_string(char* string, unsigned int* size);
-	unsigned int* get_string_max_size(char* string);
 
 	unsigned int max_name_size;
 	unsigned int max_value_size;

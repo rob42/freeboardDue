@@ -12,11 +12,6 @@
  */
 
 #include "StreamJsonReader.h"
-#include <math.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
 
 
 	StreamJsonReader::StreamJsonReader(HardwareSerial* serial, SignalkModel* model){
@@ -397,20 +392,6 @@
 		return true;
 	}
 
-
-	unsigned int* StreamJsonReader::get_string_max_size(char* string){
-		unsigned int *max_size;
-		if(string==this->element_name){
-			max_size = &this->max_name_size;
-		}
-		else if(string==this->element_value){
-			max_size = &this->max_value_size;
-		}
-		else if(string==this->trace){
-			max_size = &this->max_trace_size;
-		}
-		return max_size;
-	}
 
 
 	char* StreamJsonReader::resize_string(char* string, unsigned int* max_size){
