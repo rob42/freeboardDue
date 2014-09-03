@@ -31,7 +31,13 @@
 #include "Arduino.h"
 #include "FreeboardConstants.h"
 
-
+#define TYPE_FLOAT  0
+#define TYPE_BOOL  1
+#define TYPE_INT  2
+#define TYPE_UNSIGNED_LONG  3
+#define TYPE_DOUBLE  4 //same as float on mega
+#define TYPE_CHAR_ARRAY 5
+#define TYPE_CHAR 6
 //#include "StreamJsonReader.h"
 //#include "FreeboardConstants.h"
 #define  NAVIGATION_COURSEOVERGROUNDMAGNETIC 177632231UL
@@ -176,13 +182,6 @@ static const char *NavigationStateString[] = {
 typedef enum {AP_COMPASS,AP_WIND,AP_GPS} AutopilotHeadingSourceType;
 static const char *AutopilotHeadingSourceString[] = { "compass", "wind", "gps",};
 
-typedef enum {J_COLLECTION,J_FLOAT,J_INT,J_BOOL,J_LONG,J_CHAR,J_STRING}SignalkJsonType;
-typedef struct{
-	unsigned long hash;
-	SignalkJsonType type;
-	const char* name;
-	void *pointer;
-}SignalkJson;
 
 typedef struct {
 	float longitude;
@@ -199,6 +198,7 @@ class SignalkModel {
 public:
 
 	SignalkModel();
+	int getNumericType(unsigned long key);
 	void setValue(char* attribute, bool value);
 	void setValue(char* attribute, char* value);
 	void setValue(char* attribute, char value);

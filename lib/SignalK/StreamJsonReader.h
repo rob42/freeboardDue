@@ -34,15 +34,12 @@ public:
 	// initial_name_size: Initial allocated bytes to field names in json (will be realocated if needed)
 	// initial_value_size: Initial allocated bytes to values in json (will be realocated if needed)
 	// initial_trace_size: Initial allocated bytes to path in json (will be realocated if needed)
-	StreamJsonReader(HardwareSerial* serial, SignalkModel* model, const char* queries[],
-			unsigned int num_queries, unsigned int initial_name_size = 30,
-			unsigned int initial_value_size = 30,
-			unsigned int initial_trace_size = 60);
+	StreamJsonReader(HardwareSerial* serial, SignalkModel* model);
 	virtual ~StreamJsonReader();
 	int process_char(char c);
 	bool finished();
 	void reset();
-	char** results;
+
 	short int realloc_increment;
 
 private:
@@ -55,9 +52,6 @@ private:
 	char* element_value;
 	char* trace;
 
-	char** queries;
-	int num_queries;
-
 	bool is_numeric_last_trace_element();
 	void increment_trace_element();
 	int numeric_last_trace_element_value();
@@ -65,7 +59,6 @@ private:
 	void add_to_trace(char* element);
 
 	void assign_result(char* result);
-	bool query_match(char* query, char* trace);
 	bool partial_query_match(char* trace);
 
 	bool append_to_trace(char c);
@@ -81,7 +74,6 @@ private:
 
 	bool ignore_node; // If user don't want current node, don't read child
 
-	int found_results;
 	void alloc_elements();
 	void free_elements();
 

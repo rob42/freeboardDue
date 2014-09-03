@@ -31,7 +31,6 @@ char input;
 
 
 //freeboard model
-//FreeBoardModel model;
 SignalkModel signalkModel;
 
 
@@ -66,7 +65,7 @@ Autopilot autopilot( &signalkModel);
 //Anchor
 Anchor anchor(&signalkModel);
 
-//Seatalk seatalk(&Serial2, &model);
+Seatalk seatalk(&Serial2, &signalkModel);
 
 Levels levels(&signalkModel);
 
@@ -80,11 +79,11 @@ boolean inputSerial4Complete = false; // whether the string is complete
 
 //json support
 //{"navigation":{ "position":{"longitude":173.5, "latitude":-43.5}}}
-static const char* queries[] = {
-					"_arduino.wind.zeroOffset",
-					};
+//static const char* queries[] = {
+//					"_arduino.wind.zeroOffset",
+//					};
 
-StreamJsonReader jsonreader(&Serial, &signalkModel, queries, 0);
+StreamJsonReader jsonreader(&Serial, &signalkModel);
 
 /*
  * Timer interrupt driven method to do time sensitive calculations
@@ -183,18 +182,18 @@ void setup()
 		if (DEBUG) Serial.println("Setup complete..");
 
 		//execute hashing
-		for(int x=0; x<1; x++){
+		/*for(int x=0; x<1; x++){
 			Serial.print(queries[x]);
 			Serial.print("=");
 			Serial.println(signalkModel.hash(queries[x]),DEC);
-		}
+		}*/
 
 		//test json print
 
 		signalkModel.printVesselWrapper(&Serial);
 
 
-		//Serial.print((char*)signalkModel.abc.pointer);
+
 		//TODO: setup lvl3 pin - actually its analogue
 		pinMode(lvl3Pin, INPUT);
 }
@@ -236,7 +235,7 @@ void serialEvent1() {
 void serialEvent2() {
 	while (Serial2.available()) {
 		if (signalkModel.getValueBool(_ARDUINO_SEATALK)) {
-			//seatalk.processSeaTalkByte(Serial2.read());
+			seatalk.processSeaTalkByte(Serial2.read());
 		} else {
 			inputSerial2Complete = talker2.decode(Serial2.read());
 			if (inputSerial2Complete) {

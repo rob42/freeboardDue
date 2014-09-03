@@ -19,20 +19,12 @@
 
 
 
-	StreamJsonReader::StreamJsonReader(HardwareSerial* serial, SignalkModel* model,
-									  const char* queries[],
-									  unsigned int num_queries,
-									  unsigned int max_name_size,
-									  unsigned int max_value_size,
-									  unsigned int max_trace_size) : queries((char**)queries),
-																	 num_queries(num_queries),
-																	 max_value_size(max_value_size),
-																	 max_trace_size(max_trace_size),
-																	 max_name_size(max_name_size),
-																	 realloc_increment(5),
-																	 found_results(0),
-																	 ignore_node(false){
-
+	StreamJsonReader::StreamJsonReader(HardwareSerial* serial, SignalkModel* model){
+		max_name_size = 30;
+		max_value_size = 30;
+		max_trace_size = 60;
+		realloc_increment=5;
+		ignore_node=false;
 		this->serial=serial;
 		this->model=model;
 		alloc_elements();
@@ -46,10 +38,7 @@
 		free(this->element_value);
 		free(this->element_name);
 		free(this->trace);
-		for(int i=0; i<num_queries; i++){
-			free(this->results[i]);
-		}
-		free(this->results);
+
 	}
 
 	void StreamJsonReader::alloc_elements(){
@@ -64,82 +53,71 @@
 		element_name[0] = '\0';
 		trace[0] = '\0';
 
-		//Alloc memory for result pointers
-		results = (char**) malloc(num_queries * sizeof(char*));
-
-		//Init results with a \0
-		for(int i=0; i<num_queries; i++){
-			results[i] = (char*) malloc(1 * sizeof(char));
-			results[i][0] = '\0';
-		}
 	}
 
 	void StreamJsonReader::reset(){
 		free_elements();
-		found_results = 0;
 		status = NODE_VALUE;
 		alloc_elements();
+
 	}
 
 	// MATCH PARTIAL
 
 	void StreamJsonReader::assign_result(char* result ){
 
-				//put it straight into the Signalk model
+				//put it straight into the Signalk model, truncate vessels.self.
+		//TODO: deal with 'null' values, ints, and longs
+				unsigned long hashKey = model->hash(&trace[13]);
 				switch(element_type){
 					case TYPE_STRING:
 						Serial.println("Send to signalk String");
-						model->setValue(trace, result);
+						model->setValue(hashKey, result);
 						break;
 					case TYPE_NUMERIC:
-						Serial.println("Send to signalk Float");
-						model->setValue(trace, atoff(result));
+						//get the type here
+
+						//int type = model->getNumericType(hash);
+						switch(model->getNumericType(hashKey)){
+							case TYPE_FLOAT:
+								Serial.println("Send to signalk Float");
+								model->setValue(hashKey, atoff(result));
+								break;
+							case TYPE_UNSIGNED_LONG:
+								Serial.println("Send to signalk Unsigned Long");
+								model->setValue(hashKey,strtoul(result,NULL,10));
+								break;
+							case TYPE_INT:
+								Serial.println("Send to signalk Int");
+								model->setValue(hashKey, atoi(result));
+								break;
+							case TYPE_DOUBLE:
+								Serial.println("Send to signalk Bool");
+								model->setValue(hashKey, atof(result));
+								break;
+							default:
+								break;
+						}
 						break;
 					case TYPE_BOOLEAN:
 						Serial.println("Send to signalk Bool");
-						model->setValue(trace, result && strcmp(result,"true")==0);
-						break;
-					default:
+						model->setValue(hashKey, (stricmp(result,"true")==0));
 						break;
 				}
 				return;
 
 	}
 
-	bool StreamJsonReader::finished(){
-		return found_results == num_queries;
-	}
-
-	bool StreamJsonReader::query_match(char* query, char* trace){
-
-		if(strlen(trace) != strlen(query)){
-				serial->println(", len : false");
-				return false;
-		}
-		for(unsigned int i=0; i < strlen(trace); i++){ //dont compare \0
-			if(query[i] != trace[i]){
-				serial->println(", pos : false");
-				return false;
-			}
-		}
-		serial->print("*query_match! ");
-				serial->print(query);
-				serial->print("=");
-				serial->print(trace);
-		serial->println(", true");
-		return true;
-	}
-
-
+	//only accept vessels.self structure
 	bool StreamJsonReader::partial_query_match(char* trace){
 		//query starts with trace, we need to keep looking on this node
-		//for(int i=0; i < num_queries; i++){
-		//	if(starts_with(queries[i], trace)){
-		//		return true;
-		//	}
-		//}
-		//return false;
-		return true;
+		if(starts_with(SignalkModel::j_vessels, trace)){
+			if(sizeof(trace)>10 && !strstr(SignalkModel::j_self, trace)){
+				return false;
+			}
+				return true;
+		}
+		return false;
 	}
 
 
@@ -233,6 +211,7 @@
 			append_to_trace(element[i]);
 		}
 		ignore_node = !partial_query_match(trace);
+
 	}
 
 	int StreamJsonReader::process_char(char c){
@@ -305,8 +284,9 @@
 						break;
 					case TYPE_NUMERIC:
 						// Inside a numeric, concat until } or ,
-						if(c != '}' && c != ',' && c != ']') append_to_value(c);
-						else{
+						if(c != '}' && c != ',' && c != ']') {
+							append_to_value(c);
+						}else{
 							// FIN VALOR DE NUMERO!!! DEVOLVERLO!!
 							serial->print("*PUT NUMERO! ");
 							serial->print(element_value);

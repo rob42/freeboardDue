@@ -131,12 +131,12 @@ freeboardDue.cpp.d: ../freeboardDue.cpp ../freeboardDue.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/USB/USBCore.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/USB/USBAPI.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/RingBuffer.h \
- ../FreeboardConstants.h \
  /home/robert/gitrep/freeboardDue/lib/DueTimer/DueTimer.h \
  /home/robert/gitrep/freeboardDue/lib/MultiSerial/MultiSerial.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Stream.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h \
  /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h \
+ /home/robert/gitrep/freeboardDue/lib/SignalK/FreeboardConstants.h \
  /home/robert/gitrep/freeboardDue/lib/SignalK/StreamJsonReader.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/HardwareSerial.h \
  /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h \
@@ -144,10 +144,15 @@ freeboardDue.cpp.d: ../freeboardDue.cpp ../freeboardDue.h \
  /home/robert/gitrep/freeboardDue/lib/PString/PString.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Print.h \
  /home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h \
- ../FreeBoardModel.h /home/robert/gitrep/freeboardDue/lib/NMEA/nmea.h \
- ../NmeaSerial.h ../Alarm.h ../Gps.h ../Anchor.h ../NmeaRelay.h \
- ../Autopilot.h /home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h \
- /home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h
+ ../NmeaSerial.h /home/robert/gitrep/freeboardDue/lib/Alarms/Alarm.h \
+ /home/robert/gitrep/freeboardDue/lib/Gps/Gps.h \
+ /home/robert/gitrep/freeboardDue/lib/NMEA/nmea.h \
+ /home/robert/gitrep/freeboardDue/lib/Anchor/Anchor.h ../NmeaRelay.h \
+ /home/robert/gitrep/freeboardDue/lib/Autopilot/Autopilot.h \
+ /home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h \
+ /home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h \
+ /home/robert/gitrep/freeboardDue/lib/Levels/Levels.h \
+ /home/robert/gitrep/freeboardDue/lib/Seatalk/Seatalk.h
 
 ../freeboardDue.h:
 
@@ -415,8 +420,6 @@ freeboardDue.cpp.d: ../freeboardDue.cpp ../freeboardDue.h \
 
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/RingBuffer.h:
 
-../FreeboardConstants.h:
-
 /home/robert/gitrep/freeboardDue/lib/DueTimer/DueTimer.h:
 
 /home/robert/gitrep/freeboardDue/lib/MultiSerial/MultiSerial.h:
@@ -426,6 +429,8 @@ freeboardDue.cpp.d: ../freeboardDue.cpp ../freeboardDue.h \
 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/libraries/SPI/SPI.h:
 
 /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h:
+
+/home/robert/gitrep/freeboardDue/lib/SignalK/FreeboardConstants.h:
 
 /home/robert/gitrep/freeboardDue/lib/SignalK/StreamJsonReader.h:
 
@@ -441,22 +446,24 @@ freeboardDue.cpp.d: ../freeboardDue.cpp ../freeboardDue.h \
 
 /home/robert/gitrep/freeboardDue/lib/AverageList/AverageList.h:
 
-../FreeBoardModel.h:
+../NmeaSerial.h:
+
+/home/robert/gitrep/freeboardDue/lib/Alarms/Alarm.h:
+
+/home/robert/gitrep/freeboardDue/lib/Gps/Gps.h:
 
 /home/robert/gitrep/freeboardDue/lib/NMEA/nmea.h:
 
-../NmeaSerial.h:
-
-../Alarm.h:
-
-../Gps.h:
-
-../Anchor.h:
+/home/robert/gitrep/freeboardDue/lib/Anchor/Anchor.h:
 
 ../NmeaRelay.h:
 
-../Autopilot.h:
+/home/robert/gitrep/freeboardDue/lib/Autopilot/Autopilot.h:
 
 /home/robert/gitrep/freeboardDue/lib/PID_v1/PID_v1.h:
 
 /home/robert/gitrep/freeboardDue/lib/Kangaroo/Kangaroo.h:
+
+/home/robert/gitrep/freeboardDue/lib/Levels/Levels.h:
+
+/home/robert/gitrep/freeboardDue/lib/Seatalk/Seatalk.h:

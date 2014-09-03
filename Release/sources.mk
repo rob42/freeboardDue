@@ -37,12 +37,18 @@ SIZEDUMMY :=
 SUBDIRS := \
 lib/Wind \
 lib/SignalK \
+lib/Seatalk \
 lib/PString \
 lib/PID_v1 \
 lib/NMEA \
 lib/MultiSerial \
+lib/Levels \
 lib/Kangaroo \
+lib/Gps \
 lib/DueTimer \
+lib/Autopilot \
+lib/Anchor \
+lib/Alarms \
 . \
 arduino/variant \
 arduino/core \

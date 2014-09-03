@@ -41,10 +41,9 @@ typedef unsigned char byte;
 #include "NmeaRelay.h"
 #include <Autopilot.h>
 #include <Levels.h>
-#include <dtostrf.h>
+#include <Seatalk.h>
 /*
 #include <EEPROM.h>
-#include "Seatalk.h"
 
 #include <MemoryFree.h>
 
