@@ -233,6 +233,18 @@ void SignalkHelper::printValue(HardwareSerial* serial, const char* key, const un
 		}
 	if(!last)serial->print(",");
 }
+
+void SignalkHelper::printValue(HardwareSerial* serial, const char* key, const int value, bool last){
+	serial->print("\"");
+	serial->print(key);
+	serial->print("\":");
+	if(value==SIZE_MAX){
+			serial->print("null");
+		}else{
+			serial->print(value,DEC);
+		}
+	if(!last)serial->print(",");
+}
 void SignalkHelper::printValue(HardwareSerial* serial, const char* key, const long value, bool last){
 	serial->print("\"");
 	serial->print(key);
@@ -297,7 +309,6 @@ int SignalkHelper::getNumericType(unsigned long key){
 		case ALARMS_SILENTINTERVAL: return TYPE_INT;break;
 		case _ARDUINO_GPS_STATUS: return TYPE_CHAR;break;
 		//all char array, which we know anyway, or float
-
 		default: return TYPE_FLOAT;
 
 	/* - all char array, which we know, or float

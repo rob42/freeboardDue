@@ -92,9 +92,9 @@ StreamJsonReader jsonreader(&Serial, &signalkModel);
 void calculate() {
 	//we create 100ms pings here
 	execute = true;
-	//we record the ping count out to 2 secs
+	//we record the ping count out to 5 secs
 	interval++;
-	interval = interval % 20;
+	interval = interval % 50;
 }
 
 
@@ -209,11 +209,14 @@ void setup()
  See http://joost.damad.be/2012/01/arduino-mega-and-multiple-hardware.html
  */
 void serialEvent() {
-	while (Serial.available()) {
+	while (Serial.available()>=2) {
 		// get the new byte:
 		char inChar = (char) Serial.read();
 		//try out the json reader here
-		jsonreader.process_char(inChar);
+		if(jsonreader.process_char(inChar)>0){
+			Serial.println("Reset");
+
+		}
 
 	}
 
@@ -283,15 +286,15 @@ void loop()
 	if (execute) {
 			//timer ping
 			//do these every 100ms
-			autopilot.calcAutoPilot();
+			//autopilot.calcAutoPilot();
 
 			if (interval % 2 == 0) {
 				//do every 200ms
-				wind.calcWindSpeedAndDir();
+				//wind.calcWindSpeedAndDir();
 			}
 			if (interval % 50 == 0) {
 				//do every 500ms
-				wind.calcWindData();
+				//wind.calcWindData();
 
 				//signalkModel.writeSimple(Serial);
 			}
@@ -303,11 +306,15 @@ void loop()
 				//nmea.printTrueHeading();
 
 				//do alarm stuff here
-				anchor.checkAnchor();
-				wind.checkWindAlarm();
-				levels.checkLvlAlarms();
-				alarm.checkAlarms();
+				//anchor.checkAnchor();
+				//wind.checkWindAlarm();
+				//levels.checkLvlAlarms();
+				//alarm.checkAlarms();
+				//signalkModel.printVesselWrapper(&Serial);
+			}
+			if (interval % 400 == 0) {
 				signalkModel.printVesselWrapper(&Serial);
+				jsonreader.reset();
 			}
 
 			execute = false;

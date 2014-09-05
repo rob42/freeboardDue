@@ -134,9 +134,6 @@ SignalkModel::SignalkModel() {
 	environment.wind.speedAlarm = 0.0;
 	environment.wind.speedTrue = 0.0;
 	environment.wind.speedApparent = 0.0;
-	environment.airPressureChangeRateAlarm = 0.0;
-	environment.airPressure = 0.0;
-	environment.waterTemp = 0.0;
 	steering.rudderAngle = 0.0;
 	steering.rudderAngleTarget = 0.0;
 	steering.autopilot.state = static_cast<AutopilotStateType>(AP_OFF);
@@ -161,7 +158,7 @@ SignalkModel::SignalkModel() {
 	_arduino.serial.baud1 = 38400UL;
 	_arduino.serial.baud2 = 9600UL;
 	_arduino.serial.baud3 = 9600UL;
-	_arduino.serial.baud4 = 3840UL;
+	_arduino.serial.baud4 = 38400UL;
 	_arduino.serial.baud5 = 4800UL;
 	_arduino.alarm.level1.upper = 0;
 	_arduino.alarm.level2.upper = 0;
@@ -208,14 +205,9 @@ void SignalkModel::setValue(char* attribute, bool value) {
 void SignalkModel::setValue(unsigned long key, bool value) {
 	switch (key) {
 
-	case _ARDUINO_SEATALK:
-		_arduino.seatalk = value;
-		break;
-	case _ARDUINO_GPS_DECODE:
-		_arduino.gps.decode = value;
-		break;
-	default:
-		break;
+	case _ARDUINO_SEATALK: 		_arduino.seatalk = value; break;
+	case _ARDUINO_GPS_DECODE: 		_arduino.gps.decode = value; break;
+	default: 		break;
 
 	}
 }
@@ -227,20 +219,14 @@ void SignalkModel::setValue(char* attribute, char value) {
 void SignalkModel::setValue(unsigned long key, char value) {
 
 	switch (key) {
-
-	case _ARDUINO_GPS_STATUS:
-		_arduino.gps.status = value;
-		break;
+	case _ARDUINO_GPS_STATUS: 		_arduino.gps.status = value; break;
 	}
 }
 
 void SignalkModel::setValue(unsigned long key, double value) {
 
 	switch (key) {
-
-	case _ARDUINO_AUTOPILOT_OFFCOURSE:
-		_arduino.autopilot.offcourse = value;
-		break;
+	case _ARDUINO_AUTOPILOT_OFFCOURSE: 		_arduino.autopilot.offcourse = value; break;
 	}
 }
 
@@ -419,33 +405,15 @@ void SignalkModel::setValue(char* attribute, int value) {
 void SignalkModel::setValue(unsigned long key, int value) {
 
 	switch (key) {
-	case _ARDUINO_GPS_MODEL:
-		_arduino.gps.model = (int) value;
-		break;
-	case STEERING_AUTOPILOT_GAIN:
-		steering.autopilot.gain = (int) value;
-		break;
-	case ALARMS_SILENTINTERVAL:
-		alarms.silentInterval = (int) value;
-		break;
-	case _ARDUINO_ALARM_LEVEL1_UPPER:
-		_arduino.alarm.level1.upper = (int) value;
-		break;
-	case _ARDUINO_ALARM_LEVEL1_LOWER:
-		_arduino.alarm.level1.lower = (int) value;
-		break;
-	case _ARDUINO_ALARM_LEVEL2_UPPER:
-		_arduino.alarm.level2.upper = (int) value;
-		break;
-	case _ARDUINO_ALARM_LEVEL2_LOWER:
-		_arduino.alarm.level2.lower = (int) value;
-		break;
-	case _ARDUINO_ALARM_LEVEL3_UPPER:
-		_arduino.alarm.level3.upper = (int) value;
-		break;
-	case _ARDUINO_ALARM_LEVEL3_LOWER:
-		_arduino.alarm.level3.lower = (int) value;
-		break;
+	case _ARDUINO_GPS_MODEL: 				_arduino.gps.model = (int) value; break;
+	case STEERING_AUTOPILOT_GAIN: 			steering.autopilot.gain = (int) value; break;
+	case ALARMS_SILENTINTERVAL: 			alarms.silentInterval = (int) value; break;
+	case _ARDUINO_ALARM_LEVEL1_UPPER: 		_arduino.alarm.level1.upper = (int) value; break;
+	case _ARDUINO_ALARM_LEVEL1_LOWER: 		_arduino.alarm.level1.lower = (int) value; break;
+	case _ARDUINO_ALARM_LEVEL2_UPPER: 		_arduino.alarm.level2.upper = (int) value; break;
+	case _ARDUINO_ALARM_LEVEL2_LOWER: 		_arduino.alarm.level2.lower = (int) value; break;
+	case _ARDUINO_ALARM_LEVEL3_UPPER: 		_arduino.alarm.level3.upper = (int) value; break;
+	case _ARDUINO_ALARM_LEVEL3_LOWER: 		_arduino.alarm.level3.lower = (int) value; break;
 	}
 }
 
@@ -457,43 +425,18 @@ void SignalkModel::setValue(char* attribute, unsigned long value) {
 void SignalkModel::setValue(unsigned long key, unsigned long value) {
 
 	switch (key) {
-	case _ARDUINO_SERIAL_BAUD0:
-		_arduino.serial.baud0 = value;
-		break;
-	case _ARDUINO_SERIAL_BAUD1:
-		_arduino.serial.baud1 = value;
-		break;
-	case _ARDUINO_SERIAL_BAUD2:
-		_arduino.serial.baud2 = value;
-		break;
-	case _ARDUINO_SERIAL_BAUD3:
-		_arduino.serial.baud3 = value;
-		break;
-	case _ARDUINO_SERIAL_BAUD4:
-		_arduino.serial.baud4 = value;
-		break;
-	case _ARDUINO_SERIAL_BAUD5:
-		_arduino.serial.baud5 = value;
-		break;
-
-	case _ARDUINO_AUTOPILOT_BAUDRATE:
-		_arduino.autopilot.baudRate = value;
-		break;
-	case _ARDUINO_ALARM_SNOOZE:
-		_arduino.alarm.snooze = value;
-		break;
-	case _ARDUINO_ALARM_LAST:
-		_arduino.alarm.last = value;
-		break;
-	case _ARDUINO_GPS_LASTFIX:
-		_arduino.gps.lastFix = value;
-		break;
-	case _ARDUINO_GPS_UTC:
-		_arduino.gps.utc = value;
-		break;
-	default:
-		setValue(key,(int)value);
-		break;
+	case _ARDUINO_SERIAL_BAUD0: 		_arduino.serial.baud0 = value; break;
+	case _ARDUINO_SERIAL_BAUD1: 		_arduino.serial.baud1 = value; break;
+	case _ARDUINO_SERIAL_BAUD2: 		_arduino.serial.baud2 = value; break;
+	case _ARDUINO_SERIAL_BAUD3: 		_arduino.serial.baud3 = value; break;
+	case _ARDUINO_SERIAL_BAUD4: 		_arduino.serial.baud4 = value; break;
+	case _ARDUINO_SERIAL_BAUD5: 		_arduino.serial.baud5 = value; break;
+	case _ARDUINO_AUTOPILOT_BAUDRATE: 	_arduino.autopilot.baudRate = value; break;
+	case _ARDUINO_ALARM_SNOOZE: 		_arduino.alarm.snooze = value; break;
+	case _ARDUINO_ALARM_LAST: 			_arduino.alarm.last = value; break;
+	case _ARDUINO_GPS_LASTFIX: 			_arduino.gps.lastFix = value; break;
+	case _ARDUINO_GPS_UTC: 				_arduino.gps.utc = value; break;
+	default: 		setValue(key,(int)value); break;
 	}
 }
 
@@ -505,141 +448,52 @@ void SignalkModel::setValue(char* attribute, float value) {
 void SignalkModel::setValue(unsigned long key, float value) {
 
 	switch (key) {
-	case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
-		navigation.courseOverGroundMagnetic = value;
-		break;
-	case NAVIGATION_COURSEOVERGROUNDTRUE:
-		navigation.courseOverGroundTrue = value;
-		break;
-	case NAVIGATION_MAGNETICVARIATION:
-		navigation.magneticVariation = value;
-		break;
-	case NAVIGATION_DESTINATION_LONGITUDE:
-		navigation.destination.longitude = value;
-		break;
-	case NAVIGATION_DESTINATION_LATITUDE:
-		navigation.destination.latitude = value;
-		break;
-	case NAVIGATION_HEADINGMAGNETIC:
-		navigation.headingMagnetic = value;
-		break;
-	case NAVIGATION_HEADINGTRUE:
-		navigation.headingTrue = value;
-		break;
-	case NAVIGATION_POSITION_LONGITUDE:
-		navigation.position.longitude = value;
-		break;
-	case NAVIGATION_POSITION_LATITUDE:
-		navigation.position.latitude = value;
-		break;
-	case NAVIGATION_POSITION_ALTITUDE:
-		navigation.position.altitude = value;
-		break;
-	case NAVIGATION_PITCH:
-		navigation.pitch = value;
-		break;
-	case NAVIGATION_RATEOFTURN:
-		navigation.rateOfTurn = value;
-		break;
-	case NAVIGATION_ROLL:
-		navigation.roll = value;
-		break;
-	case NAVIGATION_SPEEDOVERGROUND:
-		navigation.speedOverGround = value;
-		break;
-	case NAVIGATION_SPEEDTHROUGHWATER:
-		navigation.speedThroughWater = value;
-		break;
-	case NAVIGATION_ANCHOR_ALARMRADIUS:
-		navigation.anchor.alarmRadius = value;
-		break;
-	case NAVIGATION_ANCHOR_MAXRADIUS:
-		navigation.anchor.maxRadius = value;
-		break;
-	case NAVIGATION_ANCHOR_CURRENTRADIUS:
-		navigation.anchor.currentRadius = value;
-		break;
-	case NAVIGATION_ANCHOR_POSITION_ALTITUDE:
-		navigation.anchor.position.altitude = value;
-		break;
-	case NAVIGATION_ANCHOR_POSITION_LATITUDE:
-		navigation.anchor.position.latitude = value;
-		break;
-	case NAVIGATION_ANCHOR_POSITION_LONGITUDE:
-		navigation.anchor.position.longitude = value;
-		break;
-	case STEERING_AUTOPILOT_TARGETHEADINGNORTH:
-		steering.autopilot.targetHeadingNorth = value;
-		break;
-	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC:
-		steering.autopilot.targetHeadingMagnetic = value;
-		break;
-	case STEERING_AUTOPILOT_ALARMHEADINGXTE:
-		steering.autopilot.alarmHeadingXte = value;
-		break;
+	case NAVIGATION_COURSEOVERGROUNDMAGNETIC: 	navigation.courseOverGroundMagnetic = value; break;
+	case NAVIGATION_COURSEOVERGROUNDTRUE: 		navigation.courseOverGroundTrue = value; break;
+	case NAVIGATION_MAGNETICVARIATION: 			navigation.magneticVariation = value; break;
+	case NAVIGATION_DESTINATION_LONGITUDE: 		navigation.destination.longitude = value; break;
+	case NAVIGATION_DESTINATION_LATITUDE: 		navigation.destination.latitude = value; break;
+	case NAVIGATION_HEADINGMAGNETIC: 			navigation.headingMagnetic = value; break;
+	case NAVIGATION_HEADINGTRUE: 				navigation.headingTrue = value; break;
+	case NAVIGATION_POSITION_LONGITUDE: 		navigation.position.longitude = value; break;
+	case NAVIGATION_POSITION_LATITUDE: 			navigation.position.latitude = value; break;
+	case NAVIGATION_POSITION_ALTITUDE: 			navigation.position.altitude = value; break;
+	case NAVIGATION_PITCH: 						navigation.pitch = value; break;
+	case NAVIGATION_RATEOFTURN: 				navigation.rateOfTurn = value; break;
+	case NAVIGATION_ROLL: 						navigation.roll = value; break;
+	case NAVIGATION_SPEEDOVERGROUND: 			navigation.speedOverGround = value; break;
+	case NAVIGATION_SPEEDTHROUGHWATER: 			navigation.speedThroughWater = value; break;
+	case NAVIGATION_ANCHOR_ALARMRADIUS: 		navigation.anchor.alarmRadius = value; break;
+	case NAVIGATION_ANCHOR_MAXRADIUS: 			navigation.anchor.maxRadius = value; break;
+	case NAVIGATION_ANCHOR_CURRENTRADIUS: 		navigation.anchor.currentRadius = value; break;
+	case NAVIGATION_ANCHOR_POSITION_ALTITUDE: 	navigation.anchor.position.altitude = value; break;
+	case NAVIGATION_ANCHOR_POSITION_LATITUDE: 	navigation.anchor.position.latitude = value; break;
+	case NAVIGATION_ANCHOR_POSITION_LONGITUDE: 	navigation.anchor.position.longitude = value; break;
 
-	case STEERING_AUTOPILOT_DEADZONE:
-		steering.autopilot.deadZone = value;
-		break;
-	case STEERING_AUTOPILOT_BACKLASH:
-		steering.autopilot.backlash = value;
-		break;
+	case STEERING_AUTOPILOT_TARGETHEADINGNORTH: steering.autopilot.targetHeadingNorth = value; break;
+	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC:	steering.autopilot.targetHeadingMagnetic = value; break;
+	case STEERING_AUTOPILOT_ALARMHEADINGXTE: 	steering.autopilot.alarmHeadingXte = value; break;
+	case STEERING_AUTOPILOT_DEADZONE: 			steering.autopilot.deadZone = value; break;
+	case STEERING_AUTOPILOT_BACKLASH: 			steering.autopilot.backlash = value; break;
+	case STEERING_AUTOPILOT_MAXDRIVEAMPS: 		steering.autopilot.maxDriveAmps = value; break;
+	case STEERING_AUTOPILOT_MAXDRIVERATE: 		steering.autopilot.maxDriveRate = value; break;
 
-	case STEERING_AUTOPILOT_MAXDRIVEAMPS:
-		steering.autopilot.maxDriveAmps = value;
-		break;
-	case STEERING_AUTOPILOT_MAXDRIVERATE:
-		steering.autopilot.maxDriveRate = value;
-		break;
+	case ENVIRONMENT_WIND_DIRECTIONAPPARENT: 	environment.wind.directionApparent = value; break;
+	case ENVIRONMENT_WIND_DIRECTIONCHANGEALARM: environment.wind.directionChangeAlarm = value; break;
+	case ENVIRONMENT_WIND_DIRECTIONTRUE: 		environment.wind.directionTrue = value; break;
+	case ENVIRONMENT_WIND_SPEEDALARM: 			environment.wind.speedAlarm = value; break;
+	case ENVIRONMENT_WIND_SPEEDTRUE: 			environment.wind.speedTrue = value; break;
+	case ENVIRONMENT_WIND_SPEEDAPPARENT: 		environment.wind.speedApparent = value; break;
 
-	case ENVIRONMENT_WIND_DIRECTIONAPPARENT:
-		environment.wind.directionApparent = value;
-		break;
-	case ENVIRONMENT_WIND_DIRECTIONCHANGEALARM:
-		environment.wind.directionChangeAlarm = value;
-		break;
-	case ENVIRONMENT_WIND_DIRECTIONTRUE:
-		environment.wind.directionTrue = value;
-		break;
-	case ENVIRONMENT_WIND_SPEEDALARM:
-		environment.wind.speedAlarm = value;
-		break;
-	case ENVIRONMENT_WIND_SPEEDTRUE:
-		environment.wind.speedTrue = value;
-		break;
-	case ENVIRONMENT_WIND_SPEEDAPPARENT:
-		environment.wind.speedApparent = value;
-		break;
-	case _ARDUINO_WIND_AVERAGE:
-		_arduino.wind.average = value;
-		break;
-	case _ARDUINO_WIND_FACTOR:
-		_arduino.wind.factor = value;
-		break;
-	case _ARDUINO_WIND_MAX:
-		_arduino.wind.max = value;
-		break;
-	case _ARDUINO_ANCHOR_RADIUSDEG:
-		_arduino.anchor.radiusDeg = value;
-		break;
-
-	case _ARDUINO_ANCHOR_NORTH:
-		_arduino.anchor.north = value;
-		break;
-	case _ARDUINO_ANCHOR_SOUTH:
-		_arduino.anchor.south = value;
-		break;
-	case _ARDUINO_ANCHOR_EAST:
-		_arduino.anchor.east = value;
-		break;
-	case _ARDUINO_ANCHOR_WEST:
-		_arduino.anchor.west = value;
-		break;
-
-	default:
-		//try long
-		setValue(key,(unsigned long)value);
-		break;
+	case _ARDUINO_WIND_AVERAGE: 	_arduino.wind.average = value; break;
+	case _ARDUINO_WIND_FACTOR: 		_arduino.wind.factor = value; break;
+	case _ARDUINO_WIND_MAX: 		_arduino.wind.max = value; break;
+	case _ARDUINO_ANCHOR_RADIUSDEG: _arduino.anchor.radiusDeg = value; break;
+	case _ARDUINO_ANCHOR_NORTH: 	_arduino.anchor.north = value; break;
+	case _ARDUINO_ANCHOR_SOUTH: 	_arduino.anchor.south = value; break;
+	case _ARDUINO_ANCHOR_EAST: 		_arduino.anchor.east = value; break;
+	case _ARDUINO_ANCHOR_WEST: 		_arduino.anchor.west = value; break;
+	default: 		break;
 
 	}
 
@@ -647,77 +501,38 @@ void SignalkModel::setValue(unsigned long key, float value) {
 
 bool SignalkModel::getValueBool(unsigned long key) {
 	switch (key) {
-	case _ARDUINO_SEATALK:
-			return true;
+	case _ARDUINO_SEATALK: 			return true;
 			break;
 	}
 	return false;
 }
 int SignalkModel::getValueInt(unsigned long key) {
 	switch (key) {
-	case _ARDUINO_GPS_MODEL:
-		return _arduino.gps.model;
-		break;
-	case STEERING_AUTOPILOT_GAIN:
-		return steering.autopilot.gain;
-		break;
-	case ALARMS_SILENTINTERVAL:
-		return alarms.silentInterval;
-		break;
-	case _ARDUINO_ALARM_LEVEL1_UPPER:
-		return _arduino.alarm.level1.upper;
-		break;
-	case _ARDUINO_ALARM_LEVEL1_LOWER:
-		return _arduino.alarm.level1.lower;
-		break;
-	case _ARDUINO_ALARM_LEVEL2_UPPER:
-		return _arduino.alarm.level2.upper;
-		break;
-	case _ARDUINO_ALARM_LEVEL2_LOWER:
-		return _arduino.alarm.level2.lower;
-		break;
-	case _ARDUINO_ALARM_LEVEL3_UPPER:
-		return _arduino.alarm.level3.upper;
-		break;
-	case _ARDUINO_ALARM_LEVEL3_LOWER:
-		return _arduino.alarm.level3.lower;
-		break;
+	case _ARDUINO_GPS_MODEL: 			return _arduino.gps.model; break;
+	case STEERING_AUTOPILOT_GAIN: 		return steering.autopilot.gain; break;
+	case ALARMS_SILENTINTERVAL: 		return alarms.silentInterval; break;
+	case _ARDUINO_ALARM_LEVEL1_UPPER: 	return _arduino.alarm.level1.upper; break;
+	case _ARDUINO_ALARM_LEVEL1_LOWER: 	return _arduino.alarm.level1.lower; break;
+	case _ARDUINO_ALARM_LEVEL2_UPPER: 	return _arduino.alarm.level2.upper; break;
+	case _ARDUINO_ALARM_LEVEL2_LOWER: 	return _arduino.alarm.level2.lower; break;
+	case _ARDUINO_ALARM_LEVEL3_UPPER: 	return _arduino.alarm.level3.upper; break;
+	case _ARDUINO_ALARM_LEVEL3_LOWER: 	return _arduino.alarm.level3.lower; break;
 	}
 	return INT16_MAX;
 }
 
 unsigned long SignalkModel::getValueLong(unsigned long key) {
 	switch (key) {
-	case _ARDUINO_SERIAL_BAUD0:
-		return _arduino.serial.baud0;
-		break;
-	case _ARDUINO_SERIAL_BAUD1:
-		return _arduino.serial.baud1;
-		break;
-	case _ARDUINO_SERIAL_BAUD2:
-		return _arduino.serial.baud2;
-		break;
-	case _ARDUINO_SERIAL_BAUD3:
-		return _arduino.serial.baud3;
-		break;
-	case _ARDUINO_SERIAL_BAUD4:
-		return _arduino.serial.baud4;
-		break;
-	case _ARDUINO_SERIAL_BAUD5:
-		return _arduino.serial.baud5;
-		break;
-	case _ARDUINO_ALARM_SNOOZE:
-		return _arduino.alarm.snooze;
-		break;
-	case _ARDUINO_ALARM_LAST:
-		return _arduino.alarm.last;
-		break;
-	case _ARDUINO_GPS_LASTFIX:
-		return _arduino.gps.lastFix;
-		break;
-	case _ARDUINO_GPS_UTC:
-		return _arduino.gps.utc;
-		break;
+	case _ARDUINO_SERIAL_BAUD0: 	return _arduino.serial.baud0; break;
+	case _ARDUINO_SERIAL_BAUD1: 	return _arduino.serial.baud1; break;
+	case _ARDUINO_SERIAL_BAUD2: 	return _arduino.serial.baud2; break;
+	case _ARDUINO_SERIAL_BAUD3: 	return _arduino.serial.baud3; break;
+	case _ARDUINO_SERIAL_BAUD4: 	return _arduino.serial.baud4; break;
+	case _ARDUINO_SERIAL_BAUD5: 	return _arduino.serial.baud5; break;
+	case _ARDUINO_ALARM_SNOOZE: 	return _arduino.alarm.snooze; break;
+	case _ARDUINO_ALARM_LAST: 		return _arduino.alarm.last; break;
+	case _ARDUINO_GPS_LASTFIX: 		return _arduino.gps.lastFix; break;
+	case _ARDUINO_GPS_UTC: 			return _arduino.gps.utc; break;
 	}
 	return SIZE_MAX;
 }
@@ -725,12 +540,8 @@ unsigned long SignalkModel::getValueLong(unsigned long key) {
 
 double SignalkModel::getValueDouble(unsigned long key) {
 	switch (key) {
-	case _ARDUINO_AUTOPILOT_OFFCOURSE:
-		return _arduino.autopilot.offcourse;
-		break;
-	case _ARDUINO_AUTOPILOT_RUDDERCOMMAND:
-		return _arduino.autopilot.rudderCommand;
-		break;
+	case _ARDUINO_AUTOPILOT_OFFCOURSE: 		return _arduino.autopilot.offcourse; break;
+	case _ARDUINO_AUTOPILOT_RUDDERCOMMAND: 	return _arduino.autopilot.rudderCommand; break;
 	}
 	return SIZE_MAX;
 }
@@ -738,139 +549,53 @@ double SignalkModel::getValueDouble(unsigned long key) {
 float SignalkModel::getValueFloat(unsigned long key) {
 	switch (key) {
 
-	case NAVIGATION_COURSEOVERGROUNDMAGNETIC:
-		return navigation.courseOverGroundMagnetic;
-		break;
-	case NAVIGATION_COURSEOVERGROUNDTRUE:
-		return navigation.courseOverGroundTrue;
-		break;
-	case NAVIGATION_MAGNETICVARIATION:
-		return navigation.magneticVariation;
-		break;
-	case NAVIGATION_DESTINATION_LONGITUDE:
-		return navigation.destination.longitude;
-		break;
-	case NAVIGATION_DESTINATION_LATITUDE:
-		return navigation.destination.latitude;
-		break;
-	case NAVIGATION_HEADINGMAGNETIC:
-		return navigation.headingMagnetic;
-		break;
-	case NAVIGATION_HEADINGTRUE:
-		return navigation.headingTrue;
-		break;
-	case NAVIGATION_POSITION_LONGITUDE:
-		return navigation.position.longitude;
-		break;
-	case NAVIGATION_POSITION_LATITUDE:
-		return navigation.position.latitude;
-		break;
-	case NAVIGATION_POSITION_ALTITUDE:
-		return navigation.position.altitude;
-		break;
-	case NAVIGATION_PITCH:
-		return navigation.pitch;
-		break;
-	case NAVIGATION_RATEOFTURN:
-		return navigation.rateOfTurn;
-		break;
-	case NAVIGATION_ROLL:
-		return navigation.roll;
-		break;
-	case NAVIGATION_SPEEDOVERGROUND:
-		return navigation.speedOverGround;
-		break;
-	case NAVIGATION_SPEEDTHROUGHWATER:
-		return navigation.speedThroughWater;
-		break;
-	case NAVIGATION_ANCHOR_ALARMRADIUS:
-		return navigation.anchor.alarmRadius;
-		break;
-	case NAVIGATION_ANCHOR_MAXRADIUS:
-		return navigation.anchor.maxRadius;
-		break;
-	case NAVIGATION_ANCHOR_CURRENTRADIUS:
-		return navigation.anchor.currentRadius;
-		break;
-	case NAVIGATION_ANCHOR_POSITION_ALTITUDE:
-		return navigation.anchor.position.altitude;
-		break;
-	case NAVIGATION_ANCHOR_POSITION_LATITUDE:
-		return navigation.anchor.position.latitude;
-		break;
-	case NAVIGATION_ANCHOR_POSITION_LONGITUDE:
-		return navigation.anchor.position.longitude;
-		break;
-	case STEERING_AUTOPILOT_TARGETHEADINGNORTH:
-		return steering.autopilot.targetHeadingNorth;
-		break;
-	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC:
-		return steering.autopilot.targetHeadingMagnetic;
-		break;
-	case STEERING_AUTOPILOT_ALARMHEADINGXTE:
-		return steering.autopilot.alarmHeadingXte;
-		break;
+	case NAVIGATION_COURSEOVERGROUNDMAGNETIC: 	return navigation.courseOverGroundMagnetic; break;
+	case NAVIGATION_COURSEOVERGROUNDTRUE: 		return navigation.courseOverGroundTrue; break;
+	case NAVIGATION_MAGNETICVARIATION: 			return navigation.magneticVariation; break;
+	case NAVIGATION_DESTINATION_LONGITUDE: 		return navigation.destination.longitude; break;
+	case NAVIGATION_DESTINATION_LATITUDE: 		return navigation.destination.latitude; break;
+	case NAVIGATION_HEADINGMAGNETIC: 			return navigation.headingMagnetic; break;
+	case NAVIGATION_HEADINGTRUE: 				return navigation.headingTrue; break;
+	case NAVIGATION_POSITION_LONGITUDE: 		return navigation.position.longitude; break;
+	case NAVIGATION_POSITION_LATITUDE: 			return navigation.position.latitude; break;
+	case NAVIGATION_POSITION_ALTITUDE: 			return navigation.position.altitude; break;
+	case NAVIGATION_PITCH: 						return navigation.pitch; break;
+	case NAVIGATION_RATEOFTURN: 				return navigation.rateOfTurn; break;
+	case NAVIGATION_ROLL: 						return navigation.roll; break;
+	case NAVIGATION_SPEEDOVERGROUND: 			return navigation.speedOverGround; break;
+	case NAVIGATION_SPEEDTHROUGHWATER: 			return navigation.speedThroughWater; break;
+	case NAVIGATION_ANCHOR_ALARMRADIUS: 		return navigation.anchor.alarmRadius; break;
+	case NAVIGATION_ANCHOR_MAXRADIUS: 			return navigation.anchor.maxRadius; break;
+	case NAVIGATION_ANCHOR_CURRENTRADIUS: 		return navigation.anchor.currentRadius; break;
+	case NAVIGATION_ANCHOR_POSITION_ALTITUDE: 	return navigation.anchor.position.altitude; break;
+	case NAVIGATION_ANCHOR_POSITION_LATITUDE: 	return navigation.anchor.position.latitude; break;
+	case NAVIGATION_ANCHOR_POSITION_LONGITUDE: 	return navigation.anchor.position.longitude; break;
 
-	case STEERING_AUTOPILOT_DEADZONE:
-		return steering.autopilot.deadZone;
-		break;
-	case STEERING_AUTOPILOT_BACKLASH:
-		return steering.autopilot.backlash;
-		break;
+	case STEERING_AUTOPILOT_TARGETHEADINGNORTH: return steering.autopilot.targetHeadingNorth; break;
+	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC: 		return steering.autopilot.targetHeadingMagnetic; break;
+	case STEERING_AUTOPILOT_ALARMHEADINGXTE: 	return steering.autopilot.alarmHeadingXte; break;
+	case STEERING_AUTOPILOT_DEADZONE: 			return steering.autopilot.deadZone; break;
+	case STEERING_AUTOPILOT_BACKLASH: 			return steering.autopilot.backlash; break;
+	case STEERING_AUTOPILOT_MAXDRIVEAMPS: 		return steering.autopilot.maxDriveAmps; break;
+	case STEERING_AUTOPILOT_MAXDRIVERATE: 		return steering.autopilot.maxDriveRate; break;
 
-	case STEERING_AUTOPILOT_MAXDRIVEAMPS:
-		return steering.autopilot.maxDriveAmps;
-		break;
-	case STEERING_AUTOPILOT_MAXDRIVERATE:
-		return steering.autopilot.maxDriveRate;
-		break;
+	case ENVIRONMENT_WIND_DIRECTIONAPPARENT: 	return environment.wind.directionApparent; break;
+	case ENVIRONMENT_WIND_DIRECTIONCHANGEALARM: return environment.wind.directionChangeAlarm; break;
+	case ENVIRONMENT_WIND_DIRECTIONTRUE: 		return environment.wind.directionTrue; break;
+	case ENVIRONMENT_WIND_SPEEDALARM: 			return environment.wind.speedAlarm; break;
+	case ENVIRONMENT_WIND_SPEEDTRUE: 			return environment.wind.speedTrue; break;
+	case ENVIRONMENT_WIND_SPEEDAPPARENT: 		return environment.wind.speedApparent; break;
 
-	case ENVIRONMENT_WIND_DIRECTIONAPPARENT:
-		return environment.wind.directionApparent;
-		break;
-	case ENVIRONMENT_WIND_DIRECTIONCHANGEALARM:
-		return environment.wind.directionChangeAlarm;
-		break;
-	case ENVIRONMENT_WIND_DIRECTIONTRUE:
-		return environment.wind.directionTrue;
-		break;
-	case ENVIRONMENT_WIND_SPEEDALARM:
-		return environment.wind.speedAlarm;
-		break;
-	case ENVIRONMENT_WIND_SPEEDTRUE:
-		return environment.wind.speedTrue;
-		break;
-	case ENVIRONMENT_WIND_SPEEDAPPARENT:
-		return environment.wind.speedApparent;
-		break;
-	case _ARDUINO_WIND_AVERAGE:
-		return _arduino.wind.average;
-		break;
-	case _ARDUINO_WIND_FACTOR:
-		return _arduino.wind.factor;
-		break;
-	case _ARDUINO_WIND_MAX:
-		return _arduino.wind.max;
-		break;
-	case _ARDUINO_ANCHOR_RADIUSDEG:
-		return _arduino.anchor.radiusDeg;
-		break;
+	case _ARDUINO_WIND_AVERAGE: 	return _arduino.wind.average; break;
+	case _ARDUINO_WIND_FACTOR: 		return _arduino.wind.factor; break;
+	case _ARDUINO_WIND_MAX: 		return _arduino.wind.max; break;
+	case _ARDUINO_ANCHOR_RADIUSDEG: return _arduino.anchor.radiusDeg; break;
+	case _ARDUINO_ANCHOR_NORTH: 	return _arduino.anchor.north; break;
+	case _ARDUINO_ANCHOR_SOUTH: 	return _arduino.anchor.south; break;
+	case _ARDUINO_ANCHOR_EAST: 		return _arduino.anchor.east; break;
+	case _ARDUINO_ANCHOR_WEST: 		return _arduino.anchor.west; break;
 
-	case _ARDUINO_ANCHOR_NORTH:
-		return _arduino.anchor.north;
-		break;
-	case _ARDUINO_ANCHOR_SOUTH:
-		return _arduino.anchor.south;
-		break;
-	case _ARDUINO_ANCHOR_EAST:
-		return _arduino.anchor.east;
-		break;
-	case _ARDUINO_ANCHOR_WEST:
-		return _arduino.anchor.west;
-		break;
-
-	default:
-		break;
+	default: 		break;
 	}
 	return NAN;
 }
@@ -878,9 +603,7 @@ float SignalkModel::getValueFloat(unsigned long key) {
 char SignalkModel::getValueChar(unsigned long key) {
 
 	switch (key) {
-	case _ARDUINO_GPS_STATUS:
-		return _arduino.gps.status;
-		break;
+	case _ARDUINO_GPS_STATUS: 		return _arduino.gps.status; break;
 	}
 	return '0';
 }
@@ -890,99 +613,37 @@ const char* SignalkModel::getValueCharArray(unsigned long key) {
 
 		switch (key) {
 
-		case NAVIGATION_STATE:
-				return NavigationStateString[navigation.state];
-			break;
-		case STEERING_AUTOPILOT_STATE:
-			return AutopilotStateString[steering.autopilot.state];
-			break;
-		case STEERING_AUTOPILOT_MODE:
-			return AutopilotModeString[steering.autopilot.mode];
-			break;
-		case STEERING_AUTOPILOT_HEADINGSOURCE:
-			return AutopilotHeadingSourceString[steering.autopilot.headingSource];
-			break;
-		case ALARMS_ANCHORALARMMETHOD:
-			return AlarmMethodString[alarms.anchorAlarmMethod];
-			break;
-		case ALARMS_ANCHORALARMSTATE:
-			return AlarmStateString[alarms.anchorAlarmState];
-			break;
-		case ALARMS_AUTOPILOTALARMMETHOD:
-			return AlarmMethodString[alarms.autopilotAlarmMethod];
-			break;
-		case ALARMS_AUTOPILOTALARMSTATE:
-			return AlarmStateString[alarms.autopilotAlarmState];
-			break;
-		case ALARMS_ENGINEALARMMETHOD:
-			return AlarmMethodString[alarms.engineAlarmMethod];
-			break;
-		case ALARMS_ENGINEALARMSTATE:
-			return AlarmStateString[alarms.engineAlarmState];
-			break;
-		case ALARMS_FIREALARMMETHOD:
-			return AlarmMethodString[alarms.fireAlarmMethod];
-			break;
-		case ALARMS_FIREALARMSTATE:
-			return AlarmStateString[alarms.fireAlarmState];
-			break;
-		case ALARMS_GASALARMMETHOD:
-			return AlarmMethodString[alarms.gasAlarmMethod];
-			break;
-		case ALARMS_GASALARMSTATE:
-			return AlarmStateString[alarms.gasAlarmState];
-			break;
-		case ALARMS_GPSALARMMETHOD:
-			return AlarmMethodString[alarms.gpsAlarmMethod];
-			break;
-		case ALARMS_GPSALARMSTATE:
-			return AlarmStateString[alarms.gpsAlarmState];
-			break;
-		case ALARMS_MAYDAYALARMMETHOD:
-			return AlarmMethodString[alarms.maydayAlarmMethod];
-			break;
-		case ALARMS_MAYDAYALARMSTATE:
-			return AlarmStateString[alarms.maydayAlarmState];
-			break;
-		case ALARMS_PANPANALARMMETHOD:
-			return AlarmMethodString[alarms.panpanAlarmMethod];
-			break;
-		case ALARMS_PANPANALARMSTATE:
-			return AlarmStateString[alarms.panpanAlarmState];
-			break;
-		case ALARMS_POWERALARMMETHOD:
-			return AlarmMethodString[alarms.powerAlarmMethod];
-			break;
-		case ALARMS_POWERALARMSTATE:
-			return AlarmStateString[alarms.powerAlarmState];
-			break;
-
-		case ALARMS_WINDALARMMETHOD:
-			return AlarmMethodString[alarms.windAlarmMethod];
-			break;
-		case ALARMS_WINDALARMSTATE:
-			return AlarmStateString[alarms.windAlarmState];
-			break;
-		case ALARMS_GENERICALARMMETHOD:
-			return AlarmMethodString[alarms.genericAlarmMethod];
-			break;
-		case ALARMS_GENERICALARMSTATE:
-			return AlarmStateString[alarms.genericAlarmState];
-			break;
-		case ALARMS_RADARALARMMETHOD:
-			return AlarmMethodString[alarms.radarAlarmMethod];
-			break;
-		case ALARMS_RADARALARMSTATE:
-			return AlarmStateString[alarms.radarAlarmState];
-			break;
-		case ALARMS_MOBALARMMETHOD:
-			return AlarmMethodString[alarms.mobAlarmMethod];
-			break;
-		case ALARMS_MOBALARMSTATE:
-			return AlarmStateString[alarms.mobAlarmState];
-			break;
-		default:
-			break;
+		case NAVIGATION_STATE:					return NavigationStateString[navigation.state]; break;
+		case STEERING_AUTOPILOT_STATE:			return AutopilotStateString[steering.autopilot.state]; break;
+		case STEERING_AUTOPILOT_MODE: 			return AutopilotModeString[steering.autopilot.mode];break;
+		case STEERING_AUTOPILOT_HEADINGSOURCE: 	return AutopilotHeadingSourceString[steering.autopilot.headingSource];break;
+		case ALARMS_ANCHORALARMMETHOD: 			return AlarmMethodString[alarms.anchorAlarmMethod];	break;
+		case ALARMS_ANCHORALARMSTATE:			return AlarmStateString[alarms.anchorAlarmState]; break;
+		case ALARMS_AUTOPILOTALARMMETHOD: 		return AlarmMethodString[alarms.autopilotAlarmMethod];break;
+		case ALARMS_AUTOPILOTALARMSTATE:		return AlarmStateString[alarms.autopilotAlarmState]; break;
+		case ALARMS_ENGINEALARMMETHOD: 			return AlarmMethodString[alarms.engineAlarmMethod];break;
+		case ALARMS_ENGINEALARMSTATE:			return AlarmStateString[alarms.engineAlarmState]; break;
+		case ALARMS_FIREALARMMETHOD: 			return AlarmMethodString[alarms.fireAlarmMethod];break;
+		case ALARMS_FIREALARMSTATE:				return AlarmStateString[alarms.fireAlarmState]; break;
+		case ALARMS_GASALARMMETHOD: 			return AlarmMethodString[alarms.gasAlarmMethod];break;
+		case ALARMS_GASALARMSTATE:				return AlarmStateString[alarms.gasAlarmState]; break;
+		case ALARMS_GPSALARMMETHOD: 			return AlarmMethodString[alarms.gpsAlarmMethod];break;
+		case ALARMS_GPSALARMSTATE:				return AlarmStateString[alarms.gpsAlarmState]; break;
+		case ALARMS_MAYDAYALARMMETHOD: 			return AlarmMethodString[alarms.maydayAlarmMethod];break;
+		case ALARMS_MAYDAYALARMSTATE:			return AlarmStateString[alarms.maydayAlarmState]; break;
+		case ALARMS_PANPANALARMMETHOD: 			return AlarmMethodString[alarms.panpanAlarmMethod];break;
+		case ALARMS_PANPANALARMSTATE:			return AlarmStateString[alarms.panpanAlarmState]; break;
+		case ALARMS_POWERALARMMETHOD: 			return AlarmMethodString[alarms.powerAlarmMethod];break;
+		case ALARMS_POWERALARMSTATE:			return AlarmStateString[alarms.powerAlarmState]; break;
+		case ALARMS_WINDALARMMETHOD: 			return AlarmMethodString[alarms.windAlarmMethod];break;
+		case ALARMS_WINDALARMSTATE:				return AlarmStateString[alarms.windAlarmState]; break;
+		case ALARMS_GENERICALARMMETHOD: 		return AlarmMethodString[alarms.genericAlarmMethod];break;
+		case ALARMS_GENERICALARMSTATE:			return AlarmStateString[alarms.genericAlarmState]; break;
+		case ALARMS_RADARALARMMETHOD: 			return AlarmMethodString[alarms.radarAlarmMethod];break;
+		case ALARMS_RADARALARMSTATE:			return AlarmStateString[alarms.radarAlarmState]; break;
+		case ALARMS_MOBALARMMETHOD: 			return AlarmMethodString[alarms.mobAlarmMethod];break;
+		case ALARMS_MOBALARMSTATE:				return AlarmStateString[alarms.mobAlarmState]; break;
+		default: 			break;
 
 		}
 		return "ERROR";
@@ -1015,52 +676,19 @@ volatile bool SignalkModel::isAlarmTriggered() {
 volatile bool SignalkModel::isAlarmTriggered(unsigned long key) {
 	switch (key) {
 
-	case ALARMS_ANCHORALARMSTATE:
-		return (alarms.anchorAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_ENGINEALARMSTATE:
-		return (alarms.engineAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_FIREALARMSTATE:
-		return (alarms.fireAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_GASALARMSTATE:
-		return (alarms.gasAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_GPSALARMSTATE:
-		return (alarms.gpsAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_MAYDAYALARMSTATE:
-		return (alarms.maydayAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_PANPANALARMSTATE:
-		return (alarms.panpanAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_POWERALARMSTATE:
-		return (alarms.powerAlarmState > ALRM_ENABLED);
-		break;
-
-	case ALARMS_WINDALARMSTATE:
-		return (alarms.windAlarmState > ALRM_ENABLED);
-		break;
-	case ALARMS_GENERICALARMSTATE:
-		return (alarms.genericAlarmState > ALRM_ENABLED);
-		break;
-	case ALARMS_RADARALARMSTATE:
-		return (alarms.radarAlarmState > ALRM_ENABLED);
-		break;
-	case ALARMS_MOBALARMSTATE:
-		return (alarms.mobAlarmState > ALRM_ENABLED);
-		break;
-	default:
-		break;
+	case ALARMS_ANCHORALARMSTATE: 		return (alarms.anchorAlarmState > ALRM_ENABLED); break;
+	case ALARMS_ENGINEALARMSTATE:		return (alarms.engineAlarmState > ALRM_ENABLED); break;
+	case ALARMS_FIREALARMSTATE:			return (alarms.fireAlarmState > ALRM_ENABLED); break;
+	case ALARMS_GASALARMSTATE:			return (alarms.gasAlarmState > ALRM_ENABLED); break;
+	case ALARMS_GPSALARMSTATE:			return (alarms.gpsAlarmState > ALRM_ENABLED); break;
+	case ALARMS_MAYDAYALARMSTATE:		return (alarms.maydayAlarmState > ALRM_ENABLED); break;
+	case ALARMS_PANPANALARMSTATE:		return (alarms.panpanAlarmState > ALRM_ENABLED); break;
+	case ALARMS_POWERALARMSTATE:		return (alarms.powerAlarmState > ALRM_ENABLED); break;
+	case ALARMS_WINDALARMSTATE:			return (alarms.windAlarmState > ALRM_ENABLED); break;
+	case ALARMS_GENERICALARMSTATE:		return (alarms.genericAlarmState > ALRM_ENABLED); break;
+	case ALARMS_RADARALARMSTATE:		return (alarms.radarAlarmState > ALRM_ENABLED); break;
+	case ALARMS_MOBALARMSTATE:			return (alarms.mobAlarmState > ALRM_ENABLED); break;
+	default: 		break;
 
 	}
 	return false;
@@ -1069,50 +697,18 @@ volatile bool SignalkModel::isAlarmTriggered(unsigned long key) {
 volatile bool SignalkModel::isAlarmOn(unsigned long key) {
 	switch (key) {
 
-	case ALARMS_ANCHORALARMSTATE:
-		return (alarms.anchorAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_ENGINEALARMSTATE:
-		return (alarms.engineAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_FIREALARMSTATE:
-		return (alarms.fireAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_GASALARMSTATE:
-		return (alarms.gasAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_GPSALARMSTATE:
-		return (alarms.gpsAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_MAYDAYALARMSTATE:
-		return (alarms.maydayAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_PANPANALARMSTATE:
-		return (alarms.panpanAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_POWERALARMSTATE:
-		return (alarms.powerAlarmState > ALRM_DISABLED);
-		break;
-
-	case ALARMS_WINDALARMSTATE:
-		return (alarms.windAlarmState > ALRM_DISABLED);
-		break;
-	case ALARMS_GENERICALARMSTATE:
-		return (alarms.genericAlarmState > ALRM_DISABLED);
-		break;
-	case ALARMS_RADARALARMSTATE:
-		return (alarms.radarAlarmState > ALRM_DISABLED);
-		break;
-	case ALARMS_MOBALARMSTATE:
-		return (alarms.mobAlarmState > ALRM_DISABLED);
-		break;
+	case ALARMS_ANCHORALARMSTATE:		return (alarms.anchorAlarmState > ALRM_DISABLED); break;
+	case ALARMS_ENGINEALARMSTATE:		return (alarms.engineAlarmState > ALRM_DISABLED); break;
+	case ALARMS_FIREALARMSTATE:			return (alarms.fireAlarmState > ALRM_DISABLED); break;
+	case ALARMS_GASALARMSTATE:			return (alarms.gasAlarmState > ALRM_DISABLED); break;
+	case ALARMS_GPSALARMSTATE:			return (alarms.gpsAlarmState > ALRM_DISABLED); break;
+	case ALARMS_MAYDAYALARMSTATE:		return (alarms.maydayAlarmState > ALRM_DISABLED); break;
+	case ALARMS_PANPANALARMSTATE:		return (alarms.panpanAlarmState > ALRM_DISABLED); break;
+	case ALARMS_POWERALARMSTATE:		return (alarms.powerAlarmState > ALRM_DISABLED); break;
+	case ALARMS_WINDALARMSTATE:			return (alarms.windAlarmState > ALRM_DISABLED); break;
+	case ALARMS_GENERICALARMSTATE:		return (alarms.genericAlarmState > ALRM_DISABLED); break;
+	case ALARMS_RADARALARMSTATE:		return (alarms.radarAlarmState > ALRM_DISABLED); break;
+	case ALARMS_MOBALARMSTATE:			return (alarms.mobAlarmState > ALRM_DISABLED); break;
 	default:
 		break;
 
@@ -1148,33 +744,33 @@ _arduino.autopilot.baudRate;
 	*/
 void SignalkModel::printAlarmBranch(HardwareSerial* serial, bool last){
 	openBranch(serial,SignalkHelper::j_alarm);
-		printValue(serial, SignalkHelper::j_anchorAlarmMethod, getValueCharArray(ALARMS_ANCHORALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_anchorAlarmState, getValueCharArray(ALARMS_ANCHORALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_autopilotAlarmMethod, getValueCharArray(ALARMS_AUTOPILOTALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_autopilotAlarmState, getValueCharArray(ALARMS_AUTOPILOTALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_engineAlarmMethod, getValueCharArray(ALARMS_ENGINEALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_engineAlarmState, getValueCharArray(ALARMS_ENGINEALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_fireAlarmMethod, getValueCharArray(ALARMS_FIREALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_fireAlarmState, getValueCharArray(ALARMS_FIREALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_gasAlarmMethod, getValueCharArray(ALARMS_GASALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_gasAlarmState, getValueCharArray(ALARMS_GASALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_gpsAlarmMethod, getValueCharArray(ALARMS_GPSALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_gpsAlarmState, getValueCharArray(ALARMS_GPSALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_maydayAlarmMethod, getValueCharArray(ALARMS_MAYDAYALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_maydayAlarmState, getValueCharArray(ALARMS_MAYDAYALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_panpanAlarmMethod, getValueCharArray(ALARMS_PANPANALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_panpanAlarmState, getValueCharArray(ALARMS_PANPANALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_powerAlarmMethod, getValueCharArray(ALARMS_POWERALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_powerAlarmState, getValueCharArray(ALARMS_POWERALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_silentInterval, (long)getValueInt(ALARMS_SILENTINTERVAL), false);
-		printValue(serial, SignalkHelper::j_windAlarmMethod, getValueCharArray(ALARMS_WINDALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_windAlarmState, getValueCharArray(ALARMS_WINDALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_genericAlarmMethod, getValueCharArray(ALARMS_GENERICALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_genericAlarmState, getValueCharArray(ALARMS_GENERICALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_radarAlarmMethod, getValueCharArray(ALARMS_RADARALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_radarAlarmState, getValueCharArray(ALARMS_RADARALARMSTATE), false);
-		printValue(serial, SignalkHelper::j_mobAlarmMethod, getValueCharArray(ALARMS_MOBALARMMETHOD), false);
-		printValue(serial, SignalkHelper::j_mobAlarmState, getValueCharArray(ALARMS_MOBALARMSTATE), true);
+		printValue(serial, SignalkHelper::j_anchorAlarmMethod, AlarmMethodString[alarms.anchorAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_anchorAlarmState,  AlarmStateString[alarms.anchorAlarmState], false);
+		printValue(serial, SignalkHelper::j_autopilotAlarmMethod, AlarmMethodString[alarms.autopilotAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_autopilotAlarmState, AlarmStateString[alarms.autopilotAlarmState], false);
+		printValue(serial, SignalkHelper::j_engineAlarmMethod, AlarmMethodString[alarms.engineAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_engineAlarmState, AlarmStateString[alarms.engineAlarmState], false);
+		printValue(serial, SignalkHelper::j_fireAlarmMethod, AlarmMethodString[alarms.fireAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_fireAlarmState, AlarmStateString[alarms.fireAlarmState], false);
+		printValue(serial, SignalkHelper::j_gasAlarmMethod, AlarmMethodString[alarms.gasAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_gasAlarmState, AlarmStateString[alarms.gasAlarmState], false);
+		printValue(serial, SignalkHelper::j_gpsAlarmMethod, AlarmMethodString[alarms.gpsAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_gpsAlarmState, AlarmStateString[alarms.gpsAlarmState], false);
+		printValue(serial, SignalkHelper::j_maydayAlarmMethod, AlarmMethodString[alarms.maydayAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_maydayAlarmState, AlarmStateString[alarms.maydayAlarmState], false);
+		printValue(serial, SignalkHelper::j_panpanAlarmMethod, AlarmMethodString[alarms.panpanAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_panpanAlarmState, AlarmStateString[alarms.panpanAlarmState], false);
+		printValue(serial, SignalkHelper::j_powerAlarmMethod, AlarmMethodString[alarms.powerAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_powerAlarmState, AlarmStateString[alarms.powerAlarmState], false);
+		printValue(serial, SignalkHelper::j_silentInterval, alarms.silentInterval, false);
+		printValue(serial, SignalkHelper::j_windAlarmMethod, AlarmMethodString[alarms.windAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_windAlarmState, AlarmStateString[alarms.windAlarmState], false);
+		printValue(serial, SignalkHelper::j_genericAlarmMethod, AlarmMethodString[alarms.genericAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_genericAlarmState, AlarmStateString[alarms.genericAlarmState], false);
+		printValue(serial, SignalkHelper::j_radarAlarmMethod, AlarmMethodString[alarms.radarAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_radarAlarmState, AlarmStateString[alarms.radarAlarmState], false);
+		printValue(serial, SignalkHelper::j_mobAlarmMethod, AlarmMethodString[alarms.mobAlarmMethod], false);
+		printValue(serial, SignalkHelper::j_mobAlarmState, AlarmStateString[alarms.mobAlarmState], true);
 	closeBranch(&Serial, last);
 
 }
@@ -1189,12 +785,12 @@ void SignalkModel::printAlarmBranch(HardwareSerial* serial, bool last){
 
 void SignalkModel::printAnchorBranch(HardwareSerial* serial, bool last){
 	openBranch(serial,SignalkHelper::j_anchor);
-	printValue(serial, SignalkHelper::j_alarmRadius, getValueFloat(NAVIGATION_ANCHOR_ALARMRADIUS), false);
-	printValue(serial, SignalkHelper::j_maxRadius, getValueFloat(NAVIGATION_ANCHOR_MAXRADIUS), false);
+	printValue(serial, SignalkHelper::j_alarmRadius, navigation.anchor.alarmRadius, false);
+	printValue(serial, SignalkHelper::j_maxRadius, navigation.anchor.maxRadius, false);
 		openBranch(serial,SignalkHelper::j_position);
-			printValue(serial, SignalkHelper::j_latitude, getValueFloat(NAVIGATION_POSITION_LATITUDE), false);
-			printValue(serial, SignalkHelper::j_longitude, getValueFloat(NAVIGATION_POSITION_LONGITUDE), false);
-			printValue(serial, SignalkHelper::j_altitude, getValueFloat(NAVIGATION_POSITION_ALTITUDE), true);
+			printValue(serial, SignalkHelper::j_latitude, navigation.position.latitude, false);
+			printValue(serial, SignalkHelper::j_longitude, navigation.position.longitude, false);
+			printValue(serial, SignalkHelper::j_altitude, navigation.position.altitude, true);
 		closeBranch(&Serial, true);
 	closeBranch(&Serial, last);
 
@@ -1210,9 +806,9 @@ void SignalkModel::printAnchorBranch(HardwareSerial* serial, bool last){
 */
 void SignalkModel::printPositionBranch(HardwareSerial* serial, bool last){
 	openBranch(serial,SignalkHelper::j_position);
-		printValue(serial, SignalkHelper::j_latitude, getValueFloat(NAVIGATION_POSITION_LATITUDE), false);
-		printValue(serial, SignalkHelper::j_longitude, getValueFloat(NAVIGATION_POSITION_LONGITUDE), false);
-		printValue(serial, SignalkHelper::j_altitude, getValueFloat(NAVIGATION_POSITION_ALTITUDE), true);
+		printValue(serial, SignalkHelper::j_latitude, navigation.position.latitude, false);
+		printValue(serial, SignalkHelper::j_longitude, navigation.position.longitude, false);
+		printValue(serial, SignalkHelper::j_altitude, navigation.position.altitude, true);
 	closeBranch(&Serial, last);
 
 }
@@ -1230,19 +826,19 @@ void SignalkModel::printPositionBranch(HardwareSerial* serial, bool last){
 	*/
 void SignalkModel::printAutopilotBranch(HardwareSerial* serial, bool last){
 	openBranch(serial,SignalkHelper::j_autopilot);
-		printValue(serial, SignalkHelper::j_state, getValueCharArray(STEERING_AUTOPILOT_STATE), false);
-		printValue(serial, SignalkHelper::j_mode, getValueCharArray(STEERING_AUTOPILOT_MODE), false);
-		printValue(serial, SignalkHelper::j_targetHeadingNorth, getValueFloat(STEERING_AUTOPILOT_TARGETHEADINGNORTH), false);
-		printValue(serial, SignalkHelper::j_targetHeadingMagnetic, getValueFloat(STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC), false);
-		printValue(serial, SignalkHelper::j_alarmHeadingXte, getValueFloat(STEERING_AUTOPILOT_ALARMHEADINGXTE), false);
-		printValue(serial, SignalkHelper::j_headingSource, getValueCharArray(STEERING_AUTOPILOT_HEADINGSOURCE), false);
-		printValue(serial, SignalkHelper::j_deadZone, getValueFloat(STEERING_AUTOPILOT_DEADZONE), false);
-		printValue(serial, SignalkHelper::j_backlash, getValueFloat(STEERING_AUTOPILOT_BACKLASH), false);
-		printValue(serial, SignalkHelper::j_gain,(long) getValueInt(STEERING_AUTOPILOT_GAIN), false);
-		printValue(serial, SignalkHelper::j_maxDriveAmps, getValueFloat(STEERING_AUTOPILOT_MAXDRIVEAMPS), false);
-		printValue(serial, SignalkHelper::j_maxDriveRate, getValueFloat(STEERING_AUTOPILOT_MAXDRIVERATE), false);
-		printValue(serial, SignalkHelper::j_portLock, getValueFloat(STEERING_AUTOPILOT_PORTLOCK), false);
-		printValue(serial, SignalkHelper::j_starboardLock, getValueFloat(STEERING_AUTOPILOT_STARBOARDLOCK), true);
+		printValue(serial, SignalkHelper::j_state, AutopilotStateString[steering.autopilot.state], false);
+		printValue(serial, SignalkHelper::j_mode, AutopilotModeString[steering.autopilot.mode], false);
+		printValue(serial, SignalkHelper::j_targetHeadingNorth, steering.autopilot.targetHeadingNorth, false);
+		printValue(serial, SignalkHelper::j_targetHeadingMagnetic, steering.autopilot.targetHeadingMagnetic, false);
+		printValue(serial, SignalkHelper::j_alarmHeadingXte, steering.autopilot.alarmHeadingXte, false);
+		printValue(serial, SignalkHelper::j_headingSource, AutopilotHeadingSourceString[steering.autopilot.headingSource], false);
+		printValue(serial, SignalkHelper::j_deadZone, steering.autopilot.deadZone, false);
+		printValue(serial, SignalkHelper::j_backlash, steering.autopilot.backlash, false);
+		printValue(serial, SignalkHelper::j_gain,(long) steering.autopilot.gain, false);
+		printValue(serial, SignalkHelper::j_maxDriveAmps, steering.autopilot.maxDriveAmps, false);
+		printValue(serial, SignalkHelper::j_maxDriveRate, steering.autopilot.maxDriveRate, false);
+		printValue(serial, SignalkHelper::j_portLock, steering.autopilot.portLock, false);
+		printValue(serial, SignalkHelper::j_starboardLock, steering.autopilot.starboardLock, true);
 	closeBranch(&Serial, last);
 
 }
@@ -1259,69 +855,69 @@ void SignalkModel::printAutopilotBranch(HardwareSerial* serial, bool last){
 	*/
 void SignalkModel::printWindBranch(HardwareSerial* serial, bool last){
 	openBranch(serial,SignalkHelper::j_wind);
-		printValue(serial, SignalkHelper::j_speedAlarm, getValueFloat(ENVIRONMENT_WIND_SPEEDALARM), false);
-		printValue(serial, SignalkHelper::j_directionChangeAlarm, getValueFloat(ENVIRONMENT_WIND_DIRECTIONCHANGEALARM), false);
-		printValue(serial, SignalkHelper::j_directionApparent, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
-		printValue(serial, SignalkHelper::j_directionTrue, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
-		printValue(serial, SignalkHelper::j_speedApparent, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), false);
-		printValue(serial, SignalkHelper::j_speedTrue, getValueFloat(ENVIRONMENT_WIND_DIRECTIONAPPARENT), true);
+		printValue(serial, SignalkHelper::j_speedAlarm, environment.wind.speedAlarm, false);
+		printValue(serial, SignalkHelper::j_directionChangeAlarm, environment.wind.directionChangeAlarm, false);
+		printValue(serial, SignalkHelper::j_directionApparent, environment.wind.directionApparent, false);
+		printValue(serial, SignalkHelper::j_directionTrue, environment.wind.directionTrue, false);
+		printValue(serial, SignalkHelper::j_speedApparent, environment.wind.speedApparent, false);
+		printValue(serial, SignalkHelper::j_speedTrue, environment.wind.speedTrue, true);
 	closeBranch(&Serial, last);
 
 }
 void SignalkModel::printConfigBranch(HardwareSerial* serial, bool last){
 
 	openBranch(serial,SignalkHelper::j_arduino);
-	openBranch(serial,SignalkHelper::j_gps);
-	printValue(serial, SignalkHelper::j_decode, getValueBool(_ARDUINO_GPS_DECODE), false);
-	printValue(serial, SignalkHelper::j_model, (long)getValueInt(_ARDUINO_GPS_MODEL), false);
-				printValue(serial, SignalkHelper::j_lastFix, getValueLong(_ARDUINO_GPS_LASTFIX), false);
-				printValue(serial, SignalkHelper::j_utc, getValueLong(_ARDUINO_GPS_UTC), false);
-				printValue(serial, SignalkHelper::j_status, getValueChar(_ARDUINO_GPS_STATUS), true);
-			closeBranch(&Serial, false);
-			openBranch(serial,SignalkHelper::j_serial);
-				printValue(serial, SignalkHelper::j_baud0, getValueLong(_ARDUINO_SERIAL_BAUD0), false);//console
-				printValue(serial, SignalkHelper::j_baud1, getValueLong(_ARDUINO_SERIAL_BAUD1), false);//GPS
-				printValue(serial, SignalkHelper::j_baud2, getValueLong(_ARDUINO_SERIAL_BAUD2), false);//NMEA1 or Seatalk
-				printValue(serial, SignalkHelper::j_baud3, getValueLong(_ARDUINO_SERIAL_BAUD3), false);//NMEA2
-				printValue(serial, SignalkHelper::j_baud4, getValueLong(_ARDUINO_SERIAL_BAUD4), false);//NMEA3 - SPI-2
-				printValue(serial, SignalkHelper::j_baud5, getValueLong(_ARDUINO_SERIAL_BAUD5), true);//NMEA talker - AltSoftSerial
-			closeBranch(&Serial, false);
-			openBranch(serial,SignalkHelper::j_alarm);
-				openBranch(serial, SignalkHelper::j_level1);
-					printValue(serial, SignalkHelper::j_upper, getValueCharArray(_ARDUINO_ALARM_LEVEL1_UPPER), false);
-					printValue(serial, SignalkHelper::j_lower, getValueCharArray(_ARDUINO_ALARM_LEVEL1_LOWER), true);
+		openBranch(serial,SignalkHelper::j_gps);
+		printValue(serial, SignalkHelper::j_decode,_arduino.gps.decode, false);
+		printValue(serial, SignalkHelper::j_model,_arduino.gps.model, false);
+					printValue(serial, SignalkHelper::j_lastFix,_arduino.gps.lastFix, false);
+					printValue(serial, SignalkHelper::j_utc,_arduino.gps.utc, false);
+					printValue(serial, SignalkHelper::j_status,_arduino.gps.status, true);
 				closeBranch(&Serial, false);
-				openBranch(serial, SignalkHelper::j_level2);
-					printValue(serial, SignalkHelper::j_upper, getValueCharArray(_ARDUINO_ALARM_LEVEL2_UPPER), false);
-					printValue(serial, SignalkHelper::j_lower, getValueCharArray(_ARDUINO_ALARM_LEVEL2_LOWER), true);
+				openBranch(serial,SignalkHelper::j_serial);
+					printValue(serial, SignalkHelper::j_baud0,_arduino.serial.baud0, false);//console
+					printValue(serial, SignalkHelper::j_baud1,_arduino.serial.baud1, false);//GPS
+					printValue(serial, SignalkHelper::j_baud2,_arduino.serial.baud2, false);//NMEA1 or Seatalk
+					printValue(serial, SignalkHelper::j_baud3,_arduino.serial.baud3, false);//NMEA2
+					printValue(serial, SignalkHelper::j_baud4,_arduino.serial.baud4, false);//NMEA3 - SPI-2
+					printValue(serial, SignalkHelper::j_baud5,_arduino.serial.baud5, true);//NMEA talker - AltSoftSerial
 				closeBranch(&Serial, false);
-				openBranch(serial, SignalkHelper::j_level3);
-					printValue(serial, SignalkHelper::j_upper, getValueCharArray(_ARDUINO_ALARM_LEVEL3_UPPER), false);
-					printValue(serial, SignalkHelper::j_lower, getValueCharArray(_ARDUINO_ALARM_LEVEL3_LOWER), true);
+				openBranch(serial,SignalkHelper::j_alarm);
+					openBranch(serial, SignalkHelper::j_level1);
+						printValue(serial, SignalkHelper::j_upper,_arduino.alarm.level1.upper, false);
+						printValue(serial, SignalkHelper::j_lower,_arduino.alarm.level1.lower, true);
+					closeBranch(&Serial, false);
+					openBranch(serial, SignalkHelper::j_level2);
+						printValue(serial, SignalkHelper::j_upper,_arduino.alarm.level2.upper, false);
+						printValue(serial, SignalkHelper::j_lower,_arduino.alarm.level2.lower, true);
+					closeBranch(&Serial, false);
+					openBranch(serial, SignalkHelper::j_level3);
+						printValue(serial, SignalkHelper::j_upper,_arduino.alarm.level3.upper, false);
+						printValue(serial, SignalkHelper::j_lower,_arduino.alarm.level3.lower, true);
+					closeBranch(&Serial, false);
+					printValue(serial, SignalkHelper::j_snooze,_arduino.alarm.snooze, false);
+					printValue(serial, SignalkHelper::j_last,_arduino.alarm.last, true);
 				closeBranch(&Serial, false);
-				printValue(serial, SignalkHelper::j_snooze, getValueLong(_ARDUINO_ALARM_SNOOZE), false);
-				printValue(serial, SignalkHelper::j_last, getValueLong(_ARDUINO_ALARM_LAST), true);
-			closeBranch(&Serial, false);
-			openBranch(serial,SignalkHelper::j_anchor);
-				printValue(serial, SignalkHelper::j_radiusDeg, getValueFloat(_ARDUINO_ANCHOR_RADIUSDEG), false);
-				printValue(serial, SignalkHelper::j_north, getValueFloat(_ARDUINO_ANCHOR_NORTH), false);
-				printValue(serial, SignalkHelper::j_south, getValueFloat(_ARDUINO_ANCHOR_SOUTH), false);
-				printValue(serial, SignalkHelper::j_east, getValueFloat(_ARDUINO_ANCHOR_EAST), false);
-				printValue(serial, SignalkHelper::j_west, getValueFloat(_ARDUINO_ANCHOR_WEST), true);
-			closeBranch(&Serial, false);
-			printValue(serial, SignalkHelper::j_seatalk, getValueBool(_ARDUINO_SEATALK), false);
-			openBranch(serial,SignalkHelper::j_wind);
-				printValue(serial, SignalkHelper::j_lastUpdate, getValueFloat(_ARDUINO_WIND_LASTUPDATE), false);
-				printValue(serial, SignalkHelper::j_average, getValueFloat(_ARDUINO_WIND_AVERAGE), false);
-				printValue(serial, SignalkHelper::j_factor, getValueFloat(_ARDUINO_WIND_FACTOR), false);
-				printValue(serial, SignalkHelper::j_max, getValueFloat(_ARDUINO_WIND_MAX), false);
-				printValue(serial, SignalkHelper::j_zeroOffset, getValueFloat(_ARDUINO_WIND_ZEROOFFSET), true);
-			closeBranch(&Serial, false);
-				printValue(serial, SignalkHelper::j_baudRate, getValueLong(_ARDUINO_AUTOPILOT_BAUDRATE), false);//autopilot - SPI-1
-				printValue(serial, SignalkHelper::j_offcourse, getValueFloat(_ARDUINO_AUTOPILOT_OFFCOURSE), false);
-				printValue(serial, SignalkHelper::j_rudderCommand, getValueFloat(_ARDUINO_AUTOPILOT_RUDDERCOMMAND), true);
-			closeBranch(&Serial, true);
-	closeBranch(&Serial, last);
+				openBranch(serial,SignalkHelper::j_anchor);
+					printValue(serial, SignalkHelper::j_radiusDeg,_arduino.anchor.radiusDeg, false);
+					printValue(serial, SignalkHelper::j_north,_arduino.anchor.north, false);
+					printValue(serial, SignalkHelper::j_south,_arduino.anchor.south, false);
+					printValue(serial, SignalkHelper::j_east,_arduino.anchor.east, false);
+					printValue(serial, SignalkHelper::j_west,_arduino.anchor.west, true);
+				closeBranch(&Serial, false);
+				printValue(serial, SignalkHelper::j_seatalk,_arduino.seatalk, false);
+				openBranch(serial,SignalkHelper::j_wind);
+					printValue(serial, SignalkHelper::j_lastUpdate,_arduino.wind.lastUpdate, false);
+					printValue(serial, SignalkHelper::j_average,_arduino.wind.average, false);
+					printValue(serial, SignalkHelper::j_factor,_arduino.wind.factor, false);
+					printValue(serial, SignalkHelper::j_max,_arduino.wind.max, false);
+					printValue(serial, SignalkHelper::j_zeroOffset,_arduino.wind.zeroOffset, true);
+				closeBranch(&Serial, false);
+					printValue(serial, SignalkHelper::j_baudRate,_arduino.autopilot.baudRate, false);//autopilot - SPI-1
+					printValue(serial, SignalkHelper::j_offcourse,(float)_arduino.autopilot.offcourse, false);
+					printValue(serial, SignalkHelper::j_rudderCommand,(float)_arduino.autopilot.rudderCommand, true);
+				closeBranch(&Serial, true);
+		closeBranch(&Serial, last);
 
 }
 
@@ -1341,19 +937,19 @@ void SignalkModel::printVesselWrapper(HardwareSerial* serial){
 void SignalkModel::printNavigationBranch(HardwareSerial* serial, bool last){
 	//navigation
 	openBranch(&Serial,SignalkHelper::j_navigation);
-		printValue(&Serial, SignalkHelper::j_courseOverGroundTrue, getValueFloat(NAVIGATION_COURSEOVERGROUNDTRUE), false);
-		printValue(&Serial, SignalkHelper::j_courseOverGroundMagnetic, getValueFloat(NAVIGATION_COURSEOVERGROUNDMAGNETIC), false);
-		printValue(&Serial, SignalkHelper::j_headingMagnetic, getValueFloat(NAVIGATION_HEADINGMAGNETIC), false);
-		printValue(&Serial, SignalkHelper::j_magneticVariation, getValueFloat(NAVIGATION_MAGNETICVARIATION), false);
-		//printValue(&Serial, SignalkHelper::j_drift, getValueFloat(NAVIGATION_DRIFT), false);
-		printValue(&Serial, SignalkHelper::j_headingTrue, getValueFloat(NAVIGATION_HEADINGTRUE), false);
-		printValue(&Serial, SignalkHelper::j_pitch, getValueFloat(NAVIGATION_PITCH), false);
-		printValue(&Serial, SignalkHelper::j_rateOfTurn, getValueFloat(NAVIGATION_RATEOFTURN), false);
-		printValue(&Serial, SignalkHelper::j_roll, getValueFloat(NAVIGATION_ROLL), false);
-		//printValue(&Serial, SignalkHelper::j_set, getValueFloat(NAVIGATION_SET), false);
-		printValue(&Serial, SignalkHelper::j_speedOverGround, getValueFloat(NAVIGATION_SPEEDOVERGROUND), false);
-		printValue(&Serial, SignalkHelper::j_speedThroughWater, getValueFloat(NAVIGATION_SPEEDTHROUGHWATER), false);
-		printValue(&Serial, SignalkHelper::j_state, getValueCharArray(NAVIGATION_STATE), false);
+		printValue(&Serial, SignalkHelper::j_courseOverGroundTrue, navigation.courseOverGroundTrue, false);
+		printValue(&Serial, SignalkHelper::j_courseOverGroundMagnetic, navigation.courseOverGroundMagnetic, false);
+		printValue(&Serial, SignalkHelper::j_headingMagnetic, navigation.headingMagnetic, false);
+		printValue(&Serial, SignalkHelper::j_magneticVariation, navigation.magneticVariation, false);
+		//printValue(&Serial, SignalkHelper::j_drift, navigation.drift, false);
+		printValue(&Serial, SignalkHelper::j_headingTrue, navigation.headingTrue, false);
+		printValue(&Serial, SignalkHelper::j_pitch, navigation.pitch, false);
+		printValue(&Serial, SignalkHelper::j_rateOfTurn, navigation.rateOfTurn, false);
+		printValue(&Serial, SignalkHelper::j_roll, navigation.roll, false);
+		//printValue(&Serial, SignalkHelper::j_set, NAVIGATION_SET), false);
+		printValue(&Serial, SignalkHelper::j_speedOverGround, navigation.speedOverGround, false);
+		printValue(&Serial, SignalkHelper::j_speedThroughWater, navigation.speedThroughWater, false);
+		printValue(&Serial, SignalkHelper::j_state, NavigationStateString[navigation.state], false);
 		//currentRoute ;
 		//destination;
 		//gnss
@@ -1365,14 +961,14 @@ void SignalkModel::printNavigationBranch(HardwareSerial* serial, bool last){
 }
 void SignalkModel::printEnvironmentBranch(HardwareSerial* serial, bool last){
 	openBranch(&Serial,SignalkHelper::j_environment);
-		printValue(&Serial, SignalkHelper::j_airPressureChangeRateAlarm, getValueFloat(ENVIRONMENT_AIRPRESSURECHANGERATEALARM), false);
-		printValue(&Serial, SignalkHelper::j_airPressure, getValueFloat(ENVIRONMENT_AIRPRESSURE), false);
-		//printValue(&Serial, SignalkHelper::j_airTemp, getValueFloat(ENVIRONMENT_AIRTEMP), false);
-		//printValue(&Serial, SignalkHelper::j_currentDirection, getValueFloat(ENVIRONMENT_CURRENTDIRECTION), false);
-		//printValue(&Serial, SignalkHelper::j_currentSpeed, getValueFloat(ENVIRONMENT_CURRENTSPEED), false);
-		//printValue(&Serial, SignalkHelper::j_humidity, getValueFloat(ENVIRONMENT_HUMIDITY), false);
-		//printValue(&Serial, SignalkHelper::j_salinity, getValueFloat(ENVIRONMENT_SALINITY), false);
-		printValue(&Serial, SignalkHelper::j_waterTemp, getValueFloat(ENVIRONMENT_WATERTEMP), false);
+		printValue(&Serial, SignalkHelper::j_airPressureChangeRateAlarm, environment.airPressureChangeRateAlarm, false);
+		printValue(&Serial, SignalkHelper::j_airPressure, environment.airPressure, false);
+		//printValue(&Serial, SignalkHelper::j_airTemp, ENVIRONMENT_AIRTEMP), false);
+		//printValue(&Serial, SignalkHelper::j_currentDirection, ENVIRONMENT_CURRENTDIRECTION), false);
+		//printValue(&Serial, SignalkHelper::j_currentSpeed, ENVIRONMENT_CURRENTSPEED), false);
+		//printValue(&Serial, SignalkHelper::j_humidity, ENVIRONMENT_HUMIDITY), false);
+		//printValue(&Serial, SignalkHelper::j_salinity, ENVIRONMENT_SALINITY), false);
+		printValue(&Serial, SignalkHelper::j_waterTemp, environment.waterTemp, false);
 		//	DepthStruct depth;
 		//	TideStruct tide;
 			printWindBranch(serial,true);
@@ -1381,8 +977,8 @@ void SignalkModel::printEnvironmentBranch(HardwareSerial* serial, bool last){
 
 void SignalkModel::printSteeringBranch(HardwareSerial* serial, bool last){
 	openBranch(&Serial,SignalkHelper::j_steering);
-		printValue(&Serial, SignalkHelper::j_rudderAngle, getValueFloat(STEERING_RUDDERANGLE), false);
-		printValue(&Serial, SignalkHelper::j_rudderAngleTarget, getValueFloat(STEERING_RUDDERANGLETARGET), false);
+		printValue(&Serial, SignalkHelper::j_rudderAngle, steering.rudderAngle, false);
+		printValue(&Serial, SignalkHelper::j_rudderAngleTarget, steering.rudderAngleTarget, false);
 		printAutopilotBranch(serial,true);
 	closeBranch(&Serial, last);
 }

@@ -171,12 +171,12 @@ public:
 	void closeBranch(HardwareSerial* serial, bool last);
 
 	void printValue(HardwareSerial* serial, const char* key, const float value, bool last);
-		void printValue(HardwareSerial* serial, const char* key, const unsigned long value, bool last);
-		void printValue(HardwareSerial* serial, const char* key, const int value, bool last);
-		void printValue(HardwareSerial* serial, const char* key, const long value, bool last);
-		void printValue(HardwareSerial* serial, const char* key, const bool value, bool last);
-		void printValue(HardwareSerial* serial, const char* key,  const char* value, bool last);
-		void printValue(HardwareSerial* serial, const char* key,  const char value, bool last);
+	void printValue(HardwareSerial* serial, const char* key, const unsigned long value, bool last);
+	void printValue(HardwareSerial* serial, const char* key, const int value, bool last);
+	void printValue(HardwareSerial* serial, const char* key, const long value, bool last);
+	void printValue(HardwareSerial* serial, const char* key, const bool value, bool last);
+	void printValue(HardwareSerial* serial, const char* key,  const char* value, bool last);
+	void printValue(HardwareSerial* serial, const char* key,  const char value, bool last);
 
 	byte getChecksum(char* str);
 
