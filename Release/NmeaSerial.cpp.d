@@ -134,7 +134,8 @@ NmeaSerial.cpp.d: ../NmeaSerial.cpp ../NmeaSerial.h \
  /home/robert/gitrep/freeboardDue/lib/PString/PString.h \
  /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/cores/arduino/Print.h \
  /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h \
- /home/robert/gitrep/freeboardDue/lib/SignalK/FreeboardConstants.h
+ /home/robert/gitrep/freeboardDue/lib/SignalK/FreeboardConstants.h \
+ /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkHelper.h
 
 ../NmeaSerial.h:
 
@@ -409,3 +410,5 @@ NmeaSerial.cpp.d: ../NmeaSerial.cpp ../NmeaSerial.h \
 /home/robert/gitrep/freeboardDue/lib/SignalK/SignalkModel.h:
 
 /home/robert/gitrep/freeboardDue/lib/SignalK/FreeboardConstants.h:
+
+/home/robert/gitrep/freeboardDue/lib/SignalK/SignalkHelper.h:

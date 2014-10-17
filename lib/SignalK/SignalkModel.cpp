@@ -61,7 +61,7 @@ SignalkModel::SignalkModel() {
 	navigation.set = 0.0;
 	navigation.speedOverGround = 0.0;
 	navigation.speedThroughWater = 0.0;
-	navigation.state = NAV_NOT_DEFINED;
+	navigation.state = static_cast<NavigationStateType>(NAV_NOT_DEFINED);
 	navigation.anchor.alarmRadius = 0.0;
 	navigation.anchor.maxRadius = 0.0;
 	navigation.anchor.currentRadius = 0.0;
@@ -70,12 +70,12 @@ SignalkModel::SignalkModel() {
 	navigation.anchor.position.longitude = 0.0;
 	steering.rudderAngle = 0.0;
 	steering.rudderAngleTarget = 0.0;
-	steering.autopilot.state = AP_OFF;
-	steering.autopilot.mode = AP_NORMAL;
+	steering.autopilot.state = static_cast<AutopilotStateType>(AP_OFF);
+	steering.autopilot.mode = static_cast<AutopilotModeType>(AP_NORMAL);
 	steering.autopilot.targetHeadingNorth = 0.0;
 	steering.autopilot.targetHeadingMagnetic = 0.0;
 	steering.autopilot.alarmHeadingXte = 0.0;
-	steering.autopilot.headingSource = AP_COMPASS;
+	steering.autopilot.headingSource = static_cast<AutopilotHeadingSourceType>(AP_COMPASS);
 	steering.autopilot.deadZone = 0.0;
 	steering.autopilot.backlash = 0.0;
 	steering.autopilot.gain = 0.0;
@@ -184,18 +184,6 @@ SignalkModel::SignalkModel() {
 	_arduino.autopilot.rudderCommand = 0.0;
 }
 
-/* Add to setSignalk
-navigation.destination.eta;
-steering.rudderAngle;
-steering.rudderAngleTarget;
-steering.autopilot.portLock;
-steering.autopilot.starboardLock;
-environment.airPressureChangeRateAlarm;
-environment.airPressure;
-environment.waterTemp;
-_arduino.wind.lastUpdate;
-_arduino.autopilot.rudderCommand;
- */
 
 void SignalkModel::setValue(char* attribute, bool value) {
 	unsigned long key = hash(attribute);
@@ -425,6 +413,13 @@ void SignalkModel::setValue(char* attribute, unsigned long value) {
 void SignalkModel::setValue(unsigned long key, unsigned long value) {
 
 	switch (key) {
+
+	case _ARDUINO_GPS_LASTFIX: 			_arduino.gps.lastFix = value; break;
+	case _ARDUINO_GPS_UTC: 				_arduino.gps.utc = value; break;
+	case _ARDUINO_WIND_LASTUPDATE: 		_arduino.wind.lastUpdate = value; break;
+	case NAVIGATION_DESTINATION_ETA: 	navigation.destination.eta = value; break;
+	case _ARDUINO_ALARM_SNOOZE: 		_arduino.alarm.snooze = value; break;
+	case _ARDUINO_ALARM_LAST: 			_arduino.alarm.last = value; break;
 	case _ARDUINO_SERIAL_BAUD0: 		_arduino.serial.baud0 = value; break;
 	case _ARDUINO_SERIAL_BAUD1: 		_arduino.serial.baud1 = value; break;
 	case _ARDUINO_SERIAL_BAUD2: 		_arduino.serial.baud2 = value; break;
@@ -432,10 +427,6 @@ void SignalkModel::setValue(unsigned long key, unsigned long value) {
 	case _ARDUINO_SERIAL_BAUD4: 		_arduino.serial.baud4 = value; break;
 	case _ARDUINO_SERIAL_BAUD5: 		_arduino.serial.baud5 = value; break;
 	case _ARDUINO_AUTOPILOT_BAUDRATE: 	_arduino.autopilot.baudRate = value; break;
-	case _ARDUINO_ALARM_SNOOZE: 		_arduino.alarm.snooze = value; break;
-	case _ARDUINO_ALARM_LAST: 			_arduino.alarm.last = value; break;
-	case _ARDUINO_GPS_LASTFIX: 			_arduino.gps.lastFix = value; break;
-	case _ARDUINO_GPS_UTC: 				_arduino.gps.utc = value; break;
 	default: 		setValue(key,(int)value); break;
 	}
 }
@@ -470,6 +461,10 @@ void SignalkModel::setValue(unsigned long key, float value) {
 	case NAVIGATION_ANCHOR_POSITION_LATITUDE: 	navigation.anchor.position.latitude = value; break;
 	case NAVIGATION_ANCHOR_POSITION_LONGITUDE: 	navigation.anchor.position.longitude = value; break;
 
+	case STEERING_RUDDERANGLE: 					steering.rudderAngle = value; break;
+	case STEERING_RUDDERANGLETARGET: 			steering.rudderAngleTarget = value; break;
+	case STEERING_AUTOPILOT_PORTLOCK: 			steering.autopilot.portLock = value; break;
+	case STEERING_AUTOPILOT_STARBOARDLOCK: 		steering.autopilot.starboardLock = value; break;
 	case STEERING_AUTOPILOT_TARGETHEADINGNORTH: steering.autopilot.targetHeadingNorth = value; break;
 	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC:	steering.autopilot.targetHeadingMagnetic = value; break;
 	case STEERING_AUTOPILOT_ALARMHEADINGXTE: 	steering.autopilot.alarmHeadingXte = value; break;
@@ -484,15 +479,21 @@ void SignalkModel::setValue(unsigned long key, float value) {
 	case ENVIRONMENT_WIND_SPEEDALARM: 			environment.wind.speedAlarm = value; break;
 	case ENVIRONMENT_WIND_SPEEDTRUE: 			environment.wind.speedTrue = value; break;
 	case ENVIRONMENT_WIND_SPEEDAPPARENT: 		environment.wind.speedApparent = value; break;
+	case ENVIRONMENT_AIRPRESSURECHANGERATEALARM: environment.airPressureChangeRateAlarm = value; break;
+	case ENVIRONMENT_AIRPRESSURE: 				environment.airPressure = value; break;
+	case ENVIRONMENT_WATERTEMP: 				environment.waterTemp = value; break;
 
 	case _ARDUINO_WIND_AVERAGE: 	_arduino.wind.average = value; break;
 	case _ARDUINO_WIND_FACTOR: 		_arduino.wind.factor = value; break;
 	case _ARDUINO_WIND_MAX: 		_arduino.wind.max = value; break;
+	case _ARDUINO_WIND_ZEROOFFSET: 	_arduino.wind.zeroOffset = value; break;
 	case _ARDUINO_ANCHOR_RADIUSDEG: _arduino.anchor.radiusDeg = value; break;
 	case _ARDUINO_ANCHOR_NORTH: 	_arduino.anchor.north = value; break;
 	case _ARDUINO_ANCHOR_SOUTH: 	_arduino.anchor.south = value; break;
 	case _ARDUINO_ANCHOR_EAST: 		_arduino.anchor.east = value; break;
 	case _ARDUINO_ANCHOR_WEST: 		_arduino.anchor.west = value; break;
+	case _ARDUINO_AUTOPILOT_RUDDERCOMMAND: _arduino.autopilot.rudderCommand = value; break;
+
 	default: 		break;
 
 	}
@@ -501,14 +502,14 @@ void SignalkModel::setValue(unsigned long key, float value) {
 
 bool SignalkModel::getValueBool(unsigned long key) {
 	switch (key) {
-	case _ARDUINO_SEATALK: 			return true;
+		case _ARDUINO_SEATALK: 			return _arduino.seatalk;
+		case _ARDUINO_GPS_DECODE: 		return _arduino.gps.decode;
 			break;
 	}
 	return false;
 }
 int SignalkModel::getValueInt(unsigned long key) {
 	switch (key) {
-	case _ARDUINO_GPS_MODEL: 			return _arduino.gps.model; break;
 	case STEERING_AUTOPILOT_GAIN: 		return steering.autopilot.gain; break;
 	case ALARMS_SILENTINTERVAL: 		return alarms.silentInterval; break;
 	case _ARDUINO_ALARM_LEVEL1_UPPER: 	return _arduino.alarm.level1.upper; break;
@@ -517,22 +518,26 @@ int SignalkModel::getValueInt(unsigned long key) {
 	case _ARDUINO_ALARM_LEVEL2_LOWER: 	return _arduino.alarm.level2.lower; break;
 	case _ARDUINO_ALARM_LEVEL3_UPPER: 	return _arduino.alarm.level3.upper; break;
 	case _ARDUINO_ALARM_LEVEL3_LOWER: 	return _arduino.alarm.level3.lower; break;
+	case _ARDUINO_GPS_MODEL: 			return _arduino.gps.model; break;
 	}
 	return INT16_MAX;
 }
 
 unsigned long SignalkModel::getValueLong(unsigned long key) {
 	switch (key) {
+	case _ARDUINO_GPS_LASTFIX: 		return _arduino.gps.lastFix; break;
+	case _ARDUINO_GPS_UTC: 			return _arduino.gps.utc; break;
+	case _ARDUINO_WIND_LASTUPDATE: 	return _arduino.wind.lastUpdate; break;
+	case _ARDUINO_AUTOPILOT_BAUDRATE: 	return _arduino.autopilot.baudRate; break;
+	case _ARDUINO_ALARM_SNOOZE: 	return _arduino.alarm.snooze; break;
+	case _ARDUINO_ALARM_LAST: 		return _arduino.alarm.last; break;
+	case NAVIGATION_DESTINATION_ETA: return navigation.destination.eta; break;
 	case _ARDUINO_SERIAL_BAUD0: 	return _arduino.serial.baud0; break;
 	case _ARDUINO_SERIAL_BAUD1: 	return _arduino.serial.baud1; break;
 	case _ARDUINO_SERIAL_BAUD2: 	return _arduino.serial.baud2; break;
 	case _ARDUINO_SERIAL_BAUD3: 	return _arduino.serial.baud3; break;
 	case _ARDUINO_SERIAL_BAUD4: 	return _arduino.serial.baud4; break;
 	case _ARDUINO_SERIAL_BAUD5: 	return _arduino.serial.baud5; break;
-	case _ARDUINO_ALARM_SNOOZE: 	return _arduino.alarm.snooze; break;
-	case _ARDUINO_ALARM_LAST: 		return _arduino.alarm.last; break;
-	case _ARDUINO_GPS_LASTFIX: 		return _arduino.gps.lastFix; break;
-	case _ARDUINO_GPS_UTC: 			return _arduino.gps.utc; break;
 	}
 	return SIZE_MAX;
 }
@@ -571,6 +576,10 @@ float SignalkModel::getValueFloat(unsigned long key) {
 	case NAVIGATION_ANCHOR_POSITION_LATITUDE: 	return navigation.anchor.position.latitude; break;
 	case NAVIGATION_ANCHOR_POSITION_LONGITUDE: 	return navigation.anchor.position.longitude; break;
 
+	case STEERING_RUDDERANGLE: 					return steering.rudderAngle; break;
+	case STEERING_RUDDERANGLETARGET: 			return 	steering.rudderAngleTarget; break;
+	case STEERING_AUTOPILOT_PORTLOCK: 			return 	steering.autopilot.portLock; break;
+	case STEERING_AUTOPILOT_STARBOARDLOCK: 		return 	steering.autopilot.starboardLock; break;
 	case STEERING_AUTOPILOT_TARGETHEADINGNORTH: return steering.autopilot.targetHeadingNorth; break;
 	case STEERING_AUTOPILOT_TARGETHEADINGMAGNETIC: 		return steering.autopilot.targetHeadingMagnetic; break;
 	case STEERING_AUTOPILOT_ALARMHEADINGXTE: 	return steering.autopilot.alarmHeadingXte; break;
@@ -585,16 +594,20 @@ float SignalkModel::getValueFloat(unsigned long key) {
 	case ENVIRONMENT_WIND_SPEEDALARM: 			return environment.wind.speedAlarm; break;
 	case ENVIRONMENT_WIND_SPEEDTRUE: 			return environment.wind.speedTrue; break;
 	case ENVIRONMENT_WIND_SPEEDAPPARENT: 		return environment.wind.speedApparent; break;
+	case ENVIRONMENT_AIRPRESSURECHANGERATEALARM: return environment.airPressureChangeRateAlarm; break;
+	case ENVIRONMENT_AIRPRESSURE: 				return 	environment.airPressure; break;
+	case ENVIRONMENT_WATERTEMP: 				return 	environment.waterTemp; break;
 
 	case _ARDUINO_WIND_AVERAGE: 	return _arduino.wind.average; break;
 	case _ARDUINO_WIND_FACTOR: 		return _arduino.wind.factor; break;
 	case _ARDUINO_WIND_MAX: 		return _arduino.wind.max; break;
+	case _ARDUINO_WIND_ZEROOFFSET: 	return _arduino.wind.zeroOffset; break;
 	case _ARDUINO_ANCHOR_RADIUSDEG: return _arduino.anchor.radiusDeg; break;
 	case _ARDUINO_ANCHOR_NORTH: 	return _arduino.anchor.north; break;
 	case _ARDUINO_ANCHOR_SOUTH: 	return _arduino.anchor.south; break;
 	case _ARDUINO_ANCHOR_EAST: 		return _arduino.anchor.east; break;
 	case _ARDUINO_ANCHOR_WEST: 		return _arduino.anchor.west; break;
-
+	case _ARDUINO_AUTOPILOT_RUDDERCOMMAND: 	return _arduino.autopilot.rudderCommand; break;
 	default: 		break;
 	}
 	return NAN;
@@ -716,27 +729,6 @@ volatile bool SignalkModel::isAlarmOn(unsigned long key) {
 	return false;
 }
 
-/* Add to get
-navigation.state;
-steering.rudderAngle;
-steering.rudderAngleTarget;
-steering.autopilot.state;
-steering.autopilot.mode;
-steering.autopilot.headingSource;
-steering.autopilot.portLock;
-steering.autopilot.starboardLock;
-alarms.autopilotAlarmState;
-alarms.autopilotAlarmMethod;
-environment.airPressureChangeRateAlarm;
-environment.airPressure;
-environment.waterTemp;
-_arduino.gps.decode;
-_arduino.seatalk;
-_arduino.wind.lastUpdate;
-_arduino.wind.zeroOffset;
-_arduino.autopilot.baudRate;
- *
- */
 
 /*
 	Output, with the trailing comma if last = false

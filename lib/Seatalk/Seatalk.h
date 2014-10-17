@@ -62,7 +62,7 @@
 
 #include "Arduino.h"
 
-#include "HardwareSerial.h"
+#include <HardwareSerial.h>
 //#include "FreeboardConstants.h"
 #include <SignalkModel.h>
 
