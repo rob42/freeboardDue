@@ -2171,7 +2171,7 @@ END GROUP
 LOAD /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtend.o
 LOAD /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtn.o
 
-.text           0x00080000     0xdfd8
+.text           0x00080000     0xdfe8
                 0x00080000                . = ALIGN (0x4)
                 0x00080000                _sfixed = .
  *(.vectors .vectors.*)
@@ -3521,253 +3521,253 @@ LOAD /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q
  .rodata.str1.1
                 0x0008c315      0x145 ./freeboardDue.cpp.o
  .rodata.str1.1
-                0x0008c45a      0x683 ./lib/SignalK/SignalkHelper.cpp.o
-                                0x6a3 (size before relaxing)
- *fill*         0x0008cadd        0x3 
+                0x0008c45a      0x68f ./lib/SignalK/SignalkHelper.cpp.o
+                                0x6b1 (size before relaxing)
+ *fill*         0x0008cae9        0x7 
  .rodata._ZTT12SignalkModel
-                0x0008cae0        0x8 ./lib/SignalK/SignalkModel.cpp.o
-                0x0008cae0                VTT for SignalkModel
+                0x0008caf0        0x8 ./lib/SignalK/SignalkModel.cpp.o
+                0x0008caf0                VTT for SignalkModel
  .rodata._ZTV12SignalkModel
-                0x0008cae8       0x10 ./lib/SignalK/SignalkModel.cpp.o
-                0x0008cae8                vtable for SignalkModel
+                0x0008caf8       0x10 ./lib/SignalK/SignalkModel.cpp.o
+                0x0008caf8                vtable for SignalkModel
  .rodata.str1.1
-                0x0008caf8      0x12d ./lib/SignalK/SignalkModel.cpp.o
+                0x0008cb08      0x12d ./lib/SignalK/SignalkModel.cpp.o
                                 0x13f (size before relaxing)
- *fill*         0x0008cc25        0x3 
+ *fill*         0x0008cc35        0x3 
  .rodata._ZTV16StreamJsonReader
-                0x0008cc28       0x10 ./lib/SignalK/StreamJsonReader.cpp.o
-                0x0008cc28                vtable for StreamJsonReader
+                0x0008cc38       0x10 ./lib/SignalK/StreamJsonReader.cpp.o
+                0x0008cc38                vtable for StreamJsonReader
  .rodata.str1.1
-                0x0008cc38        0x3 ./lib/SignalK/StreamJsonReader.cpp.o
+                0x0008cc48        0x3 ./lib/SignalK/StreamJsonReader.cpp.o
                                   0xf (size before relaxing)
- *fill*         0x0008cc3b        0x5 
+ *fill*         0x0008cc4b        0x5 
  .rodata._ZTV7PString
-                0x0008cc40       0x10 ./lib/PString/PString.cpp.o
-                0x0008cc40                vtable for PString
+                0x0008cc50       0x10 ./lib/PString/PString.cpp.o
+                0x0008cc50                vtable for PString
  .rodata.str1.1
-                0x0008cc50        0x8 ./lib/NMEA/nmea.cpp.o
+                0x0008cc60        0x8 ./lib/NMEA/nmea.cpp.o
  .rodata.str1.1
-                0x0008cc58       0x40 ./lib/MultiSerial/MultiSerial.cpp.o
+                0x0008cc68       0x40 ./lib/MultiSerial/MultiSerial.cpp.o
  .rodata._ZTV11MultiSerial
-                0x0008cc98       0x28 ./lib/MultiSerial/MultiSerial.cpp.o
-                0x0008cc98                vtable for MultiSerial
+                0x0008cca8       0x28 ./lib/MultiSerial/MultiSerial.cpp.o
+                0x0008cca8                vtable for MultiSerial
  .rodata._ZTV6Levels
-                0x0008ccc0       0x10 ./lib/Levels/Levels.cpp.o
-                0x0008ccc0                vtable for Levels
+                0x0008ccd0       0x10 ./lib/Levels/Levels.cpp.o
+                0x0008ccd0                vtable for Levels
  .rodata._ZTV3Gps
-                0x0008ccd0       0x10 ./lib/Gps/Gps.cpp.o
-                0x0008ccd0                vtable for Gps
- .rodata        0x0008cce0        0x8 ./lib/DueTimer/DueTimer.cpp.o
+                0x0008cce0       0x10 ./lib/Gps/Gps.cpp.o
+                0x0008cce0                vtable for Gps
+ .rodata        0x0008ccf0        0x8 ./lib/DueTimer/DueTimer.cpp.o
  .rodata._ZN8DueTimer6TimersE
-                0x0008cce8       0x6c ./lib/DueTimer/DueTimer.cpp.o
-                0x0008cce8                DueTimer::Timers
+                0x0008ccf8       0x6c ./lib/DueTimer/DueTimer.cpp.o
+                0x0008ccf8                DueTimer::Timers
  .rodata.str1.1
-                0x0008cd54       0x62 ./lib/Autopilot/Autopilot.cpp.o
- *fill*         0x0008cdb6        0x2 
+                0x0008cd64       0x62 ./lib/Autopilot/Autopilot.cpp.o
+ *fill*         0x0008cdc6        0x2 
  .rodata._ZTV6Anchor
-                0x0008cdb8       0x10 ./lib/Anchor/Anchor.cpp.o
-                0x0008cdb8                vtable for Anchor
+                0x0008cdc8       0x10 ./lib/Anchor/Anchor.cpp.o
+                0x0008cdc8                vtable for Anchor
  .rodata._ZTV5Alarm
-                0x0008cdc8       0x10 ./lib/Alarms/Alarm.cpp.o
-                0x0008cdc8                vtable for Alarm
+                0x0008cdd8       0x10 ./lib/Alarms/Alarm.cpp.o
+                0x0008cdd8                vtable for Alarm
  .rodata.g_APinDescription
-                0x0008cdd8      0xa2c /home/robert/gitrep/freeboardDue/Release/arduino.ar(variant.cpp.o)
-                0x0008cdd8                g_APinDescription
+                0x0008cde8      0xa2c /home/robert/gitrep/freeboardDue/Release/arduino.ar(variant.cpp.o)
+                0x0008cde8                g_APinDescription
  .rodata.str1.1
-                0x0008d804        0xc /home/robert/gitrep/freeboardDue/Release/arduino.ar(Print.cpp.o)
+                0x0008d814        0xc /home/robert/gitrep/freeboardDue/Release/arduino.ar(Print.cpp.o)
                                   0xe (size before relaxing)
  .rodata._ZTV9UARTClass
-                0x0008d810       0x30 /home/robert/gitrep/freeboardDue/Release/arduino.ar(UARTClass.cpp.o)
-                0x0008d810                vtable for UARTClass
+                0x0008d820       0x30 /home/robert/gitrep/freeboardDue/Release/arduino.ar(UARTClass.cpp.o)
+                0x0008d820                vtable for UARTClass
  .rodata._ZTV10USARTClass
-                0x0008d840       0x30 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USARTClass.cpp.o)
-                0x0008d840                vtable for USARTClass
+                0x0008d850       0x30 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USARTClass.cpp.o)
+                0x0008d850                vtable for USARTClass
  .rodata.STRING_PRODUCT
-                0x0008d870        0xc /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
-                0x0008d870                STRING_PRODUCT
+                0x0008d880        0xc /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d880                STRING_PRODUCT
  .rodata.USB_DeviceDescriptor
-                0x0008d87c       0x12 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
-                0x0008d87c                USB_DeviceDescriptor
- *fill*         0x0008d88e        0x2 
+                0x0008d88c       0x12 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d88c                USB_DeviceDescriptor
+ *fill*         0x0008d89e        0x2 
  .rodata._ZL9EndPoints
-                0x0008d890       0x14 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d8a0       0x14 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
  .rodata.STRING_LANGUAGE
-                0x0008d8a4        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
-                0x0008d8a4                STRING_LANGUAGE
+                0x0008d8b4        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d8b4                STRING_LANGUAGE
  .rodata._ZL18test_packet_buffer
-                0x0008d8a8       0x35 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d8b8       0x35 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
  .rodata.STRING_MANUFACTURER
-                0x0008d8dd        0xc /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
-                0x0008d8dd                STRING_MANUFACTURER
+                0x0008d8ed        0xc /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d8ed                STRING_MANUFACTURER
  .rodata.USB_DeviceDescriptorA
-                0x0008d8e9       0x12 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
-                0x0008d8e9                USB_DeviceDescriptorA
+                0x0008d8f9       0x12 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+                0x0008d8f9                USB_DeviceDescriptorA
  .rodata._ZL19USB_DeviceQualifier
-                0x0008d8fb       0x12 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
- *fill*         0x0008d90d        0x3 
+                0x0008d90b       0x12 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+ *fill*         0x0008d91d        0x3 
  .rodata._ZTV7Serial_
-                0x0008d910       0x28 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
-                0x0008d910                vtable for Serial_
+                0x0008d920       0x28 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
+                0x0008d920                vtable for Serial_
  .rodata._ZL18_cdcOtherInterface
-                0x0008d938       0x42 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
+                0x0008d948       0x42 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
  .rodata._ZL13_cdcInterface
-                0x0008d97a       0x42 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
- *fill*         0x0008d9bc        0x4 
+                0x0008d98a       0x42 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
+ *fill*         0x0008d9cc        0x4 
  .rodata._ZTV9Keyboard_
-                0x0008d9c0       0x20 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
-                0x0008d9c0                vtable for Keyboard_
+                0x0008d9d0       0x20 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
+                0x0008d9d0                vtable for Keyboard_
  .rodata._asciimap
-                0x0008d9e0       0x80 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
-                0x0008d9e0                _asciimap
+                0x0008d9f0       0x80 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
+                0x0008d9f0                _asciimap
  .rodata._hidInterface
-                0x0008da60       0x19 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
-                0x0008da60                _hidInterface
+                0x0008da70       0x19 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
+                0x0008da70                _hidInterface
  .rodata._hidReportDescriptor
-                0x0008da79       0x65 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
-                0x0008da79                _hidReportDescriptor
+                0x0008da89       0x65 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
+                0x0008da89                _hidReportDescriptor
  .rodata.str1.1
-                0x0008dade       0x54 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(tc.o)
+                0x0008daee       0x54 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(tc.o)
  .rodata.__func__.6634
-                0x0008db32        0xd /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(tc.o)
+                0x0008db42        0xd /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(tc.o)
  .rodata.__func__.6640
-                0x0008db3f        0x9 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(tc.o)
+                0x0008db4f        0x9 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(tc.o)
  .rodata.C.0.8146
-                0x0008db48       0x40 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(adc.o)
+                0x0008db58       0x40 /home/robert/dev/arduino-1.5.7/hardware/arduino/sam/variants/arduino_due_x/libsam_sam3x8e_gcc_rel.a(adc.o)
  .rodata.str1.4
-                0x0008db88       0x3f /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-assert.o)
+                0x0008db98       0x3f /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-assert.o)
                                  0x44 (size before relaxing)
- *fill*         0x0008dbc7        0x1 
+ *fill*         0x0008dbd7        0x1 
  .rodata.str1.4
-                0x0008dbc8        0x2 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-impure.o)
+                0x0008dbd8        0x2 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-impure.o)
                                   0x4 (size before relaxing)
- *fill*         0x0008dbca        0x2 
+ *fill*         0x0008dbda        0x2 
  .rodata._global_impure_ptr
-                0x0008dbcc        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-impure.o)
-                0x0008dbcc                _global_impure_ptr
+                0x0008dbdc        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-impure.o)
+                0x0008dbdc                _global_impure_ptr
  .rodata.fpi.5235
-                0x0008dbd0       0x14 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
+                0x0008dbe0       0x14 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
  .rodata.fpinan.5271
-                0x0008dbe4       0x14 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
+                0x0008dbf4       0x14 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
  .rodata.str1.4
-                0x0008dbf8        0xf /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
+                0x0008dc08        0xf /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
                                  0x10 (size before relaxing)
- *fill*         0x0008dc07        0x1 
+ *fill*         0x0008dc17        0x1 
  .rodata.tinytens
-                0x0008dc08       0x28 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
+                0x0008dc18       0x28 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-strtod.o)
  .rodata.blanks.6717
-                0x0008dc30       0x10 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-vfiprintf.o)
+                0x0008dc40       0x10 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-vfiprintf.o)
  .rodata.str1.4
-                0x0008dc40       0x2f /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-vfiprintf.o)
+                0x0008dc50       0x2f /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-vfiprintf.o)
                                  0x30 (size before relaxing)
- *fill*         0x0008dc6f        0x1 
+ *fill*         0x0008dc7f        0x1 
  .rodata.zeroes.6718
-                0x0008dc70       0x10 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-vfiprintf.o)
+                0x0008dc80       0x10 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-vfiprintf.o)
  .rodata._ctype_
-                0x0008dc80      0x104 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-ctype_.o)
-                0x0008dc80                _ctype_
+                0x0008dc90      0x104 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-ctype_.o)
+                0x0008dc90                _ctype_
  .rodata.__hexdig
-                0x0008dd84      0x100 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-gdtoa-gethex.o)
-                0x0008dd84                __hexdig
+                0x0008dd94      0x100 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-gdtoa-gethex.o)
+                0x0008dd94                __hexdig
  .rodata.str1.4
-                0x0008de84        0xc /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-locale.o)
+                0x0008de94        0xc /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-locale.o)
                                  0x14 (size before relaxing)
  .rodata.__mprec_tens
-                0x0008de90       0xc8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-mprec.o)
-                0x0008de90                __mprec_tens
+                0x0008dea0       0xc8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-mprec.o)
+                0x0008dea0                __mprec_tens
  .rodata.__mprec_bigtens
-                0x0008df58       0x28 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-mprec.o)
-                0x0008df58                __mprec_bigtens
+                0x0008df68       0x28 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-mprec.o)
+                0x0008df68                __mprec_bigtens
  .rodata.p05.5266
-                0x0008df80        0xc /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-mprec.o)
+                0x0008df90        0xc /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-mprec.o)
  *(.ARM.extab* .gnu.linkonce.armextab.*)
-                0x0008df8c                . = ALIGN (0x4)
+                0x0008df9c                . = ALIGN (0x4)
  *(.init)
- .init          0x0008df8c        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crti.o
-                0x0008df8c                _init
- .init          0x0008df90        0x8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtn.o
-                0x0008df98                . = ALIGN (0x4)
-                0x0008df98                __preinit_array_start = .
+ .init          0x0008df9c        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crti.o
+                0x0008df9c                _init
+ .init          0x0008dfa0        0x8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtn.o
+                0x0008dfa8                . = ALIGN (0x4)
+                0x0008dfa8                __preinit_array_start = .
  *(.preinit_array)
-                0x0008df98                __preinit_array_end = .
-                0x0008df98                . = ALIGN (0x4)
-                0x0008df98                __init_array_start = .
+                0x0008dfa8                __preinit_array_end = .
+                0x0008dfa8                . = ALIGN (0x4)
+                0x0008dfa8                __init_array_start = .
  *(SORT(.init_array.*))
  .init_array.00000
-                0x0008df98        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-__call_atexit.o)
+                0x0008dfa8        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libc.a(lib_a-__call_atexit.o)
  *(.init_array)
- .init_array    0x0008df9c        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
- .init_array    0x0008dfa0        0x4 ./freeboardDue.cpp.o
- .init_array    0x0008dfa4        0x4 ./lib/Wind/Wind.cpp.o
- .init_array    0x0008dfa8        0x4 ./lib/Gps/Gps.cpp.o
- .init_array    0x0008dfac        0x4 ./lib/DueTimer/DueTimer.cpp.o
- .init_array    0x0008dfb0        0x4 ./lib/Autopilot/Autopilot.cpp.o
- .init_array    0x0008dfb4        0x4 ./Libraries/SPI/SPI.cpp.o
- .init_array    0x0008dfb8        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(variant.cpp.o)
- .init_array    0x0008dfbc        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
- .init_array    0x0008dfc0        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
- .init_array    0x0008dfc4        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
-                0x0008dfc8                __init_array_end = .
-                0x0008dfc8                . = ALIGN (0x4)
+ .init_array    0x0008dfac        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
+ .init_array    0x0008dfb0        0x4 ./freeboardDue.cpp.o
+ .init_array    0x0008dfb4        0x4 ./lib/Wind/Wind.cpp.o
+ .init_array    0x0008dfb8        0x4 ./lib/Gps/Gps.cpp.o
+ .init_array    0x0008dfbc        0x4 ./lib/DueTimer/DueTimer.cpp.o
+ .init_array    0x0008dfc0        0x4 ./lib/Autopilot/Autopilot.cpp.o
+ .init_array    0x0008dfc4        0x4 ./Libraries/SPI/SPI.cpp.o
+ .init_array    0x0008dfc8        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(variant.cpp.o)
+ .init_array    0x0008dfcc        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(USBCore.cpp.o)
+ .init_array    0x0008dfd0        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(CDC.cpp.o)
+ .init_array    0x0008dfd4        0x4 /home/robert/gitrep/freeboardDue/Release/arduino.ar(HID.cpp.o)
+                0x0008dfd8                __init_array_end = .
+                0x0008dfd8                . = ALIGN (0x4)
  *crtbegin.o(.ctors)
  *(EXCLUDE_FILE(*crtend.o) .ctors)
  *(SORT(.ctors.*))
  *crtend.o(.ctors)
-                0x0008dfc8                . = ALIGN (0x4)
+                0x0008dfd8                . = ALIGN (0x4)
  *(.fini)
- .fini          0x0008dfc8        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crti.o
-                0x0008dfc8                _fini
- .fini          0x0008dfcc        0x8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtn.o
-                0x0008dfd4                . = ALIGN (0x4)
-                0x0008dfd4                __fini_array_start = .
+ .fini          0x0008dfd8        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crti.o
+                0x0008dfd8                _fini
+ .fini          0x0008dfdc        0x8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtn.o
+                0x0008dfe4                . = ALIGN (0x4)
+                0x0008dfe4                __fini_array_start = .
  *(.fini_array)
- .fini_array    0x0008dfd4        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
+ .fini_array    0x0008dfe4        0x4 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
  *(SORT(.fini_array.*))
-                0x0008dfd8                __fini_array_end = .
+                0x0008dfe8                __fini_array_end = .
  *crtbegin.o(.dtors)
  *(EXCLUDE_FILE(*crtend.o) .dtors)
  *(SORT(.dtors.*))
  *crtend.o(.dtors)
-                0x0008dfd8                . = ALIGN (0x4)
-                0x0008dfd8                _efixed = .
-                0x0008dfd8                PROVIDE (__exidx_start, .)
+                0x0008dfe8                . = ALIGN (0x4)
+                0x0008dfe8                _efixed = .
+                0x0008dfe8                PROVIDE (__exidx_start, .)
 
-.vfp11_veneer   0x0008dfd8        0x0
+.vfp11_veneer   0x0008dfe8        0x0
  .vfp11_veneer  0x00000000        0x0 linker stubs
 
-.v4_bx          0x0008dfd8        0x0
+.v4_bx          0x0008dfe8        0x0
  .v4_bx         0x00000000        0x0 linker stubs
 
-.iplt           0x0008dfd8        0x0
+.iplt           0x0008dfe8        0x0
  .iplt          0x00000000        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
 
-.ARM.exidx      0x0008dfd8        0x8
+.ARM.exidx      0x0008dfe8        0x8
  *(.ARM.exidx* .gnu.linkonce.armexidx.*)
  .ARM.exidx.text._ZdlPv
-                0x0008dfd8        0x8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libstdc++.a(del_op.o)
+                0x0008dfe8        0x8 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libstdc++.a(del_op.o)
  .ARM.exidx.text.__aeabi_atexit
-                0x0008dfe0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libstdc++.a(atexit_arm.o)
+                0x0008dff0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/../../../../arm-none-eabi/lib/armv7-m/libstdc++.a(atexit_arm.o)
                                   0x8 (size before relaxing)
- .ARM.exidx     0x0008dfe0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/libgcc.a(_divdi3.o)
+ .ARM.exidx     0x0008dff0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/libgcc.a(_divdi3.o)
                                   0x8 (size before relaxing)
- .ARM.exidx     0x0008dfe0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/libgcc.a(_udivdi3.o)
+ .ARM.exidx     0x0008dff0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/libgcc.a(_udivdi3.o)
                                   0x8 (size before relaxing)
-                0x0008dfe0                PROVIDE (__exidx_end, .)
+                0x0008dff0                PROVIDE (__exidx_end, .)
 
-.eh_frame       0x0008dfe0        0x0
- .eh_frame      0x0008dfe0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
+.eh_frame       0x0008dff0        0x0
+ .eh_frame      0x0008dff0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
 
-.rel.dyn        0x0008dfe0        0x0
+.rel.dyn        0x0008dff0        0x0
  .rel.iplt      0x00000000        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
 
-.jcr            0x0008dfe0        0x0
- .jcr           0x0008dfe0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
+.jcr            0x0008dff0        0x0
+ .jcr           0x0008dff0        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
 
-.igot.plt       0x0008dfe0        0x0
+.igot.plt       0x0008dff0        0x0
  .igot.plt      0x00000000        0x0 /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q1/bin/../lib/gcc/arm-none-eabi/4.8.3/armv7-m/crtbegin.o
-                0x0008dfe0                . = ALIGN (0x4)
-                0x0008dfe0                _etext = .
+                0x0008dff0                . = ALIGN (0x4)
+                0x0008dff0                _etext = .
 
-.relocate       0x20070000      0xad8 load address 0x0008dfe0
+.relocate       0x20070000      0xad8 load address 0x0008dff0
                 0x20070000                . = ALIGN (0x4)
                 0x20070000                _srelocate = .
  *(.ramfunc .ramfunc.*)
@@ -4068,7 +4068,7 @@ LOAD /home/robert/dev/arduino-1.5.7/hardware/tools/gcc-arm-none-eabi-4.8.3-2014q
                 0x20070ad8                . = ALIGN (0x4)
                 0x20070ad8                _erelocate = .
 
-.bss            0x20070ad8     0x11a0 load address 0x0008eab8
+.bss            0x20070ad8     0x11a0 load address 0x0008eac8
                 0x20070ad8                . = ALIGN (0x4)
                 0x20070ad8                _sbss = .
                 0x20070ad8                _szero = .
