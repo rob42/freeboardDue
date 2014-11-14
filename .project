@@ -27,11 +27,6 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>Libraries/SPI</name>
-			<type>2</type>
-			<locationURI>ArduinoHardwareLibPath/SPI</locationURI>
-		</link>
-		<link>
 			<name>arduino/core</name>
 			<type>2</type>
 			<locationURI>ArduinoPlatformPath/cores/arduino</locationURI>
