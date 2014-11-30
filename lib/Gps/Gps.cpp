@@ -166,8 +166,14 @@ void Gps::setupGps() {
 	 8 ZDA (if 1PPS output is supported)
 	 9 Not defined
 	 */
-	autoBaud();
-
+	unsigned long baud = autoBaud();
+	Serial.println("Setting GPS config...");
+	int gpsModel = model->getValueInt(_ARDUINO_GPS_MODEL);
+	if(GPS_GENERIC == gpsModel){
+		Serial.println(F("Setting GPS to GENERIC") );
+		//we set this now, as we dont know how to alter it.
+		model->setValue(_ARDUINO_SERIAL_BAUD1,baud);
+	}
 	setupGpsImpl();
 	//now flush and restart
 	Serial1.flush();
